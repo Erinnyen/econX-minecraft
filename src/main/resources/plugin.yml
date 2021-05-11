@@ -1,0 +1,15 @@
+name: EconX
+version: ${project.version}
+main: com.erinnyen.econx.EconX
+api-version: 1.16
+authors: [ Erinnyen ]
+description: A simple economics Plugin for paperserver.
+website: https://github.com/Erinnyen
+
+commands:
+  send:
+    description: send money between players
+
+  getcredit:
+    description: get your own credit
+
