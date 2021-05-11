@@ -36,7 +36,11 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onLeft(PlayerQuitEvent event){
         Player player = event.getPlayer();
+        String player_name = player.getName();
         event.setQuitMessage(ChatColor.BLUE + "Bye, " + player.getName());
+
+        DBInteraction dbConn = new DBInteraction();
+        dbConn.updateLastOnline(player_name);
 
     }
 }

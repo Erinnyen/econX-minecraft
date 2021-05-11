@@ -206,6 +206,9 @@ public class DBInteraction {
             newPlayerQuery.setDouble(3, 1000);
 
             newPlayerQuery.executeUpdate();
+            newPlayerQuery.close();
+            conn.close();
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -275,6 +278,28 @@ public class DBInteraction {
             return 0;
         }
     }
+    public void updateLastOnline(String pName){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection conn = DriverManager.getConnection(url, uname, password);
+            PreparedStatement lastonline = conn.prepareStatement("INSERT INTO sql_playerdb.players (last_online)" +
+                    "VALUES (?)");
+
+            lastonline.setString(1, pName);
+            lastonline.executeUpdate();
+            lastonline.close();
+            conn.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
 }
 
 
