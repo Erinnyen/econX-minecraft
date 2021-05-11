@@ -1,10 +1,13 @@
 package com.erinnyen.econx.DBInteraction;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import org.bukkit.ChatColor;
 
-import java.io.Reader;
+import java.io.*;
+import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 
@@ -16,14 +19,23 @@ public class DBInteraction {
 
     public DBInteraction(){
 
-        String path = "./econX/dbcreds.json";
+        String file = "dbcreds.json";
+        Path pathToFile = Paths.get(file);
+
+        //Path path = pathToFile.toAbsolutePath();
+
+        //System.out.println( System.getProperty("user.dir"));
+
+
 
         try {
             Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(path));
+            //JsonReader reader = new JsonReader(new FileReader(new File(file)));
+            BufferedReader reader = new BufferedReader(new FileReader(new File(file)));
 
 
             dbCreds dbcreds = gson.fromJson(reader, dbCreds.class);
+
 
             uname = dbcreds.getUsername();
             password = dbcreds.getPassword();

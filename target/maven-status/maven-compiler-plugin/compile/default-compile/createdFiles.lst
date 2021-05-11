@@ -1,5 +1,6 @@
+com\erinnyen\econx\DBInteraction\DBInteraction.class
+com\erinnyen\econx\Listeners\ConnectionListeners.class
 com\erinnyen\econx\EconX.class
 com\erinnyen\econx\econCommands\getCreditCommand.class
 com\erinnyen\econx\econCommands\sendCommand.class
-com\erinnyen\econx\DBInteraction\DBInteraction.class
-com\erinnyen\econx\Listeners\ConnectionListeners.class
+com\erinnyen\econx\DBInteraction\dbCreds.class
