@@ -1,5 +1,6 @@
 package com.erinnyen.econx.DBInteraction;
 
+import com.erinnyen.econx.EconX;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.bukkit.ChatColor;
@@ -19,34 +20,6 @@ public class DBInteraction {
 
     public DBInteraction(){
 
-        String file = "dbcreds.json";
-        Path pathToFile = Paths.get(file);
-
-        //Path path = pathToFile.toAbsolutePath();
-
-        //System.out.println( System.getProperty("user.dir"));
-
-
-
-        try {
-            Gson gson = new Gson();
-            //JsonReader reader = new JsonReader(new FileReader(new File(file)));
-            BufferedReader reader = new BufferedReader(new FileReader(new File(file)));
-
-
-            dbCreds dbcreds = gson.fromJson(reader, dbCreds.class);
-
-
-            uname = dbcreds.getUsername();
-            password = dbcreds.getPassword();
-            url = dbcreds.getUrl();
-
-            reader.close();
-
-        } catch (Exception ex){
-            ex.printStackTrace();
-            System.out.println("Error: Something went wrong with the Database credentials!");
-        }
 
     }
 
