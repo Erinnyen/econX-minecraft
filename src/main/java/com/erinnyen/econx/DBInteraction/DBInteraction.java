@@ -244,14 +244,15 @@ public class DBInteraction {
                     playerId.close();
                     conn.close();
                     return playerId.getInt(2);
+                }else{
+                    playerId.close();
+                    conn.close();
                 }
             }
-            playerId.close();
-            conn.close();
             return 0;
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             return 0;
         }
     }
@@ -263,6 +264,11 @@ public class DBInteraction {
         }
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
+
+            if(getID(pName) == 0){
+                System.out.println("Error: The player you wanted to update does not exist.");
+                return;
+            }
             PreparedStatement lastonline = conn.prepareStatement("INSERT INTO sql_playerdb.players (last_online)" +
                     "VALUES ? WHERE player_id= ?");
 
