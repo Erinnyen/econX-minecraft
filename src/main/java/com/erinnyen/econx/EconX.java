@@ -24,15 +24,15 @@ public final class EconX extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        DBCredentials dbCreds = getDBcredsFromJSON();
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new ConnectionListeners(), this);
-        this.getCommand("send").setExecutor(new sendCommand());
-        this.getCommand("getcredit").setExecutor(new getCreditCommand());
+        pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
+        this.getCommand("send").setExecutor(new sendCommand(dbCreds));
+        this.getCommand("getcredit").setExecutor(new getCreditCommand(dbCreds));
         System.out.println(path);
         System.out.println(path.listFiles());
 
-        DBCredentials dbCreds = getDBcredsFromJSON();
 
 
     }

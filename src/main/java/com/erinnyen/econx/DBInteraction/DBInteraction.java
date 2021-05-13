@@ -1,15 +1,6 @@
 package com.erinnyen.econx.DBInteraction;
 
-import com.erinnyen.econx.EconX;
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import org.bukkit.ChatColor;
-
-import java.io.*;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 
 public class DBInteraction {
@@ -18,8 +9,10 @@ public class DBInteraction {
     private String password;
     private  String url;
 
-    public DBInteraction(){
-
+    public DBInteraction(DBCredentials pDBcreds){
+        uname = pDBcreds.getUsername();
+        password = pDBcreds.getPassword();
+        url = pDBcreds.getUrl();
 
     }
 

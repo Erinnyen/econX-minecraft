@@ -1,5 +1,6 @@
 package com.erinnyen.econx.econCommands;
 
+import com.erinnyen.econx.DBInteraction.DBCredentials;
 import com.erinnyen.econx.DBInteraction.DBInteraction;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,6 +10,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class getCreditCommand implements CommandExecutor {
+
+    DBCredentials dbCreds;
+
+    public getCreditCommand(DBCredentials pdbCreds){
+        dbCreds = pdbCreds;
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Bank] ";
@@ -17,7 +25,7 @@ public class getCreditCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                DBInteraction creditQuery = new DBInteraction();
+                DBInteraction creditQuery = new DBInteraction(dbCreds);
 
                 String player_1 = player.getName();
                 double credit = creditQuery.getCredit(player_1);
