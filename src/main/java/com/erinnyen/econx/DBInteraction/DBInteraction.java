@@ -209,7 +209,7 @@ public class DBInteraction {
             ResultSet creditResult = creditQuery.executeQuery();
 
 
-            while (creditResult.next()) {
+            if(creditResult.next()){
                 double credit = creditResult.getDouble(1);
                 creditResult.close();
                 conn.close();
@@ -264,8 +264,7 @@ public class DBInteraction {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
             PreparedStatement lastonline = conn.prepareStatement("INSERT INTO sql_playerdb.players (last_online)" +
-                    "VALUES (?) WHERE player_id=(?)");
-
+                    "VALUES ? WHERE player_id= ?");
 
             lastonline.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             lastonline.setInt(2, getID(pName));
