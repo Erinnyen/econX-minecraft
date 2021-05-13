@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public final class EconX extends JavaPlugin {
 
-    private File path = new File(this.getDataFolder() + "/econX");
+    private File path = new File(String.valueOf(this.getDataFolder()));
 
     @Override
     public void onEnable() {
@@ -32,7 +32,7 @@ public final class EconX extends JavaPlugin {
         System.out.println(path);
         System.out.println(path.listFiles());
 
-        //DBCredentials dbCreds = getDBcredsFromJSON();
+        DBCredentials dbCreds = getDBcredsFromJSON();
 
 
     }
