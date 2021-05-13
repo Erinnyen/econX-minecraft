@@ -240,7 +240,7 @@ public class DBInteraction {
             ResultSet playerId = playerQuery.executeQuery();
 
             while(playerId.next()) {
-                if (playerId.getString(1) == pPlayer) {
+                if (playerId.getString(1).equals(pPlayer)) {
                     playerId.close();
                     conn.close();
                     return playerId.getInt(2);
