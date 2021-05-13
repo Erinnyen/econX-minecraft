@@ -241,14 +241,14 @@ public class DBInteraction {
 
             while(playerId.next()) {
                 if (playerId.getString(1).equals(pPlayer)) {
+                    int id = playerId.getInt(2);
                     playerId.close();
                     conn.close();
-                    return playerId.getInt(2);
-                }else{
-                    playerId.close();
-                    conn.close();
+                    return id;
                 }
             }
+            playerId.close();
+            conn.close();
             return 0;
 
         } catch (SQLException sqlException) {
