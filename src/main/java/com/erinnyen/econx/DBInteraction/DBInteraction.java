@@ -5,9 +5,9 @@ import java.sql.*;
 
 public class DBInteraction {
 
-    private String uname;
-    private String password;
-    private  String url;
+    private final String uname;
+    private final String password;
+    private  final String url;
 
     public DBInteraction(DBCredentials pDBcreds){
         uname = pDBcreds.getUsername();
@@ -264,15 +264,17 @@ public class DBInteraction {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
             PreparedStatement lastonline = conn.prepareStatement("INSERT INTO sql_playerdb.players (last_online)" +
-                    "VALUES (?)");
+                    "VALUES (?) WHERE player_id=(?)");
 
-            lastonline.setString(1, pName);
+
+            lastonline.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+            lastonline.setInt(2, getID(pName));
             lastonline.executeUpdate();
             lastonline.close();
             conn.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
     }
 
