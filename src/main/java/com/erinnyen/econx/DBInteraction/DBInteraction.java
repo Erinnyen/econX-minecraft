@@ -110,8 +110,8 @@ public class DBInteraction {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
             PreparedStatement voidTransaction = conn.prepareStatement("INSERT INTO sql_playerdb.transactions (sender, receiver," +
-                    " amount, timestamp, transaction_type, item_price, comment)" +
-                    "VALUES (?,?,?,?,?,?,?)");
+                    " amount, timestamp, transaction_type, comment)" +
+                    "VALUES (?,?,?,?,?,?)");
 
             java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -120,12 +120,11 @@ public class DBInteraction {
             voidTransaction.setDouble(3, pAmount);
             voidTransaction.setTimestamp(4, timestamp);
             voidTransaction.setInt(5, 1);
-            voidTransaction.setDouble(6, pAmount);
 
             if(pComment != null){
-                voidTransaction.setString(7, pComment);
+                voidTransaction.setString(6, pComment);
             }else{
-                voidTransaction.setString(7, "DEFAULT");
+                voidTransaction.setString(6, "DEFAULT");
             }
             voidTransaction.executeUpdate();
 
