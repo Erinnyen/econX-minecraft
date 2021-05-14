@@ -311,7 +311,7 @@ public class DBInteraction {
                 double amount = recent_transactions.getDouble(2);
                 Timestamp timestamp = recent_transactions.getTimestamp(3);
                 String msg = "You received " + ChatColor.GREEN + amount
-                        +  ChatColor.WHITE + " from " + sender;
+                        +  ChatColor.WHITE + " from " + getName(sender);
 
                 transactionList.add(msg);
 
@@ -326,6 +326,40 @@ public class DBInteraction {
             return null;
         }
 
+    }
+    public String getName(int pID){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+
+            Connection conn = DriverManager.getConnection(url, uname, password);
+            PreparedStatement creditQuery = conn.prepareStatement("SELECT name FROM sql_playerdb.players WHERE player_id = ?");
+
+            creditQuery.setInt(1, pID);
+
+            ResultSet nameResult = creditQuery.executeQuery();
+
+
+            if(nameResult.next()){
+                String playername = nameResult.getString(1);
+                nameResult.close();
+                conn.close();
+                return playername;
+            }
+            nameResult.close();
+            conn.close();
+            return null;
+
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
     }
 
 
