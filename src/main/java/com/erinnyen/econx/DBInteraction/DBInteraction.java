@@ -310,7 +310,7 @@ public class DBInteraction {
                 int sender = recent_transactions.getInt(1);
                 double amount = recent_transactions.getDouble(2);
                 Timestamp timestamp = recent_transactions.getTimestamp(3);
-                String msg = "You received " + ChatColor.GREEN + amount
+                String msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
                         +  ChatColor.WHITE + " from " + getName(sender);
 
                 transactionList.add(msg);
