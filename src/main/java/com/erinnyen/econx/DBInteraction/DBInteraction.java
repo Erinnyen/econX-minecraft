@@ -285,7 +285,7 @@ public class DBInteraction {
 
     public ArrayList<String> getRecentTransactions(String pPlayer){
 
-        ArrayList<String> idkwhattonamethis = new ArrayList<String>();
+        ArrayList<String> transactionList = new ArrayList<String>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -295,14 +295,11 @@ public class DBInteraction {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
-            //int pId = getID(pPlayer);
             int pId = getID(pPlayer);
-            //temporary
 
             PreparedStatement transactionQuery = conn.prepareStatement("SELECT * FROM sql_playerdb.transactions WHERE receiver = ?;");
             transactionQuery.setInt(1, pId);
             ResultSet recent_transactions = transactionQuery.executeQuery();
-            System.out.println("got to this point!");
 
             if(!recent_transactions.next()){
                 recent_transactions.close();
@@ -315,14 +312,13 @@ public class DBInteraction {
                 String msg = "You received " + ChatColor.GREEN + amount
                         +  ChatColor.WHITE + " from" + sender;
 
-                idkwhattonamethis.add(msg);
+                transactionList.add(msg);
 
             }
 
-
             recent_transactions.close();
             conn.close();
-            return idkwhattonamethis;
+            return transactionList;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
