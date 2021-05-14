@@ -28,8 +28,6 @@ public class recentTransactionsCommand implements CommandExecutor {
                 Player player = (Player) sender;
 
                 DBInteraction dbQuery = new DBInteraction(dbCreds);
-
-                System.out.println("got here");
                 String playerName = player.getName();
                 ArrayList<String> transactions = dbQuery.getRecentTransactions(playerName);
 

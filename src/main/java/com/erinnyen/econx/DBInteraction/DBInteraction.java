@@ -241,7 +241,7 @@ public class DBInteraction {
             ResultSet playerId = playerQuery.executeQuery();
 
             while(playerId.next()) {
-                if (playerId.getString(1).equals(pPlayer)) {
+                if (playerId.getString(1).equalsIgnoreCase(pPlayer)) {
                     int id = playerId.getInt(2);
                     playerId.close();
                     conn.close();
@@ -295,20 +295,22 @@ public class DBInteraction {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
+            //int pId = getID(pPlayer);
             int pId = getID(pPlayer);
+            //temporary
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT * FROM sql_playerdb.transactions WHERE receiver = ?");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT * FROM sql_playerdb.transactions WHERE receiver = ?;");
             transactionQuery.setInt(1, pId);
             ResultSet recent_transactions = transactionQuery.executeQuery();
+            System.out.println("got to this point!");
 
-            if(recent_transactions.next() == false){
+            if(!recent_transactions.next()){
                 recent_transactions.close();
                 conn.close();
                 return null;
             }
-            int i = 0;
             while(recent_transactions.next()){
-                Integer sender = recent_transactions.getInt(2);
+                int sender = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(4);
                 String msg = "You received " + ChatColor.GREEN + amount
                         +  ChatColor.WHITE + " from" + sender;
