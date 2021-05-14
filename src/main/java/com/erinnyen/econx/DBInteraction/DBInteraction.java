@@ -297,7 +297,7 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT * FROM sql_playerdb.transactions WHERE receiver = ?;");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ?;");
             transactionQuery.setInt(1, pId);
             ResultSet recent_transactions = transactionQuery.executeQuery();
 
@@ -307,10 +307,11 @@ public class DBInteraction {
                 return null;
             }
             while(recent_transactions.next()){
-                int sender = recent_transactions.getInt(2);
-                double amount = recent_transactions.getDouble(4);
+                int sender = recent_transactions.getInt(1);
+                double amount = recent_transactions.getDouble(2);
+                Timestamp timestamp = recent_transactions.getTimestamp(3);
                 String msg = "You received " + ChatColor.GREEN + amount
-                        +  ChatColor.WHITE + " from" + sender;
+                        +  ChatColor.WHITE + " from " + sender;
 
                 transactionList.add(msg);
 
