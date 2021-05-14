@@ -34,7 +34,11 @@ public class recentTransactionsCommand implements CommandExecutor {
                 dbQuery.getRecentTransactions(playerName);
 
 
+                return true;
+
+
             }
+            sender.sendMessage(header + ChatColor.DARK_RED +"You have to be a player to use this command!");
         }
         return false;
     }

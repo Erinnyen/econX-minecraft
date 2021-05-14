@@ -282,7 +282,7 @@ public class DBInteraction {
         }
     }
 
-    public void getRecentTransactions(String pPlayer){
+    public String getRecentTransactions(String pPlayer){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -298,9 +298,9 @@ public class DBInteraction {
             ResultSet recent_transactions = transactionQuery.executeQuery();
 
             if(recent_transactions.next() == false){
-                System.out.println("You haven't received any money from anyone!");
                 recent_transactions.close();
                 conn.close();
+                return "You haven't received any money from other players yet";
             }
             while(recent_transactions.next()){
                 Integer sender = recent_transactions.getInt(2);
@@ -315,9 +315,11 @@ public class DBInteraction {
 
             recent_transactions.close();
             conn.close();
+            return "success";
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return null;
         }
 
     }
