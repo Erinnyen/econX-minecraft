@@ -11,8 +11,10 @@ commands:
     description: send money between players
 
   getcredit:
+    aliases: [credit]
     description: get your own credit
 
 
   recent:
+    aliases: [recentTransactions, getrecent]
     description: view the recent transactions associated with your account
