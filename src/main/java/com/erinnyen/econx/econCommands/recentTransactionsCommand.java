@@ -21,11 +21,13 @@ public class recentTransactionsCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Bank] ";
 
-        if(label.equalsIgnoreCase("recentTransactions")){
+        if(label.equalsIgnoreCase("recent")){
             if(sender instanceof Player){
                 Player player = (Player) sender;
 
                 DBInteraction dbQuery = new DBInteraction(dbCreds);
+
+                System.out.println("got here");
 
                 String playerName = player.getName();
 

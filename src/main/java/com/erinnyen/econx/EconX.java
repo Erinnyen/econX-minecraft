@@ -31,7 +31,7 @@ public final class EconX extends JavaPlugin {
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
         this.getCommand("send").setExecutor(new sendCommand(dbCreds));
         this.getCommand("getcredit").setExecutor(new getCreditCommand(dbCreds));
-        this.getCommand("recenttransactions").setExecutor(new recentTransactionsCommand(dbCreds));
+        this.getCommand("recent").setExecutor(new recentTransactionsCommand(dbCreds));
         System.out.println(path);
         System.out.println(path.listFiles());
 

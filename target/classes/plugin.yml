@@ -13,3 +13,6 @@ commands:
   getcredit:
     description: get your own credit
 
+
+  recent:
+    description: view the recent transactions associated with your account

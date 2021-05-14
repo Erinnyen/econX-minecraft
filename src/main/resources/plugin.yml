@@ -14,6 +14,5 @@ commands:
     description: get your own credit
 
 
-  recentTransactions:
-    aliases: recent
+  recent:
     description: view the recent transactions associated with your account
