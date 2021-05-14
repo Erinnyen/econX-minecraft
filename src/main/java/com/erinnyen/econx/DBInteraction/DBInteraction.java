@@ -2,6 +2,7 @@ package com.erinnyen.econx.DBInteraction;
 
 import org.bukkit.ChatColor;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBInteraction {
 
@@ -282,7 +283,10 @@ public class DBInteraction {
         }
     }
 
-    public String getRecentTransactions(String pPlayer){
+    public ArrayList<String> getRecentTransactions(String pPlayer){
+
+        ArrayList<String> idkwhattonamethis = new ArrayList<String>();
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -300,22 +304,23 @@ public class DBInteraction {
             if(recent_transactions.next() == false){
                 recent_transactions.close();
                 conn.close();
-                return "You haven't received any money from other players yet";
+                return null;
             }
+            int i = 0;
             while(recent_transactions.next()){
                 Integer sender = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(4);
                 String msg = "You received " + ChatColor.GREEN + amount
                         +  ChatColor.WHITE + " from" + sender;
 
-                System.out.println(msg);
+                idkwhattonamethis.add(msg);
 
             }
 
 
             recent_transactions.close();
             conn.close();
-            return "success";
+            return idkwhattonamethis;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
