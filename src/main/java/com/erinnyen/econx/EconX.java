@@ -3,6 +3,7 @@ package com.erinnyen.econx;
 import com.erinnyen.econx.DBInteraction.DBCredentials;
 import com.erinnyen.econx.Listeners.ConnectionListeners;
 import com.erinnyen.econx.econCommands.getCreditCommand;
+import com.erinnyen.econx.econCommands.recentTransactionsCommand;
 import com.erinnyen.econx.econCommands.sendCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -30,6 +31,7 @@ public final class EconX extends JavaPlugin {
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
         this.getCommand("send").setExecutor(new sendCommand(dbCreds));
         this.getCommand("getcredit").setExecutor(new getCreditCommand(dbCreds));
+        this.getCommand("recenttransactions").setExecutor(new recentTransactionsCommand(dbCreds));
         System.out.println(path);
         System.out.println(path.listFiles());
 

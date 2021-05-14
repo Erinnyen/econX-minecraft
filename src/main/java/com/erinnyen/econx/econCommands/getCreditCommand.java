@@ -13,8 +13,8 @@ public class getCreditCommand implements CommandExecutor {
 
     DBCredentials dbCreds;
 
-    public getCreditCommand(DBCredentials pdbCreds){
-        dbCreds = pdbCreds;
+    public getCreditCommand(DBCredentials pDBCreds){
+        dbCreds = pDBCreds;
     }
 
     @Override

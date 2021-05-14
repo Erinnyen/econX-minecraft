@@ -282,6 +282,46 @@ public class DBInteraction {
         }
     }
 
+    public void getRecentTransactions(String pPlayer){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection conn = DriverManager.getConnection(url, uname, password);
+
+            int pId = getID(pPlayer);
+
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT * FROM sql_playerdb.transactions WHERE receiver = ?");
+            transactionQuery.setInt(1, pId);
+            ResultSet recent_transactions = transactionQuery.executeQuery();
+
+            if(recent_transactions.next() == false){
+                System.out.println("You haven't received any money from anyone!");
+                recent_transactions.close();
+                conn.close();
+            }
+            while(recent_transactions.next()){
+                Integer sender = recent_transactions.getInt(2);
+                double amount = recent_transactions.getDouble(4);
+                String msg = "You received " + ChatColor.GREEN + amount
+                        +  ChatColor.WHITE + " from" + sender;
+
+                System.out.println(msg);
+
+            }
+
+
+            recent_transactions.close();
+            conn.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
 
 }
 
