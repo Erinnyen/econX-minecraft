@@ -64,10 +64,6 @@ public final class EconX extends JavaPlugin {
                 String password = (String) jsonObject.get("password");
                 String url = (String) jsonObject.get("url");
 
-                System.out.println(username);
-                System.out.println(password);
-                System.out.println(url);
-
                 DBCredentials dbCreds = new DBCredentials(username, password, url);
 
                 return dbCreds;
