@@ -1,6 +1,7 @@
 package com.erinnyen.econx;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DBInteraction;
 import com.erinnyen.econx.Listeners.ConnectionListeners;
 import com.erinnyen.econx.econCommands.getCreditCommand;
 import com.erinnyen.econx.econCommands.recentTransactionsCommand;
@@ -73,6 +74,14 @@ public final class EconX extends JavaPlugin {
                     getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
                     return;
                 }
+                DBInteraction test_conn = new DBInteraction(test_conn_creds);
+                if(test_conn.testConnection()){
+                    getLogger().info("Database connection established.");
+                    getLogger().info("All set good to go");
+                    return;
+                }
+                getLogger().warning("Something went wrong with the database connection!");
+                getLogger().warning("Please check your database credentials.");
             }
         }
     }
