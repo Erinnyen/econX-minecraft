@@ -324,9 +324,10 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? LIMIT ?;");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? OR sender = ? ORDER BY timestamp LIMIT ?;");
             transactionQuery.setInt(1, pId);
-            transactionQuery.setInt(2, pLength);
+            transactionQuery.setInt(2, pId);
+            transactionQuery.setInt(3, pLength);
             ResultSet recent_transactions = transactionQuery.executeQuery();
             //somehow the output will only be pLength -1 indices long.
 
@@ -337,13 +338,20 @@ public class DBInteraction {
             }
             while(recent_transactions.next()){
                 int sender_id = recent_transactions.getInt(1);
-                double amount = recent_transactions.getDouble(2);
-                Timestamp timestamp = recent_transactions.getTimestamp(3);
-                String msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
-                        +  ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
+                int receiver_id = recent_transactions.getInt(2);
+                double amount = recent_transactions.getDouble(3);
+                Timestamp timestamp = recent_transactions.getTimestamp(4);
+
+                if(pId == receiver_id){
+                    String msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
+                            +  ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
+
+                    transactionList.add(msg);
+                }
+                String msg =  "[" + timestamp.toString() + "] " + ChatColor.RED + "-" + amount
+                        +  ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
 
                 transactionList.add(msg);
-
             }
 
             recent_transactions.close();
