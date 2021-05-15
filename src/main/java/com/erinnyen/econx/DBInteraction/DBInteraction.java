@@ -270,7 +270,7 @@ public class DBInteraction {
                 System.out.println("Error: The player you wanted to update does not exist.");
                 return;
             }
-            PreparedStatement lastonline = conn.prepareStatement("UPDATE sql_playerdb.players SET timestamp = ? WHERE player_id = ?;");
+            PreparedStatement lastonline = conn.prepareStatement("UPDATE sql_playerdb.players SET last_online = ? WHERE player_id = ?;");
 
             lastonline.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             lastonline.setInt(2, getID(pName));
