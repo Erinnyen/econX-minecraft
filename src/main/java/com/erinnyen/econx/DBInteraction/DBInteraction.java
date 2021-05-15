@@ -297,7 +297,7 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? LIMIT ?;");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? LIMIT ?;");
             transactionQuery.setInt(1, pId);
             transactionQuery.setInt(2, pLength);
             ResultSet recent_transactions = transactionQuery.executeQuery();
@@ -309,12 +309,11 @@ public class DBInteraction {
                 return null;
             }
             while(recent_transactions.next()){
-                int sender = recent_transactions.getInt(1);
-                //crucial logic mistake here, you need to print out the sender not the receiver
+                int sender_id = recent_transactions.getInt(1);
                 double amount = recent_transactions.getDouble(2);
                 Timestamp timestamp = recent_transactions.getTimestamp(3);
                 String msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
-                        +  ChatColor.WHITE + " from " + getName(sender);
+                        +  ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
 
                 transactionList.add(msg);
 
