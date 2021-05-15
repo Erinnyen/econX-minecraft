@@ -347,11 +347,12 @@ public class DBInteraction {
                             +  ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
 
                     transactionList.add(msg);
-                }
-                String msg =  "[" + timestamp.toString() + "] " + ChatColor.RED + "-" + amount
-                        +  ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
+                }else {
+                    String msg = "[" + timestamp.toString() + "] " + ChatColor.RED + "-" + amount
+                            + ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
 
-                transactionList.add(msg);
+                    transactionList.add(msg);
+                }
             }
 
             recent_transactions.close();
