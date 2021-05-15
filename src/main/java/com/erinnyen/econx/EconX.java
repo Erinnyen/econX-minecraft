@@ -46,6 +46,7 @@ public final class EconX extends JavaPlugin {
         if(getDataFolder().mkdirs()){
             getLogger().info("Created Plugin directory");
             createDBCredsFile();
+            Bukkit.getPluginManager().disablePlugin(this);
 
         }else {
             getLogger().info("Plugin directory already exists.");
@@ -55,7 +56,7 @@ public final class EconX extends JavaPlugin {
                     getLogger().warning("dbcreds.json doesn't exists yet.");
 
                     createDBCredsFile();
-                    return;
+                    Bukkit.getPluginManager().disablePlugin(this);
                 }
                 getLogger().info("Found dbcreds.json");
                 DBCredentials test_conn_creds = getDBcredsFromJSON();
@@ -63,15 +64,15 @@ public final class EconX extends JavaPlugin {
                 if (test_conn_creds.getUsername() != null || test_conn_creds.getPassword() != null || test_conn_creds.getUrl() != null) {
                     if (test_conn_creds.getUsername().equals("")) {
                         getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
-                        return;
+                        Bukkit.getPluginManager().disablePlugin(this);
                     }
                     if (test_conn_creds.getPassword().equals("")) {
                         getLogger().warning("Please specify a password for the DB connection in dbcreds.json");
-                        return;
+                        Bukkit.getPluginManager().disablePlugin(this);
                     }
                     if (test_conn_creds.getUrl().equals("")) {
                         getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
-                        return;
+                        Bukkit.getPluginManager().disablePlugin(this);
                     }
                     DBInteraction test_conn = new DBInteraction(test_conn_creds);
                     if (test_conn.testConnection()) {
@@ -81,9 +82,10 @@ public final class EconX extends JavaPlugin {
                     }
                     getLogger().warning("Something went wrong with the database connection!");
                     getLogger().warning("Please check your database credentials.");
+                    Bukkit.getPluginManager().disablePlugin(this);
                 }
                 getLogger().warning("Couldn't extract username, password and url from dbcreds.json");
-                return;
+                Bukkit.getPluginManager().disablePlugin(this);
             }
         }
     }
