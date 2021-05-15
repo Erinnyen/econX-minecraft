@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public final class EconX extends JavaPlugin {
 
-    private File path = new File(String.valueOf(this.getDataFolder()));
+    private final File path = new File(String.valueOf(this.getDataFolder()));
 
     @Override
     public void onEnable() {
@@ -29,11 +29,9 @@ public final class EconX extends JavaPlugin {
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
-        this.getCommand("send").setExecutor(new sendCommand(dbCreds));
-        this.getCommand("getcredit").setExecutor(new getCreditCommand(dbCreds));
-        this.getCommand("recent").setExecutor(new recentTransactionsCommand(dbCreds));
-        System.out.println(path);
-        System.out.println(path.listFiles());
+        Objects.requireNonNull(this.getCommand("send")).setExecutor(new sendCommand(dbCreds));
+        Objects.requireNonNull(this.getCommand("getcredit")).setExecutor(new getCreditCommand(dbCreds));
+        Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));
 
 
 
@@ -66,9 +64,7 @@ public final class EconX extends JavaPlugin {
                 String password = (String) jsonObject.get("password");
                 String url = (String) jsonObject.get("url");
 
-                DBCredentials dbCreds = new DBCredentials(username, password, url);
-
-                return dbCreds;
+                return new DBCredentials(username, password, url);
 
             }catch(ParseException | IOException e){
 

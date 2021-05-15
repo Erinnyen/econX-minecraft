@@ -285,7 +285,7 @@ public class DBInteraction {
 
     public ArrayList<String> getRecentTransactions(String pPlayer, int pLength){
 
-        ArrayList<String> transactionList = new ArrayList<String>();
+        ArrayList<String> transactionList = new ArrayList<>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -310,6 +310,7 @@ public class DBInteraction {
             }
             while(recent_transactions.next()){
                 int sender = recent_transactions.getInt(1);
+                //crucial logic mistake here, you need to print out the sender not the receiver
                 double amount = recent_transactions.getDouble(2);
                 Timestamp timestamp = recent_transactions.getTimestamp(3);
                 String msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
