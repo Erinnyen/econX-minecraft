@@ -301,6 +301,7 @@ public class DBInteraction {
             transactionQuery.setInt(1, pId);
             transactionQuery.setInt(2, pLength);
             ResultSet recent_transactions = transactionQuery.executeQuery();
+            //somehow the output will only be pLength -1 indices long.
 
             if(!recent_transactions.next()){
                 recent_transactions.close();
