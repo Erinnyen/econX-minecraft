@@ -324,7 +324,7 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? OR sender = ? ORDER BY timestamp LIMIT ?;");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? OR sender = ? ORDER BY timestamp DESC LIMIT ?;");
             transactionQuery.setInt(1, pId);
             transactionQuery.setInt(2, pId);
             transactionQuery.setInt(3, pLength);
