@@ -113,9 +113,6 @@ public final class EconX extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public void onFirstStartup(){
-
-    }
 
     public DBCredentials getDBcredsFromJSON(){
 
