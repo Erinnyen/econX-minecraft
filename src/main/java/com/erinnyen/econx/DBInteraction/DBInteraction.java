@@ -17,6 +17,8 @@ public class DBInteraction {
 
     }
 
+
+
     public String transaction(String pPlayer_1, String pPlayer_2, double pAmount, String pComment) {
 
         String err_header = ChatColor.DARK_RED + "Transaction error: " + ChatColor.GRAY;
