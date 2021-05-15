@@ -61,6 +61,7 @@ public final class EconX extends JavaPlugin {
                     createDBCredsFile();
                     return;
                 }
+                getLogger().info("Found dbcreds.json");
                 DBCredentials test_conn_creds = getDBcredsFromJSON();
                 if(test_conn_creds.getUsername().equals("")){
                     getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
