@@ -51,20 +51,21 @@ public final class EconX extends JavaPlugin {
         }
         for(File file : Objects.requireNonNull(path.listFiles())){
             if(!file.getName().equals("dbcreds.json")){
-                System.out.println("Couldn't fetch credentials for Database connections from dbcreds.json ");
+                getLogger().warning("Couldn't fetch credentials for Database connections.");
+                getLogger().warning("dbcreds.json doesn't exists.");
                 return;
             }
             DBCredentials test_conn_creds = getDBcredsFromJSON();
             if(test_conn_creds.getUsername().equals("")){
-                System.out.println("Please specify a username for the DB connection in dbcreds.json");
+                getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
                 return;
             }
             if(test_conn_creds.getPassword().equals("")){
-                System.out.println("Please specify a password for the DB connection in dbcreds.json");
+                getLogger().warning("Please specify a password for the DB connection in dbcreds.json");
                 return;
             }
             if(test_conn_creds.getUrl().equals("")){
-                System.out.println("Please specify a url for the DB connection in dbcreds.json");
+                getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
                 return;
             }
         }
