@@ -17,7 +17,31 @@ public class DBInteraction {
 
     }
 
+    public boolean testConnection(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
 
+            Connection conn = DriverManager.getConnection(url, uname, password);
+            PreparedStatement creditQuery = conn.prepareStatement("SELECT 1 FROM sql_playerdb.players");
+            ResultSet testResultSet = creditQuery.executeQuery();
+            if(testResultSet.next()){
+                return true;
+            }
+            testResultSet.close();
+            conn.close();
+
+        } catch (SQLException | NullPointerException e) {
+            // handle SQL error here!
+            e.printStackTrace();
+            System.out.println("Error: Something went wrong with the Database connection!");
+        }
+        return false;
+
+    }
 
     public String transaction(String pPlayer_1, String pPlayer_2, double pAmount, String pComment) {
 
