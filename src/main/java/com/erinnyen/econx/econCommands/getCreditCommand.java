@@ -21,7 +21,7 @@ public class getCreditCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Bank] ";
 
-        if (label.equalsIgnoreCase("getCredit")) {
+        if (label.equalsIgnoreCase("getCredit") || label.equalsIgnoreCase("credit")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
