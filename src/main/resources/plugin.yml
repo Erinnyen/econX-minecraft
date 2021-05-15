@@ -9,12 +9,15 @@ website: https://github.com/Erinnyen
 commands:
   send:
     description: send money between players
+    usage: /<send> <player> <amount> <comment>
 
   getcredit:
     aliases: [credit]
     description: get your own credit
+    usage: /<getcredit>
 
 
   recent:
     aliases: [recenttransactions, getrecent]
     description: view the recent transactions associated with your account
+    usage: /<recent>
