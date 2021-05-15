@@ -324,7 +324,9 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? OR sender = ? ORDER BY timestamp ASC LIMIT ?;");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM" +
+                    "(SELECT * FROM sql_playerdb.transactions ORDER BY timestamp DESC LIMIT 10) AS derived_table WHERE " +
+                    "receiver = ? OR sender = ? ORDER BY timestamp ASC LIMIT ?;");
             transactionQuery.setInt(1, pId);
             transactionQuery.setInt(2, pId);
             transactionQuery.setInt(3, pLength);
@@ -336,23 +338,25 @@ public class DBInteraction {
                 conn.close();
                 return null;
             }
+
             while(recent_transactions.next()){
+                //at the last result it wont be true anymore.
                 int sender_id = recent_transactions.getInt(1);
                 int receiver_id = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(3);
                 Timestamp timestamp = recent_transactions.getTimestamp(4);
 
-                if(pId == receiver_id){
-                    String msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
-                            +  ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
+                String msg;
+                if (pId == receiver_id){
+                    msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
+                            + ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
 
-                    transactionList.add(msg);
                 }else {
-                    String msg = "[" + timestamp.toString() + "] " + ChatColor.RED + "-" + amount
+                    msg = "[" + timestamp.toString() + "] " + ChatColor.RED + "-" + amount
                             + ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
 
-                    transactionList.add(msg);
                 }
+                transactionList.add(msg);
             }
 
             recent_transactions.close();
