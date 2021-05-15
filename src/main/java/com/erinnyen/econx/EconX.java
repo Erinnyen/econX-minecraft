@@ -46,29 +46,57 @@ public final class EconX extends JavaPlugin {
 
         //plugin on load logic
 
-        if(!getDataFolder().exists()) {
-            getDataFolder().mkdirs();
+        if(getDataFolder().mkdirs()){
+            getLogger().info("Created Plugin directory");
+            createDBCredsFile();
+
+        }else {
+            getLogger().info("Plugin directory already exists.");
+            for(File file : Objects.requireNonNull(path.listFiles())){
+                if(!file.getName().equals("dbcreds.json")){
+                    getLogger().warning("Couldn't fetch credentials for Database connections.");
+                    getLogger().warning("dbcreds.json doesn't exists yet.");
+
+                    createDBCredsFile();
+                    return;
+                }
+                DBCredentials test_conn_creds = getDBcredsFromJSON();
+                if(test_conn_creds.getUsername().equals("")){
+                    getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
+                    return;
+                }
+                if(test_conn_creds.getPassword().equals("")){
+                    getLogger().warning("Please specify a password for the DB connection in dbcreds.json");
+                    return;
+                }
+                if(test_conn_creds.getUrl().equals("")){
+                    getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
+                    return;
+                }
+            }
         }
-        for(File file : Objects.requireNonNull(path.listFiles())){
-            if(!file.getName().equals("dbcreds.json")){
-                getLogger().warning("Couldn't fetch credentials for Database connections.");
-                getLogger().warning("dbcreds.json doesn't exists.");
+    }
+
+    public void createDBCredsFile(){
+
+        File dbCredsJSONFIle = new File(path + "dbcreds.json");
+
+        try {
+            if(dbCredsJSONFIle.createNewFile()){
+                getLogger().info("Created the dbcreds.json file");
+                getLogger().info("Please enter your database credentials in the file");
                 return;
+            }else{
+                getLogger().warning("Somehow dbcreds.json already exist. I have no clue why though");
             }
-            DBCredentials test_conn_creds = getDBcredsFromJSON();
-            if(test_conn_creds.getUsername().equals("")){
-                getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
-                return;
-            }
-            if(test_conn_creds.getPassword().equals("")){
-                getLogger().warning("Please specify a password for the DB connection in dbcreds.json");
-                return;
-            }
-            if(test_conn_creds.getUrl().equals("")){
-                getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
-                return;
-            }
+
+        }catch (IOException e){
+            getLogger().warning("An error occurred while creating the dbcreds.json file");
+            e.printStackTrace();
         }
+
+
+
     }
 
     @Override
