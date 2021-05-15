@@ -26,10 +26,6 @@ public final class EconX extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
-        if(true){
-
-        }
-
         DBCredentials dbCreds = getDBcredsFromJSON();
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
@@ -53,8 +49,8 @@ public final class EconX extends JavaPlugin {
 
         }else {
             getLogger().info("Plugin directory already exists.");
-            for(File file : Objects.requireNonNull(path.listFiles())){
-                if(!file.getName().equals("dbcreds.json")){
+            for(File file : Objects.requireNonNull(path.listFiles())) {
+                if (!file.getName().equals("dbcreds.json")) {
                     getLogger().warning("Couldn't fetch credentials for Database connections.");
                     getLogger().warning("dbcreds.json doesn't exists yet.");
 
@@ -63,26 +59,31 @@ public final class EconX extends JavaPlugin {
                 }
                 getLogger().info("Found dbcreds.json");
                 DBCredentials test_conn_creds = getDBcredsFromJSON();
-                if(test_conn_creds.getUsername().equals("")){
-                    getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
-                    return;
+                assert test_conn_creds != null;
+                if (test_conn_creds.getUsername() != null || test_conn_creds.getPassword() != null || test_conn_creds.getUrl() != null) {
+                    if (test_conn_creds.getUsername().equals("")) {
+                        getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
+                        return;
+                    }
+                    if (test_conn_creds.getPassword().equals("")) {
+                        getLogger().warning("Please specify a password for the DB connection in dbcreds.json");
+                        return;
+                    }
+                    if (test_conn_creds.getUrl().equals("")) {
+                        getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
+                        return;
+                    }
+                    DBInteraction test_conn = new DBInteraction(test_conn_creds);
+                    if (test_conn.testConnection()) {
+                        getLogger().info("Database connection established.");
+                        getLogger().info("All set good to go");
+                        return;
+                    }
+                    getLogger().warning("Something went wrong with the database connection!");
+                    getLogger().warning("Please check your database credentials.");
                 }
-                if(test_conn_creds.getPassword().equals("")){
-                    getLogger().warning("Please specify a password for the DB connection in dbcreds.json");
-                    return;
-                }
-                if(test_conn_creds.getUrl().equals("")){
-                    getLogger().warning("Please specify a url for the DB connection in dbcreds.json");
-                    return;
-                }
-                DBInteraction test_conn = new DBInteraction(test_conn_creds);
-                if(test_conn.testConnection()){
-                    getLogger().info("Database connection established.");
-                    getLogger().info("All set good to go");
-                    return;
-                }
-                getLogger().warning("Something went wrong with the database connection!");
-                getLogger().warning("Please check your database credentials.");
+                getLogger().warning("Couldn't extract username, password and url from dbcreds.json");
+                return;
             }
         }
     }
@@ -95,7 +96,6 @@ public final class EconX extends JavaPlugin {
             if(dbCredsJSONFIle.createNewFile()){
                 getLogger().info("Created the dbcreds.json file");
                 getLogger().info("Please enter your database credentials in the file");
-                return;
             }else{
                 getLogger().warning("Somehow dbcreds.json already exist. I have no clue why though");
             }
