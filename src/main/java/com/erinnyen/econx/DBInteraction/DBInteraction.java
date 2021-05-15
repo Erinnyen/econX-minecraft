@@ -283,7 +283,7 @@ public class DBInteraction {
         }
     }
 
-    public ArrayList<String> getRecentTransactions(String pPlayer){
+    public ArrayList<String> getRecentTransactions(String pPlayer, int pLength){
 
         ArrayList<String> transactionList = new ArrayList<String>();
 
@@ -297,8 +297,9 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
-            PreparedStatement transactionQuery = conn.prepareStatement("SELECT receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ?;");
+            PreparedStatement transactionQuery = conn.prepareStatement("SELECT receiver, amount, timestamp FROM sql_playerdb.transactions WHERE receiver = ? LIMIT ?;");
             transactionQuery.setInt(1, pId);
+            transactionQuery.setInt(2, pLength);
             ResultSet recent_transactions = transactionQuery.executeQuery();
 
             if(!recent_transactions.next()){

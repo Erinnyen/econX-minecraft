@@ -23,13 +23,16 @@ public class recentTransactionsCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Bank] " + ChatColor.WHITE;
 
+
         if(label.equalsIgnoreCase("recent") || label.equalsIgnoreCase("recentTransaction") || label.equalsIgnoreCase("getrecent")){
             if(sender instanceof Player){
                 Player player = (Player) sender;
 
+
                 DBInteraction dbQuery = new DBInteraction(dbCreds);
                 String playerName = player.getName();
-                ArrayList<String> transactions = dbQuery.getRecentTransactions(playerName);
+                ArrayList<String> transactions = dbQuery.getRecentTransactions(playerName, 5);
+                //limits the output to 5
 
                 if(transactions == null){
                     sender.sendMessage(header + "You don't have any recent transactions to view.");
