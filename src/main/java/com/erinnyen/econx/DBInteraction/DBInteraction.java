@@ -229,6 +229,7 @@ public class DBInteraction {
     }
 
     public int getID(String pPlayer){
+        // this method is pure laziness, for the long-term please use "JOIN" in the sql statements
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {

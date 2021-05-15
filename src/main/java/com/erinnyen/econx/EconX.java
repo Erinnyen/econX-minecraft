@@ -25,6 +25,10 @@ public final class EconX extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        if(true){
+
+        }
+
         DBCredentials dbCreds = getDBcredsFromJSON();
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
@@ -35,6 +39,35 @@ public final class EconX extends JavaPlugin {
 
 
 
+    }
+
+    @Override
+    public void onLoad(){
+
+        //plugin on load logic
+
+        if(!getDataFolder().exists()) {
+            getDataFolder().mkdirs();
+        }
+        for(File file : Objects.requireNonNull(path.listFiles())){
+            if(!file.getName().equals("dbcreds.json")){
+                System.out.println("Couldn't fetch credentials for Database connections from dbcreds.json ");
+                return;
+            }
+            DBCredentials test_conn_creds = getDBcredsFromJSON();
+            if(test_conn_creds.getUsername().equals("")){
+                System.out.println("Please specify a username for the DB connection in dbcreds.json");
+                return;
+            }
+            if(test_conn_creds.getPassword().equals("")){
+                System.out.println("Please specify a password for the DB connection in dbcreds.json");
+                return;
+            }
+            if(test_conn_creds.getUrl().equals("")){
+                System.out.println("Please specify a url for the DB connection in dbcreds.json");
+                return;
+            }
+        }
     }
 
     @Override
