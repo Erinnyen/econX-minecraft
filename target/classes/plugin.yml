@@ -16,5 +16,5 @@ commands:
 
 
   recent:
-    aliases: [recentTransactions, getrecent]
+    aliases: [recenttransactions, getrecent]
     description: view the recent transactions associated with your account
