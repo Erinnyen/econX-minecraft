@@ -163,7 +163,6 @@ public class DBInteraction {
         }
     }
 
-
     public boolean playerExistsInDB(String pPlayer){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -193,7 +192,6 @@ public class DBInteraction {
         }
     }
 
-
     public void newPLayerEntry(String pUUID, String pName){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -218,7 +216,6 @@ public class DBInteraction {
             throwables.printStackTrace();
         }
     }
-
 
     public double getCredit(String pName){
         try {
@@ -284,6 +281,7 @@ public class DBInteraction {
             return 0;
         }
     }
+
     public void updateLastOnline(String pName){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -339,8 +337,8 @@ public class DBInteraction {
                 return null;
             }
 
-            while(recent_transactions.next()){
-                //at the last result it wont be true anymore.
+            while(true){
+                //still wont show the most recent transaction
                 int sender_id = recent_transactions.getInt(1);
                 int receiver_id = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(3);
@@ -357,6 +355,9 @@ public class DBInteraction {
 
                 }
                 transactionList.add(msg);
+                if(!recent_transactions.next()){
+                    break;
+                }
             }
 
             recent_transactions.close();
@@ -369,6 +370,7 @@ public class DBInteraction {
         }
 
     }
+
     public String getName(int pID){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

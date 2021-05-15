@@ -32,7 +32,7 @@ public class recentTransactionsCommand implements CommandExecutor {
                 DBInteraction dbQuery = new DBInteraction(dbCreds);
                 String playerName = player.getName();
                 ArrayList<String> transactions = dbQuery.getRecentTransactions(playerName, 9);
-                //limits the output to 5
+                //limits the output to pLength
 
                 if(transactions == null){
                     sender.sendMessage(header + "You don't have any recent transactions to view.");
