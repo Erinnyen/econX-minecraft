@@ -335,14 +335,24 @@ public class DBInteraction {
                 recent_transactions.close();
                 conn.close();
                 return null;
+
             }
 
-            while(true){
+            //recent_transactions.beforeFirst();
+            //Will move the cursor before the first row in the resultset.
+            recent_transactions.next();
+
+
+            while(!recent_transactions.isAfterLast()){
+                // isAfterLast() will return true if the cursor is after the last row
                 //still wont show the most recent transaction
+
                 int sender_id = recent_transactions.getInt(1);
                 int receiver_id = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(3);
                 Timestamp timestamp = recent_transactions.getTimestamp(4);
+
+                System.out.println(recent_transactions.isLast());
 
                 String msg;
                 if (pId == receiver_id){
@@ -355,9 +365,8 @@ public class DBInteraction {
 
                 }
                 transactionList.add(msg);
-                if(!recent_transactions.next()){
-                    break;
-                }
+                recent_transactions.next();
+
             }
 
             recent_transactions.close();
