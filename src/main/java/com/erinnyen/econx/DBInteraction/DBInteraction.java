@@ -350,40 +350,16 @@ public class DBInteraction {
                 int sender_id = recent_transactions.getInt(1);
                 int receiver_id = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(3);
-                Timestamp transactionTimestamp = recent_transactions.getTimestamp(4);
 
-                Date date = new Date(transactionTimestamp.getTime());
-                Time time = new Time(transactionTimestamp.getTime());
-
-                String day = Integer.toString(date.getDay());
-                String month = Integer.toString(date.getMonth());
-
-                //Making these to string because i want to have them in the dd and mm format and not d and m.
-
-                if(date.getDay() < 10){
-                    day = "0" + day;
-                }
-                if(date.getMonth() < 10){
-                    month = "0" + month;
-                }
-
-                int hours = time.getHours();
-                int minutes = time.getMinutes();
-
-                String date_dd_mm = day + "." + month + " " + hours + ":" + minutes;
-                /*
-                    This is my own format to display the recent transactions - the regular timestamp is too long.
-                    I know it is highly inefficient, but i currently don't know any better way.
-                    I also don't like how I am using depreciated methods, but again i don't know any way around it.
-                 */
+                String shortedTimestamp = shortTimestamp(recent_transactions.getTimestamp(4));
 
                 String msg;
                 if (pId == receiver_id){
-                    msg = "[" + date_dd_mm + "] " + ChatColor.GREEN + "+" + amount
+                    msg = "[" + shortedTimestamp + "] " + ChatColor.GREEN + "+" + amount
                             + ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
 
                 }else {
-                    msg = "[" + date_dd_mm + "] " + ChatColor.RED + "-" + amount
+                    msg = "[" + shortedTimestamp + "] " + ChatColor.RED + "-" + amount
                             + ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
 
                 }
@@ -437,7 +413,47 @@ public class DBInteraction {
 
         return null;
     }
+    public String shortTimestamp(Timestamp pTimestamp){
 
+        Date date = new Date(pTimestamp.getTime());
+        Time time = new Time(pTimestamp.getTime());
+
+        // Please find a way to not use depreciated methods.
+
+        String day = Integer.toString(date.getDay());
+        String month = Integer.toString(date.getMonth());
+        String hours = Integer.toString(time.getHours());
+        String minutes = Integer.toString(time.getMinutes());
+
+        //Making these to string because i want to have them in the dd and mm format and not d and m.
+
+        if(date.getDay() < 10){
+            day = "0" + day;
+        }
+        if(date.getMonth() < 10){
+            month = "0" + month;
+        }
+        if(time.getHours() < 10){
+            hours = "0" + hours;
+        }
+        if(time.getMinutes() < 10){
+            minutes = "0" + minutes;
+
+        }
+        // I hate those if-statements please find a better way to do that right here.
+
+        String date_dd_mm_hh_mm = day + "." + month + " " + hours + ":" + minutes;
+
+        /*
+            This is my own format to display the recent transactions - the regular timestamp is too long.
+            I know it is highly inefficient, but i currently don't know any better way.
+            I also don't like how I am using depreciated methods, but again i don't know any way around it.
+            Please rewrite this method. It is so ugly.
+
+
+         */
+       return date_dd_mm_hh_mm;
+    }
 
 }
 
