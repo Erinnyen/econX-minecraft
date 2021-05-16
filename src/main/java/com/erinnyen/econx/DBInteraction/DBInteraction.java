@@ -164,6 +164,7 @@ public class DBInteraction {
     }
 
     public boolean playerExistsInDB(String pPlayer){
+        // Please rewrite this method to use sql to check if the player exists.
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -322,14 +323,15 @@ public class DBInteraction {
 
             int pId = getID(pPlayer);
 
+
             PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM" +
-                    "(SELECT * FROM sql_playerdb.transactions ORDER BY timestamp DESC LIMIT 10) AS derived_table WHERE " +
-                    "receiver = ? OR sender = ? ORDER BY timestamp ASC LIMIT ?;");
-            transactionQuery.setInt(1, pId);
+                    "(SELECT * FROM sql_playerdb.transactions ORDER BY transaction_id DESC LIMIT ?) AS derived_table WHERE " +
+                    "receiver = ? OR sender = ? ORDER BY transaction_id ASC LIMIT ?;");
+            transactionQuery.setInt(1, pLength);
             transactionQuery.setInt(2, pId);
-            transactionQuery.setInt(3, pLength);
+            transactionQuery.setInt(3, pId);
+            transactionQuery.setInt(4, pLength);
             ResultSet recent_transactions = transactionQuery.executeQuery();
-            //somehow the output will only be pLength -1 indices long.
 
             if(!recent_transactions.next()){
                 recent_transactions.close();
@@ -338,21 +340,17 @@ public class DBInteraction {
 
             }
 
-            //recent_transactions.beforeFirst();
-            //Will move the cursor before the first row in the resultset.
             recent_transactions.next();
 
 
             while(!recent_transactions.isAfterLast()){
                 // isAfterLast() will return true if the cursor is after the last row
-                //still wont show the most recent transaction
+
 
                 int sender_id = recent_transactions.getInt(1);
                 int receiver_id = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(3);
                 Timestamp timestamp = recent_transactions.getTimestamp(4);
-
-                System.out.println(recent_transactions.isLast());
 
                 String msg;
                 if (pId == receiver_id){
