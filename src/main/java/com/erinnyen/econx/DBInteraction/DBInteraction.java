@@ -2,6 +2,7 @@ package com.erinnyen.econx.DBInteraction;
 
 import org.bukkit.ChatColor;
 import java.sql.*;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 
 public class DBInteraction {
@@ -346,19 +347,43 @@ public class DBInteraction {
             while(!recent_transactions.isAfterLast()){
                 // isAfterLast() will return true if the cursor is after the last row
 
-
                 int sender_id = recent_transactions.getInt(1);
                 int receiver_id = recent_transactions.getInt(2);
                 double amount = recent_transactions.getDouble(3);
-                Timestamp timestamp = recent_transactions.getTimestamp(4);
+                Timestamp transactionTimestamp = recent_transactions.getTimestamp(4);
+
+                Date date = new Date(transactionTimestamp.getTime());
+                Time time = new Time(transactionTimestamp.getTime());
+
+                String day = Integer.toString(date.getDay());
+                String month = Integer.toString(date.getMonth());
+
+                //Making these to string because i want to have them in the dd and mm format and not d and m.
+
+                if(date.getDay() < 10){
+                    day = "0" + day;
+                }
+                if(date.getMonth() < 10){
+                    month = "0" + month;
+                }
+
+                int hours = time.getHours();
+                int minutes = time.getMinutes();
+
+                String date_dd_mm = day + "." + month + " " + hours + ":" + minutes;
+                /*
+                    This is my own format to display the recent transactions - the regular timestamp is too long.
+                    I know it is highly inefficient, but i currently don't know any better way.
+                    I also don't like how I am using depreciated methods, but again i don't know any way around it.
+                 */
 
                 String msg;
                 if (pId == receiver_id){
-                    msg = "[" + timestamp.toString() + "] " + ChatColor.GREEN + "+" + amount
+                    msg = "[" + date_dd_mm + "] " + ChatColor.GREEN + "+" + amount
                             + ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
 
                 }else {
-                    msg = "[" + timestamp.toString() + "] " + ChatColor.RED + "-" + amount
+                    msg = "[" + date_dd_mm + "] " + ChatColor.RED + "-" + amount
                             + ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
 
                 }
