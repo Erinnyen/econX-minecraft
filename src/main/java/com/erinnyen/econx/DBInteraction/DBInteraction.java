@@ -355,12 +355,12 @@ public class DBInteraction {
 
                 String msg;
                 if (pId == receiver_id){
-                    msg = "[" + shortedTimestamp + "] " + ChatColor.GREEN + "+" + amount
-                            + ChatColor.WHITE + " from " + ChatColor.GRAY + getName(sender_id);
+                    msg = ChatColor.GRAY + "[" + shortedTimestamp + "] " + ChatColor.GREEN + "+" + amount
+                            + ChatColor.WHITE + " from " + ChatColor.BOLD + getName(sender_id);
 
                 }else {
-                    msg = "[" + shortedTimestamp + "] " + ChatColor.RED + "-" + amount
-                            + ChatColor.WHITE + " to " + ChatColor.GRAY + getName(receiver_id);
+                    msg = ChatColor.GRAY + "[" + shortedTimestamp + "] " + ChatColor.RED + "-" + amount
+                            + ChatColor.WHITE + " to " + ChatColor.BOLD + getName(receiver_id);
 
                 }
                 transactionList.add(msg);

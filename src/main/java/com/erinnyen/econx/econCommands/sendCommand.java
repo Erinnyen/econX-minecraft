@@ -121,12 +121,12 @@ public class sendCommand implements CommandExecutor {
                         }
                         sender.sendMessage(header + ChatColor.WHITE + dbFeedback);
                         sender.sendMessage(header + ChatColor.WHITE + "You send " + ChatColor.GOLD + amount + "C " +
-                                ChatColor.WHITE + "to " + playerReceiver);
+                                ChatColor.WHITE + "to " +  ChatColor.BOLD + playerReceiver);
 
                         Player receiverOnline = Bukkit.getPlayerExact(playerReceiver);
                         if(receiverOnline != null){
                             if(playerComment){
-                                receiverOnline.sendMessage(header + ChatColor.WHITE + playerSender + " has send you "
+                                receiverOnline.sendMessage(header + ChatColor.WHITE + ChatColor.BOLD + playerSender + ChatColor.RESET + " has send you "
                                         + ChatColor.GOLD + amount + "C " +
                                         ChatColor.WHITE + "with the message:");
                                 receiverOnline.sendMessage(ChatColor.BLUE + comment);
