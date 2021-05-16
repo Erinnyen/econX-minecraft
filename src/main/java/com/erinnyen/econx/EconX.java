@@ -9,12 +9,8 @@ import com.erinnyen.econx.econCommands.sendCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -26,7 +22,7 @@ public final class EconX extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
-        DBCredentials dbCreds = getDBcredsFromJSON();
+        DBCredentials dbCreds = new DBCredentials(path);
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
@@ -59,8 +55,8 @@ public final class EconX extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(this);
                 }
                 getLogger().info("Found dbcreds.json");
-                DBCredentials test_conn_creds = getDBcredsFromJSON();
-                assert test_conn_creds != null;
+                DBCredentials test_conn_creds = new DBCredentials(path);
+
                 if (test_conn_creds.getUsername() != null || test_conn_creds.getPassword() != null || test_conn_creds.getUrl() != null) {
                     if (test_conn_creds.getUsername().equals("")) {
                         getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
@@ -107,8 +103,6 @@ public final class EconX extends JavaPlugin {
             e.printStackTrace();
         }
 
-
-
     }
 
     @Override
@@ -116,34 +110,4 @@ public final class EconX extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-
-    public DBCredentials getDBcredsFromJSON(){
-
-        for(File file : Objects.requireNonNull(path.listFiles())){
-            if(!file.getName().equals("dbcreds.json")){
-                System.out.println("Error: file not found");
-                return null;
-
-            }
-
-            try {
-                JSONParser jsonParser = new JSONParser();
-                Object parsed = jsonParser.parse(new FileReader(file.getPath()));
-                JSONObject jsonObject = (JSONObject) parsed;
-
-                String username = (String) jsonObject.get("username");
-                String password = (String) jsonObject.get("password");
-                String url = (String) jsonObject.get("url");
-
-                return new DBCredentials(username, password, url);
-
-            }catch(ParseException | IOException e){
-
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-        return null;
-    }
 }
