@@ -2,7 +2,7 @@ package com.erinnyen.econx.Listeners;
 
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
-import com.erinnyen.econx.DBInteraction.DBInteraction;
+import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -29,7 +29,7 @@ public class ConnectionListeners implements Listener {
     public void onJoin(PlayerJoinEvent event){
 
         Player p = event.getPlayer();
-        DBInteraction dbConn = new DBInteraction(dbCreds);
+        PlayerDBInteraction dbConn = new PlayerDBInteraction(dbCreds);
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(p.getName());
 
 
@@ -48,7 +48,7 @@ public class ConnectionListeners implements Listener {
         String player_name = player.getName();
         event.setQuitMessage(ChatColor.BLUE + "Bye, " + player.getName());
 
-        DBInteraction dbConn = new DBInteraction(dbCreds);
+        PlayerDBInteraction dbConn = new PlayerDBInteraction(dbCreds);
         dbConn.updateLastOnline(player_name);
 
     }

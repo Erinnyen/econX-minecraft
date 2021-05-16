@@ -1,7 +1,7 @@
 package com.erinnyen.econx.econCommands;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
-import com.erinnyen.econx.DBInteraction.DBInteraction;
+import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -60,7 +60,7 @@ public class sendCommand implements CommandExecutor {
                         We will only proceed if our argument length is greater or equal
                         to 2, so we make sure that a player- and an amount-argument is given.
                      */
-                    DBInteraction dbConn = new DBInteraction(dbCreds); // creating a new Database connection object
+                    PlayerDBInteraction dbConn = new PlayerDBInteraction(dbCreds); // creating a new Database connection object
                     if(!dbConn.playerExistsInDB(playerReceiver)){
                         /*
                             With this method from the DBInteraction Class we're making sure, that

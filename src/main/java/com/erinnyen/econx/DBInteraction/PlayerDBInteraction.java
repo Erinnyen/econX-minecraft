@@ -5,13 +5,13 @@ import java.sql.*;
 import java.time.DateTimeException;
 import java.util.ArrayList;
 
-public class DBInteraction {
+public class PlayerDBInteraction {
 
     private final String uname;
     private final String password;
     private  final String url;
 
-    public DBInteraction(DBCredentials pDBcreds){
+    public PlayerDBInteraction(DBCredentials pDBcreds){
         uname = pDBcreds.getUsername();
         password = pDBcreds.getPassword();
         url = pDBcreds.getUrl();
