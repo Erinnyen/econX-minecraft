@@ -1,5 +1,6 @@
 package com.erinnyen.econx.econCommands;
 
+import com.erinnyen.econx.DBInteraction.DBCredentials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -16,6 +17,7 @@ public class sellCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
+        double askedPrice;
         //make Market command package
 
         if(label.equalsIgnoreCase("sell")){
@@ -26,7 +28,7 @@ public class sellCommand implements CommandExecutor {
             }
 
             try{
-                double asked_price = Double.parseDouble(args[0]);
+                askedPrice = Double.parseDouble(args[0]);
 
             }catch(NumberFormatException | IndexOutOfBoundsException e){
                 if(e instanceof IndexOutOfBoundsException){
@@ -48,6 +50,15 @@ public class sellCommand implements CommandExecutor {
                 return false;
 
             }
+
+            int amount = sellItem.getAmount();
+            Material type = sellItem.getType(); // Maybe rename this to material
+            double instancePrice = askedPrice / amount; // The price of each individual item;
+
+            String sellerName = player.getName();
+            int playerId = 8; // Temporary
+
+
 
             playerInventory.setItemInMainHand(null);
 
