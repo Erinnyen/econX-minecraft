@@ -26,17 +26,32 @@ public class sellCommand implements CommandExecutor {
 
             Player player = (Player) sender;
 
+
+
             try{
                 double asked_price = Double.parseDouble(args[0]);
 
-            }catch(NumberFormatException e){
-                sender.sendMessage(header + ChatColor.DARK_RED + "Sell price musst be a number!");
+            }catch(NumberFormatException | NullPointerException e){
+                if(e instanceof NullPointerException){
+                    // Checking which exception we're getting to send the corresponding error message.
+                    sender.sendMessage(header + ChatColor.DARK_RED + "Please specify a sell-price");
+                }else{
+                    sender.sendMessage(header + ChatColor.DARK_RED + "Sell-price must be a number!");
+                }
                 return false;
             }
 
             PlayerInventory playerInventory = player.getInventory();
 
-            ItemStack sellItem = playerInventory.getItemInMainHand();
+
+            try{
+                ItemStack sellItem = playerInventory.getItemInMainHand();
+            }catch(NullPointerException e){
+                sender.sendMessage(header + ChatColor.DARK_RED + "Please hold the item you want to sell in your hand!");
+                return false;
+
+            }
+
 
             sender.sendMessage("This kinda worked");
 
