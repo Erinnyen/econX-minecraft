@@ -1,6 +1,9 @@
 package com.erinnyen.econx.econCommands;
 
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -10,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
+
 
 public class sellCommand implements CommandExecutor {
 
@@ -63,8 +67,20 @@ public class sellCommand implements CommandExecutor {
             String sellerName = player.getName();
             int playerId = 8; // Temporary
 
+            /*
 
+            TextComponent confirmMessage = new TextComponent(ChatColor.BOLD + "Click here to confirm placing a sell order of "
+                    + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.BLUE + askedPrice);
 
+            confirmMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
+
+            */
+            sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + amount + " "
+                    + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
+                    ChatColor.GRAY + " (" + instancePrice + "C per individual item).");
+
+            sender.sendMessage(header + ChatColor.BOLD + " Order placed");
+            // Add "You can always withdraw uncompleted orders on the market place"
 
 
             playerInventory.setItemInMainHand(null);
