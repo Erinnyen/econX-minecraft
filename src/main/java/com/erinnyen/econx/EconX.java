@@ -5,6 +5,7 @@ import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
 import com.erinnyen.econx.Listeners.ConnectionListeners;
 import com.erinnyen.econx.econCommands.getCreditCommand;
 import com.erinnyen.econx.econCommands.recentTransactionsCommand;
+import com.erinnyen.econx.econCommands.sellCommand;
 import com.erinnyen.econx.econCommands.sendCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -29,6 +30,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("send")).setExecutor(new sendCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("getcredit")).setExecutor(new getCreditCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));
+        Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand());
 
 
 

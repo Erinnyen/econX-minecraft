@@ -5,6 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 public class sellCommand implements CommandExecutor {
@@ -24,9 +26,13 @@ public class sellCommand implements CommandExecutor {
                 double asked_price = Double.parseDouble(args[0]);
 
             }catch(NumberFormatException e){
-                sender.sendMessage(header + ChatColor.DARK_RED + "Amount musst be a number!");
+                sender.sendMessage(header + ChatColor.DARK_RED + "Sell price musst be a number!");
                 return false;
             }
+
+            PlayerInventory playerInventory = player.getInventory();
+
+            ItemStack sellItem = playerInventory.getItemInMainHand();
 
 
         }

@@ -21,3 +21,7 @@ commands:
     aliases: [recenttransactions, getrecent]
     description: view the recent transactions associated with your account
     usage: /<recent>
+
+  sell:
+    description: Use this to sell items.
+    usage: /<sell> <asked-price>
