@@ -30,7 +30,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("send")).setExecutor(new sendCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("getcredit")).setExecutor(new getCreditCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));
-        Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand());
+        Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand(dbCreds));
 
 
 

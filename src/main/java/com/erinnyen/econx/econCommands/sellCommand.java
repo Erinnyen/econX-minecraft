@@ -1,6 +1,7 @@
 package com.erinnyen.econx.econCommands;
 
 
+import com.erinnyen.econx.DBInteraction.DBCredentials;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
@@ -16,6 +17,17 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class sellCommand implements CommandExecutor {
+
+    private final String uname;
+    private final String password;
+    private  final String url;
+
+    public sellCommand(DBCredentials pDBcreds){
+        uname = pDBcreds.getUsername();
+        password = pDBcreds.getPassword();
+        url = pDBcreds.getUrl();
+
+    }
 
 
     @Override
@@ -86,6 +98,7 @@ public class sellCommand implements CommandExecutor {
             playerInventory.setItemInMainHand(null);
 
             sender.sendMessage("This kinda worked");
+            //for debugging
 
             return true;
 
