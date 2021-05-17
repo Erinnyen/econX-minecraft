@@ -1,6 +1,7 @@
 package com.erinnyen.econx.econCommands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,10 +25,6 @@ public class sellCommand implements CommandExecutor {
                 return false;
             }
 
-            Player player = (Player) sender;
-
-
-
             try{
                 double asked_price = Double.parseDouble(args[0]);
 
@@ -41,17 +38,18 @@ public class sellCommand implements CommandExecutor {
                 return false;
             }
 
+            Player player = (Player) sender;
+
             PlayerInventory playerInventory = player.getInventory();
+            ItemStack sellItem = playerInventory.getItemInMainHand();
 
-
-            try{
-                ItemStack sellItem = playerInventory.getItemInMainHand();
-            }catch(NullPointerException e){
-                sender.sendMessage(header + ChatColor.DARK_RED + "Please hold the item you want to sell in your hand!");
+            if(sellItem == null || sellItem.getType().equals(Material.AIR)){
+                sender.sendMessage(header + ChatColor.DARK_RED + " Please hold the item you want to sell in your hand!");
                 return false;
 
             }
 
+            playerInventory.setItemInMainHand(null);
 
             sender.sendMessage("This kinda worked");
 
