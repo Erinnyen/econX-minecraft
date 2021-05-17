@@ -158,7 +158,7 @@ public class sendCommand implements CommandExecutor {
             }
             sender.sendMessage(header + ChatColor.RED + "You have to be a Player to use this command!");
             sender.sendMessage(usage);
-            return true;
+            return false;
         }
         return false;
     }

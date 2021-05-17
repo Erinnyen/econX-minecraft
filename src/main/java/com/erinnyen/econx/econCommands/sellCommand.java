@@ -10,16 +10,20 @@ import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 public class sellCommand implements CommandExecutor {
+
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
         //make Market command package
 
-        if(label.equalsIgnoreCase("send")){
+        if(label.equalsIgnoreCase("sell")){
+
             if(!(sender instanceof Player)){
                 sender.sendMessage(header + ChatColor.DARK_RED +"You have to be a player to use this command!");
                 return false;
             }
+
             Player player = (Player) sender;
 
             try{
@@ -34,6 +38,9 @@ public class sellCommand implements CommandExecutor {
 
             ItemStack sellItem = playerInventory.getItemInMainHand();
 
+            sender.sendMessage("This kinda worked");
+
+            return true;
 
         }
         return false;
