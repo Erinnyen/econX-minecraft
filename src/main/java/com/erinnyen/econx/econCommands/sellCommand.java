@@ -31,12 +31,12 @@ public class sellCommand implements CommandExecutor {
             try{
                 double asked_price = Double.parseDouble(args[0]);
 
-            }catch(NumberFormatException | NullPointerException e){
-                if(e instanceof NullPointerException){
+            }catch(NumberFormatException | IndexOutOfBoundsException e){
+                if(e instanceof IndexOutOfBoundsException){
                     // Checking which exception we're getting to send the corresponding error message.
-                    sender.sendMessage(header + ChatColor.DARK_RED + "Please specify a sell-price");
+                    sender.sendMessage(header + ChatColor.DARK_RED + " Please specify a sell-price");
                 }else{
-                    sender.sendMessage(header + ChatColor.DARK_RED + "Sell-price must be a number!");
+                    sender.sendMessage(header + ChatColor.DARK_RED + " Sell-price must be a number!");
                 }
                 return false;
             }
