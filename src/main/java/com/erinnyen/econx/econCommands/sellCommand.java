@@ -27,6 +27,11 @@ public class sellCommand implements CommandExecutor {
                 return false;
             }
 
+            if(args.length != 1){
+                sender.sendMessage("Usage:");
+                return false;
+            }
+
             try{
                 askedPrice = Double.parseDouble(args[0]);
 
@@ -57,6 +62,8 @@ public class sellCommand implements CommandExecutor {
 
             String sellerName = player.getName();
             int playerId = 8; // Temporary
+
+
 
 
 
