@@ -26,6 +26,6 @@ commands:
     description: Use this to sell items.
     usage: /<sell> <asked-price>
 
-  getSellOrders:
+  viewsellorders:
     description: Kind of like the recent command, just for the open sellorders.
     usage: /<sellorders>

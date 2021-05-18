@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class sellOrdersCommand implements CommandExecutor {
+public class ViewSellOrdersCommand implements CommandExecutor {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     DBCredentials dbCreds;
 
-    public sellOrdersCommand(DBCredentials pDBcreds){
+    public ViewSellOrdersCommand(DBCredentials pDBcreds){
         dbCreds = pDBcreds;
     }
 

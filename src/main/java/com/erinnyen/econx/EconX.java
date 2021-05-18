@@ -7,7 +7,7 @@ import com.erinnyen.econx.econCommands.banking.getCreditCommand;
 import com.erinnyen.econx.econCommands.banking.recentTransactionsCommand;
 import com.erinnyen.econx.econCommands.market.sellCommand;
 import com.erinnyen.econx.econCommands.banking.sendCommand;
-import com.erinnyen.econx.econCommands.market.sellOrdersCommand;
+import com.erinnyen.econx.econCommands.market.ViewSellOrdersCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,7 +32,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("getcredit")).setExecutor(new getCreditCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand(dbCreds));
-        Objects.requireNonNull(this.getCommand("sellorders")).setExecutor(new sellOrdersCommand(dbCreds));
+        Objects.requireNonNull(this.getCommand("viewsellorders")).setExecutor(new ViewSellOrdersCommand(dbCreds));
 
 
 
