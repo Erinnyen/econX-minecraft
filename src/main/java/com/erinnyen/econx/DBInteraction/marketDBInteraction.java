@@ -8,6 +8,8 @@ public class marketDBInteraction {
     private  final String url;
 
     public marketDBInteraction(DBCredentials pDBcreds){
+
+
         uname = pDBcreds.getUsername();
         password = pDBcreds.getPassword();
         url = pDBcreds.getUrl();

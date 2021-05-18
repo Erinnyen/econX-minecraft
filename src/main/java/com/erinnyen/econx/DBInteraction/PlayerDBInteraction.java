@@ -354,11 +354,11 @@ public class PlayerDBInteraction {
 
                 String msg;
                 if (pId == receiver_id){
-                    msg = ChatColor.GRAY + "[" + shortedTimestamp + "] " + ChatColor.GREEN + "+" + amount
+                    msg = ChatColor.GRAY + "[" + shortedTimestamp + "] " + ChatColor.GREEN + "+" + amount + "C"
                             + ChatColor.WHITE + " from " + ChatColor.BOLD + getName(sender_id);
 
                 }else {
-                    msg = ChatColor.GRAY + "[" + shortedTimestamp + "] " + ChatColor.RED + "-" + amount
+                    msg = ChatColor.GRAY + "[" + shortedTimestamp + "] " + ChatColor.RED + "-" + amount + "C"
                             + ChatColor.WHITE + " to " + ChatColor.BOLD + getName(receiver_id);
 
                 }
@@ -417,12 +417,18 @@ public class PlayerDBInteraction {
         Date date = new Date(pTimestamp.getTime());
         Time time = new Time(pTimestamp.getTime());
 
+        System.out.println(date);
+        System.out.println(time);
+
         // Please find a way to not use depreciated methods.
+        // Please use the calender because it doesn't work
 
         String day = Integer.toString(date.getDay());
         String month = Integer.toString(date.getMonth());
         String hours = Integer.toString(time.getHours());
         String minutes = Integer.toString(time.getMinutes());
+
+        System.out.println(day);
 
         //Making these to string because i want to have them in the dd and mm format and not d and m.
 
