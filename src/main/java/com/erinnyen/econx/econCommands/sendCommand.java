@@ -67,7 +67,7 @@ public class sendCommand implements CommandExecutor {
                             the player we want to send money to is listed in our database. If he's not
                             then we will return and print an error-message.
                          */
-                        sender.sendMessage(header + ChatColor.DARK_RED + "Player does not exist.");
+                        sender.sendMessage(header + ChatColor.DARK_RED + "Player does not exist on this server.");
                         return false;
                     }
 
