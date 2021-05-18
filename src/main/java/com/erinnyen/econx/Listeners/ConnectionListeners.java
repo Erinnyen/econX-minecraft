@@ -35,7 +35,7 @@ public class ConnectionListeners implements Listener {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(p.getName());
 
 
-        if(!dbConn.playerExistsInDB(p.getName())){
+        if(!dbConn.playerExistsInDB(p.getName()) || !offlinePlayer.hasPlayedBefore()){
             // maybe remove the second condition later- just for debugging purposes.
             event.setJoinMessage(header + "Welcome " + ChatColor.BLUE + p.getName() + "!");
             UUID uuid = p.getUniqueId();
