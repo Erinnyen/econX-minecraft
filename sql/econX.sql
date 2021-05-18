@@ -44,6 +44,7 @@ CREATE TABLE `open_sell_orders` (
     `seller_id` INT(11) NOT NUll;
     `timestamp` timestamp NOT NULL;
     `transaction_type` INT(5) NOT NUll;
+    `JSONobject` VARCHAR(1023) NOT NUll;
 )
 
 CREATE USER 'your-username'@'localhost' IDENTIFIED BY 'your-password';

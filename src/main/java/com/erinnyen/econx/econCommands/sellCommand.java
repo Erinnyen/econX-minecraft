@@ -3,7 +3,6 @@ package com.erinnyen.econx.econCommands;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
@@ -17,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import com.google.gson.Gson;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import org.json.simple.JSONObject;
 
+import java.text.ParseException;
 
 
 public class sellCommand implements CommandExecutor {
@@ -80,16 +79,18 @@ public class sellCommand implements CommandExecutor {
             String sellerName = player.getName();
             int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName); // Temporary
 
-            ObjectMapper mapper = new ObjectMapper();
 
-            try {
-                String sellItemJson = mapper.writeValueAsString(sellItem);
-                System.out.println(sellItemJson);
 
-            } catch (JsonProcessingException e) {
-                sender.sendMessage(header + ChatColor.DARK_RED + " Error: Something went wrong while performing the database entry!");
-                e.printStackTrace();
-            }
+            //serializing the itemStack object sellItem to a Json String so we can save it in the database.
+            Gson gson = new Gson();
+            String sellItemString = gson.toJson(sellItem.serialize());
+            //JSONObject sellItemJSON = new JSONObject(sellItemString);
+
+            System.out.println(sellItemString);
+
+
+            //sender.sendMessage(header + ChatColor.DARK_RED + " Error: Something went wrong while performing the database entry!");
+
 
             /*
 
