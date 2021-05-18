@@ -29,3 +29,7 @@ commands:
   viewsellorders:
     description: Kind of like the recent command, just for the open sellorders.
     usage: /<sellorders>
+
+  buy:
+    description: Use this command to buy up sell orders.
+    usage: /buy

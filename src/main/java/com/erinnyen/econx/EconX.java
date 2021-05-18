@@ -5,6 +5,7 @@ import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
 import com.erinnyen.econx.Listeners.ConnectionListeners;
 import com.erinnyen.econx.econCommands.banking.getCreditCommand;
 import com.erinnyen.econx.econCommands.banking.recentTransactionsCommand;
+import com.erinnyen.econx.econCommands.market.BuyCommand;
 import com.erinnyen.econx.econCommands.market.sellCommand;
 import com.erinnyen.econx.econCommands.banking.sendCommand;
 import com.erinnyen.econx.econCommands.market.ViewSellOrdersCommand;
@@ -33,6 +34,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("viewsellorders")).setExecutor(new ViewSellOrdersCommand(dbCreds));
+        Objects.requireNonNull(this.getCommand("buy")).setExecutor(new BuyCommand(dbCreds));
 
 
 
