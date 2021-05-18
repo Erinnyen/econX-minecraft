@@ -84,7 +84,6 @@ public class sellCommand implements CommandExecutor {
             String sellItemString = gson.toJson(sellItem.serialize());
             //JSONObject sellItemJSON = new JSONObject(sellItemString);
 
-            System.out.println(sellItemString);
             //sender.sendMessage(header + ChatColor.DARK_RED + " Error: Something went wrong while performing the database entry!");
             /*
             TextComponent confirmMessage = new TextComponent(ChatColor.BOLD + "Click here to confirm placing a sell order of "
@@ -92,11 +91,16 @@ public class sellCommand implements CommandExecutor {
 
             confirmMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
             */
+
+
             sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + amount + " "
                     + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
                     ChatColor.GRAY + " (" + instancePrice + "C per individual item).");
 
             sender.sendMessage(header + ChatColor.BOLD + " Order placed");
+
+
+
 
             // Add "You can always withdraw uncompleted orders on the market place"
 
