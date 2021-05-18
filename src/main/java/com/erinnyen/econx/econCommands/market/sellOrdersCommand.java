@@ -1,11 +1,14 @@
 package com.erinnyen.econx.econCommands.market;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.MarketDBInteraction;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class sellOrdersCommand implements CommandExecutor {
 
@@ -32,7 +35,18 @@ public class sellOrdersCommand implements CommandExecutor {
             return false;
         }
 
+        ArrayList<String> openOrders = new MarketDBInteraction(dbCreds).getOpenSellOrders();
 
-        return false;
+        if(openOrders == null){
+            sender.sendMessage(header + "There are no open sell orders at this time.");
+            return false;
+        }
+
+        sender.sendMessage(header + "open sell orders:");
+        for(int i = 0; i< openOrders.size(); i++){
+            sender.sendMessage(openOrders.get(i));
+        }
+        return true;
+
     }
 }

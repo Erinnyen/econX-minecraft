@@ -3,10 +3,8 @@ package com.erinnyen.econx.DBInteraction;
 import org.bukkit.ChatColor;
 import org.json.simple.JSONObject;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class MarketDBInteraction {
 
@@ -64,4 +62,62 @@ public class MarketDBInteraction {
         return "Transaction completed!";
     }
 
+
+    public ArrayList<String> getOpenSellOrders(){
+
+        ArrayList<String> orderList = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, uname, password);
+
+            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT amount, type, instance_price, price FROM sql_econx.open_sell_orders");
+            ResultSet openOrdersResultSet = openOrdersQuery.executeQuery();
+
+            if(!openOrdersResultSet.next()){
+                openOrdersQuery.close();
+                conn.close();
+                return null;
+
+            }
+
+            openOrdersResultSet.next();
+            while(!openOrdersResultSet.isAfterLast()){
+                int amount = openOrdersResultSet.getInt(1);
+                String type = openOrdersResultSet.getString(2);
+                double instance_price = openOrdersResultSet.getDouble(3);
+                double total_price = openOrdersResultSet.getDouble(4);
+
+                String msg = ChatColor.WHITE + Integer.toString(amount) + ChatColor.BLUE + type + "for "
+                        + ChatColor.GOLD + total_price + "C" + ChatColor.GRAY +
+                        "(" + instance_price + "C per item)";
+
+                orderList.add(msg);
+                openOrdersResultSet.next();
+            }
+            openOrdersResultSet.close();
+            conn.close();
+            return orderList;
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
+
