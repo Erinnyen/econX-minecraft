@@ -27,7 +27,7 @@ public class ViewSellOrdersCommand implements CommandExecutor {
             In the long run I want to implement a chest gui to see the open orders.
          */
 
-        if(!label.equalsIgnoreCase("sellorders")){
+        if(!label.equalsIgnoreCase("viewsellorders")){
             return false;
         }
         if(args.length != 1){
