@@ -1,20 +1,21 @@
 package com.erinnyen.econx.DBInteraction;
 
 import org.bukkit.ChatColor;
+import org.json.simple.JSONObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class marketDBInteraction {
+public class MarketDBInteraction {
 
 
     private final String uname;
     private final String password;
     private  final String url;
 
-    public marketDBInteraction(DBCredentials pDBcreds){
+    public MarketDBInteraction(DBCredentials pDBcreds){
 
 
         uname = pDBcreds.getUsername();
@@ -37,7 +38,7 @@ public class marketDBInteraction {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
             PreparedStatement sellOrderEntry = conn.prepareStatement("INSERT INTO sql_econx.open_sell_orders" +
-                    "(amount, type, instance_price, seller_name, seller_id, transaction_type, JSONString" +
+                    "(amount, type, instance_price, seller_name, seller_id, transaction_type, JSONString)" +
                     "VALUES (?,?,?,?,?,?,?)");
 
             sellOrderEntry.setDouble(1, pAmount);

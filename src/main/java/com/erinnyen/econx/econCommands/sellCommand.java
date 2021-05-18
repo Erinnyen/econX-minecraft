@@ -2,23 +2,22 @@ package com.erinnyen.econx.econCommands;
 
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.MarketDBInteraction;
 import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CampfireRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
-
-import java.text.ParseException;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class sellCommand implements CommandExecutor {
@@ -73,34 +72,36 @@ public class sellCommand implements CommandExecutor {
             }
 
             int amount = sellItem.getAmount();
-            Material type = sellItem.getType(); // Maybe rename this to material
-            double instancePrice = askedPrice / amount; // The price of each individual item;
-
+            double instancePrice = askedPrice / amount; // The price of each individual item.
             String sellerName = player.getName();
             int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName);
+            int transactionType = 1; // transaction type for commodity - please add check feature later
+
+            Object materialType = sellItem.getType();
+            String sellItemType = materialType.toString();
+
+
 
             //serializing the itemStack object sellItem to a Json String so we can save it in the database.
+
             Gson gson = new Gson();
-            String sellItemString = gson.toJson(sellItem.serialize());
-            //JSONObject sellItemJSON = new JSONObject(sellItemString);
+            String sellItemJSONString = gson.toJson(sellItem.serialize());
 
-            //sender.sendMessage(header + ChatColor.DARK_RED + " Error: Something went wrong while performing the database entry!");
-            /*
-            TextComponent confirmMessage = new TextComponent(ChatColor.BOLD + "Click here to confirm placing a sell order of "
-                    + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.BLUE + askedPrice);
+            MarketDBInteraction sellOrderDBEntry = new MarketDBInteraction(dbCreds);
 
-            confirmMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
-            */
+            String sellOrderReturnMessage = sellOrderDBEntry.createSellOrder(amount, sellItemType, instancePrice,
+                    sellerName, playerId, transactionType, sellItemJSONString);
 
+            if(!sellOrderReturnMessage.equals("Transaction completed!")){
+                sender.sendMessage(header + ChatColor.DARK_RED + sellOrderReturnMessage);
+                return false;
+            }
 
             sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + amount + " "
-                    + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
+                    + ChatColor.BLUE + sellItemType + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
                     ChatColor.GRAY + " (" + instancePrice + "C per individual item).");
 
             sender.sendMessage(header + ChatColor.BOLD + " Order placed");
-
-
-
 
             // Add "You can always withdraw uncompleted orders on the market place"
 
@@ -108,7 +109,6 @@ public class sellCommand implements CommandExecutor {
 
             sender.sendMessage("This kinda worked");
             //for debugging
-
             return true;
 
         }
