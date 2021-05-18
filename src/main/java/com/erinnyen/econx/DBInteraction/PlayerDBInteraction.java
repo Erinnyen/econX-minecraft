@@ -26,7 +26,7 @@ public class PlayerDBInteraction {
         try {
 
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement creditQuery = conn.prepareStatement("SELECT 1 FROM sql_playerdb.players");
+            PreparedStatement creditQuery = conn.prepareStatement("SELECT 1 FROM sql_econx.players");
             ResultSet testResultSet = creditQuery.executeQuery();
             if(testResultSet.next()){
                 return true;
@@ -65,7 +65,7 @@ public class PlayerDBInteraction {
             }
 
 
-            PreparedStatement prepQuery1 = conn.prepareStatement("SELECT player_id, credit FROM sql_playerdb.players WHERE name = ?");
+            PreparedStatement prepQuery1 = conn.prepareStatement("SELECT player_id, credit FROM sql_econx.players WHERE name = ?");
             prepQuery1.setString(1, pPlayer_1);
 
             ResultSet resultSet1 = prepQuery1.executeQuery();
@@ -78,7 +78,7 @@ public class PlayerDBInteraction {
             int cr_1 = resultSet1.getInt("credit");
 
 
-            PreparedStatement prepQuery2 = conn.prepareStatement("SELECT player_id, credit FROM sql_playerdb.players WHERE name = ?");
+            PreparedStatement prepQuery2 = conn.prepareStatement("SELECT player_id, credit FROM sql_econx.players WHERE name = ?");
             prepQuery2.setString(1, pPlayer_2);
 
             ResultSet resultSet2 = prepQuery2.executeQuery();
@@ -98,13 +98,13 @@ public class PlayerDBInteraction {
             double ncr_2 = cr_2 + pAmount;
 
 
-            PreparedStatement prepStat1 = conn.prepareStatement("UPDATE sql_playerdb.players SET credit = ? WHERE player_id = ?;");
+            PreparedStatement prepStat1 = conn.prepareStatement("UPDATE sql_econx.players SET credit = ? WHERE player_id = ?;");
             prepStat1.setDouble(1, ncr_1);
 
             prepStat1.setInt(2, id_1);
 
 
-            PreparedStatement prepStat2 = conn.prepareStatement("UPDATE sql_playerdb.players SET credit = ? WHERE player_id = ?;");
+            PreparedStatement prepStat2 = conn.prepareStatement("UPDATE sql_econx.players SET credit = ? WHERE player_id = ?;");
             prepStat2.setDouble(1, ncr_2);
             prepStat2.setInt(2, id_2);
 
@@ -136,7 +136,7 @@ public class PlayerDBInteraction {
         }
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement voidTransaction = conn.prepareStatement("INSERT INTO sql_playerdb.transactions (sender, receiver," +
+            PreparedStatement voidTransaction = conn.prepareStatement("INSERT INTO sql_econx.transactions (sender, receiver," +
                     " amount, timestamp, transaction_type, comment)" +
                     "VALUES (?,?,?,?,?,?)");
 
@@ -173,7 +173,7 @@ public class PlayerDBInteraction {
 
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement playerQuery = conn.prepareStatement("SELECT name FROM sql_playerdb.players");
+            PreparedStatement playerQuery = conn.prepareStatement("SELECT name FROM sql_econx.players");
             ResultSet playernames = playerQuery.executeQuery();
 
             while(playernames.next()) {
@@ -201,7 +201,7 @@ public class PlayerDBInteraction {
         }
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement newPlayerQuery = conn.prepareStatement("INSERT INTO sql_playerdb.players (uuid, name, credit)" +
+            PreparedStatement newPlayerQuery = conn.prepareStatement("INSERT INTO sql_econx.players (uuid, name, credit)" +
                     "VALUES (?, ?, ?)");
 
             newPlayerQuery.setString(1, pUUID);
@@ -227,7 +227,7 @@ public class PlayerDBInteraction {
         try {
 
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement creditQuery = conn.prepareStatement("SELECT credit FROM sql_playerdb.players WHERE name = ?");
+            PreparedStatement creditQuery = conn.prepareStatement("SELECT credit FROM sql_econx.players WHERE name = ?");
 
             creditQuery.setString(1, pName);
 
@@ -262,7 +262,7 @@ public class PlayerDBInteraction {
 
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement playerQuery = conn.prepareStatement("SELECT name, player_id FROM sql_playerdb.players");
+            PreparedStatement playerQuery = conn.prepareStatement("SELECT name, player_id FROM sql_econx.players");
             ResultSet playerId = playerQuery.executeQuery();
 
             while(playerId.next()) {
@@ -296,7 +296,7 @@ public class PlayerDBInteraction {
                 System.out.println("Error: The player you wanted to update does not exist.");
                 return;
             }
-            PreparedStatement lastonline = conn.prepareStatement("UPDATE sql_playerdb.players SET last_online = ? WHERE player_id = ?;");
+            PreparedStatement lastonline = conn.prepareStatement("UPDATE sql_econx.players SET last_online = ? WHERE player_id = ?;");
 
             lastonline.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             lastonline.setInt(2, getID(pName));
@@ -325,7 +325,7 @@ public class PlayerDBInteraction {
 
 
             PreparedStatement transactionQuery = conn.prepareStatement("SELECT sender, receiver, amount, timestamp FROM" +
-                    "(SELECT * FROM sql_playerdb.transactions ORDER BY transaction_id DESC LIMIT ?) AS derived_table WHERE " +
+                    "(SELECT * FROM sql_econx.transactions ORDER BY transaction_id DESC LIMIT ?) AS derived_table WHERE " +
                     "receiver = ? OR sender = ? ORDER BY transaction_id ASC LIMIT ?;");
             transactionQuery.setInt(1, pLength);
             transactionQuery.setInt(2, pId);
@@ -387,7 +387,7 @@ public class PlayerDBInteraction {
         try {
 
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement creditQuery = conn.prepareStatement("SELECT name FROM sql_playerdb.players WHERE player_id = ?");
+            PreparedStatement creditQuery = conn.prepareStatement("SELECT name FROM sql_econx.players WHERE player_id = ?");
 
             creditQuery.setInt(1, pID);
 

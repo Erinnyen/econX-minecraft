@@ -3,6 +3,7 @@ package com.erinnyen.econx.econCommands;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
@@ -80,6 +81,15 @@ public class sellCommand implements CommandExecutor {
             int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName); // Temporary
 
             ObjectMapper mapper = new ObjectMapper();
+
+            try {
+                String sellItemJson = mapper.writeValueAsString(sellItem);
+                System.out.println(sellItemJson);
+
+            } catch (JsonProcessingException e) {
+                sender.sendMessage(header + ChatColor.DARK_RED + " Error: Something went wrong while performing the database entry!");
+                e.printStackTrace();
+            }
 
             /*
 
