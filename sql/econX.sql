@@ -49,6 +49,24 @@ CREATE TABLE `open_sell_orders` (
      PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `closed_sales` (
+    `closed_order_id` INT(20) NOT NUll AUTO_INCREMENT,
+    `sell_order_id` INT(20) NOT NUll,
+    `price` double(20, 2) NOT NULL,
+    `amount` int(5) NOT NULL,
+    `type` VARCHAR(255) NOT NULL,
+    `instance_price` double(20, 2) NOT NULL,
+    `seller_name` VARCHAR(50) NOT NUll,
+    `seller_id` INT(11) NOT NUll,
+    `buyer_name` VARCHAR(50) NOT NUll,
+    `buyer_id` INT(11) NOT NUll,
+    `open_timestamp` timestamp NOT NUll,
+    `close_timestamp` timestamp NOT NUll DEFAULT CURRENT_TIMESTAMP,
+    `transaction_type` INT(5) NOT NUll,
+    `JSONString` VARCHAR(1023) NOT NUll,
+    PRIMARY KEY (`closed_order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE USER 'your-username'@'localhost' IDENTIFIED BY 'your-password';
 GRANT DELETE, INSERT, SELECT, UPDATE ON sql_econx.* TO 'your-username'@'localhost';
            

@@ -42,7 +42,7 @@ public class ViewSellOrdersCommand implements CommandExecutor {
             return false;
         }
 
-        sender.sendMessage(header + "open sell orders:");
+        sender.sendMessage(header + " Open sell orders:");
         for(int i = 0; i< openOrders.size(); i++){
             sender.sendMessage(openOrders.get(i));
         }
