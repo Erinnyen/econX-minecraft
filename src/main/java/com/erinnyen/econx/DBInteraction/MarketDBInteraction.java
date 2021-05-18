@@ -77,7 +77,7 @@ public class MarketDBInteraction {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
-            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT amount, type, instance_price, price FROM sql_econx.open_sell_orders");
+            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT amount, type, instance_price, price, order_id FROM sql_econx.open_sell_orders");
             ResultSet openOrdersResultSet = openOrdersQuery.executeQuery();
 
             if(!openOrdersResultSet.next()){
@@ -93,8 +93,10 @@ public class MarketDBInteraction {
                 String type = openOrdersResultSet.getString(2);
                 double instance_price = openOrdersResultSet.getDouble(3);
                 double total_price = openOrdersResultSet.getDouble(4);
+                int order_id = openOrdersResultSet.getInt(5);
 
-                String msg = ChatColor.WHITE + "- " + Integer.toString(amount) + " " + ChatColor.BLUE + type +
+                String msg = ChatColor.DARK_PURPLE + "(" + Integer.toString(order_id) + ")" +
+                        ChatColor.WHITE + " " + Integer.toString(amount) + " " + ChatColor.BLUE + type +
                         ChatColor.WHITE + " for " + ChatColor.GOLD + total_price + "C " + ChatColor.GRAY +
                         "(" + instance_price + "C per item)";
 
