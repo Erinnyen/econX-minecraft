@@ -71,6 +71,7 @@ public class sellCommand implements CommandExecutor {
 
             }
 
+
             int amount = sellItem.getAmount();
             double instancePrice = askedPrice / amount; // The price of each individual item.
             String sellerName = player.getName();
@@ -89,7 +90,7 @@ public class sellCommand implements CommandExecutor {
 
             MarketDBInteraction sellOrderDBEntry = new MarketDBInteraction(dbCreds);
 
-            String sellOrderReturnMessage = sellOrderDBEntry.createSellOrder(amount, sellItemType, instancePrice,
+            String sellOrderReturnMessage = sellOrderDBEntry.createSellOrder(askedPrice, amount, sellItemType, instancePrice,
                     sellerName, playerId, transactionType, sellItemJSONString);
 
             if(!sellOrderReturnMessage.equals("Transaction completed!")){
