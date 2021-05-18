@@ -36,7 +36,7 @@ INSERT INTO sql_econx.transaction_type
 
 
 CREATE TABLE `open_sell_orders` (
-    `order_id` int(20) NOT NULL AUTO_INCREMENT;
+    `order_id` int(20) NOT NULL AUTO_INCREMENT,
     `amount` int(5) NOT NULL,
     `type` VARCHAR(255) NOT NULL,
     `instance_price` double(20, 2) NOT NULL,
