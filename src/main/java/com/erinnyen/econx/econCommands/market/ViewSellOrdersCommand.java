@@ -30,7 +30,7 @@ public class ViewSellOrdersCommand implements CommandExecutor {
         if(!label.equalsIgnoreCase("viewsellorders")){
             return false;
         }
-        if(args.length != 1){
+        if(args.length != 0){
             sender.sendMessage("Usage:");
             return false;
         }
