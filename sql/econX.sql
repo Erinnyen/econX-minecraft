@@ -45,5 +45,8 @@ CREATE TABLE `open_sell_orders` (
     `timestamp` timestamp NOT NULL;
     `transaction_type` INT(5) NOT NUll;
 )
+
+CREATE USER 'your-username'@'localhost' IDENTIFIED BY 'your-password';
+GRANT DELETE, INSERT, SELECT, UPDATE ON sql_econx.* TO 'your-username'@'localhost';
            
 
