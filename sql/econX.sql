@@ -42,7 +42,7 @@ CREATE TABLE `open_sell_orders` (
     `instance_price` double(20, 2) NOT NULL,
     `seller_name` VARCHAR(50) NOT NUll,
     `seller_id` INT(11) NOT NUll,
-    `timestamp` timestamp NOT NULL,
+    `timestamp` timestamp NOT NUll DEFAULT CURRENT_TIMESTAMP,
     `transaction_type` INT(5) NOT NUll,
     `JSONString` VARCHAR(1023) NOT NUll,
      PRIMARY KEY (`order_id`)

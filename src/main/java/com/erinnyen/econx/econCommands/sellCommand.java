@@ -77,9 +77,7 @@ public class sellCommand implements CommandExecutor {
             double instancePrice = askedPrice / amount; // The price of each individual item;
 
             String sellerName = player.getName();
-            int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName); // Temporary
-
-
+            int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName);
 
             //serializing the itemStack object sellItem to a Json String so we can save it in the database.
             Gson gson = new Gson();
@@ -87,18 +85,12 @@ public class sellCommand implements CommandExecutor {
             //JSONObject sellItemJSON = new JSONObject(sellItemString);
 
             System.out.println(sellItemString);
-
-
             //sender.sendMessage(header + ChatColor.DARK_RED + " Error: Something went wrong while performing the database entry!");
-
-
             /*
-
             TextComponent confirmMessage = new TextComponent(ChatColor.BOLD + "Click here to confirm placing a sell order of "
                     + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.BLUE + askedPrice);
 
             confirmMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ""));
-
             */
             sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + amount + " "
                     + ChatColor.BLUE + type + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
@@ -106,10 +98,7 @@ public class sellCommand implements CommandExecutor {
 
             sender.sendMessage(header + ChatColor.BOLD + " Order placed");
 
-
-
             // Add "You can always withdraw uncompleted orders on the market place"
-
 
             playerInventory.setItemInMainHand(null);
 
