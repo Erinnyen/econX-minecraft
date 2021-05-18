@@ -37,15 +37,16 @@ INSERT INTO sql_econx.transaction_type
 
 CREATE TABLE `open_sell_orders` (
     `order_id` int(20) NOT NULL AUTO_INCREMENT;
-    `amount` int(5) NOT NULL;
-    `type` VARCHAR(255) NOT NULL;
-    `instance_price` double(20, 2) NOT NULL;
-    `seller_name` VARCHAR(50) NOT NUll;
-    `seller_id` INT(11) NOT NUll;
-    `timestamp` timestamp NOT NULL;
-    `transaction_type` INT(5) NOT NUll;
-    `JSONobject` VARCHAR(1023) NOT NUll;
-)
+    `amount` int(5) NOT NULL,
+    `type` VARCHAR(255) NOT NULL,
+    `instance_price` double(20, 2) NOT NULL,
+    `seller_name` VARCHAR(50) NOT NUll,
+    `seller_id` INT(11) NOT NUll,
+    `timestamp` timestamp NOT NULL,
+    `transaction_type` INT(5) NOT NUll,
+    `JSONString` VARCHAR(1023) NOT NUll,
+     PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE USER 'your-username'@'localhost' IDENTIFIED BY 'your-password';
 GRANT DELETE, INSERT, SELECT, UPDATE ON sql_econx.* TO 'your-username'@'localhost';
