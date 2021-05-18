@@ -9,26 +9,26 @@ website: https://github.com/Erinnyen
 commands:
   send:
     description: send money between players
-    usage: /<send> <player> <amount> <comment>
+    usage: /send <player> <amount> <comment>
 
   getcredit:
     aliases: [credit]
     description: get your own credit
-    usage: /<getcredit>
+    usage: /getcredit
 
 
   recent:
     aliases: [recenttransactions, getrecent]
     description: view the recent transactions associated with your account
-    usage: /<recent>
+    usage: /recent
 
   sell:
     description: Use this to sell items.
-    usage: /<sell> <asked-price>
+    usage: /sell <asked-price>
 
   viewsellorders:
     description: Kind of like the recent command, just for the open sellorders.
-    usage: /<sellorders>
+    usage: /sellorders
 
   buy:
     description: Use this command to buy up sell orders.
