@@ -26,7 +26,7 @@ public class PlayerDBInteraction {
         try {
 
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement creditQuery = conn.prepareStatement("SELECT 1 FROM sql_econx.players");
+            PreparedStatement creditQuery = conn.prepareStatement("SELECT 1 FROM sql_econx.transaction_type");
             ResultSet testResultSet = creditQuery.executeQuery();
             if(testResultSet.next()){
                 return true;
