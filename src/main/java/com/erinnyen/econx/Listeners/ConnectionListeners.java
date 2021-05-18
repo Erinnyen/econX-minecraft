@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.UUID;
 
 public class ConnectionListeners implements Listener {
+    String header = ChatColor.GRAY + "[Server]" + ChatColor.RESET;
 
     DBCredentials dbCreds;
 
@@ -28,14 +29,15 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
 
+
         Player p = event.getPlayer();
         PlayerDBInteraction dbConn = new PlayerDBInteraction(dbCreds);
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(p.getName());
 
 
-        if(!offlinePlayer.hasPlayedBefore() && !dbConn.playerExistsInDB(p.getName())){
+        if(!dbConn.playerExistsInDB(p.getName())){
             // maybe remove the second condition later- just for debugging purposes.
-            event.setJoinMessage(ChatColor.BLUE + "Hello " + p.getName());
+            event.setJoinMessage(header + "Welcome " + ChatColor.BLUE + p.getName() + "!");
             UUID uuid = p.getUniqueId();
             String name = p.getName();
             String str_uuid = uuid.toString();
@@ -47,7 +49,7 @@ public class ConnectionListeners implements Listener {
     public void onLeft(PlayerQuitEvent event){
         Player player = event.getPlayer();
         String player_name = player.getName();
-        event.setQuitMessage(ChatColor.BLUE + "Bye, " + player.getName());
+        event.setQuitMessage(header + "Bye, " + ChatColor.BLUE + player.getName() + "!");
 
         PlayerDBInteraction dbConn = new PlayerDBInteraction(dbCreds);
         dbConn.updateLastOnline(player_name);
