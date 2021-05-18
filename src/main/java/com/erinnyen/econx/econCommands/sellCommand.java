@@ -2,6 +2,7 @@ package com.erinnyen.econx.econCommands;
 
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
@@ -14,19 +15,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
+import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 
 
 public class sellCommand implements CommandExecutor {
 
-    private final String uname;
-    private final String password;
-    private  final String url;
+    DBCredentials dbCreds;
 
     public sellCommand(DBCredentials pDBcreds){
-        uname = pDBcreds.getUsername();
-        password = pDBcreds.getPassword();
-        url = pDBcreds.getUrl();
-
+        dbCreds = pDBcreds;
     }
 
 
@@ -66,7 +66,7 @@ public class sellCommand implements CommandExecutor {
             PlayerInventory playerInventory = player.getInventory();
             ItemStack sellItem = playerInventory.getItemInMainHand();
 
-            if(sellItem == null || sellItem.getType().equals(Material.AIR)){
+            if(sellItem.getType().equals(Material.AIR)){
                 sender.sendMessage(header + ChatColor.DARK_RED + " Please hold the item you want to sell in your hand!");
                 return false;
 
@@ -77,7 +77,9 @@ public class sellCommand implements CommandExecutor {
             double instancePrice = askedPrice / amount; // The price of each individual item;
 
             String sellerName = player.getName();
-            int playerId = 8; // Temporary
+            int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName); // Temporary
+
+            ObjectMapper mapper = new ObjectMapper();
 
             /*
 
@@ -92,6 +94,9 @@ public class sellCommand implements CommandExecutor {
                     ChatColor.GRAY + " (" + instancePrice + "C per individual item).");
 
             sender.sendMessage(header + ChatColor.BOLD + " Order placed");
+
+
+
             // Add "You can always withdraw uncompleted orders on the market place"
 
 
