@@ -1,4 +1,4 @@
-package com.erinnyen.econx.econCommands;
+package com.erinnyen.econx.econCommands.banking;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;

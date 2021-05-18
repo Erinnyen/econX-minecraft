@@ -1,4 +1,4 @@
-package com.erinnyen.econx.econCommands;
+package com.erinnyen.econx.econCommands.market;
 
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
