@@ -32,4 +32,4 @@ commands:
 
   buy:
     description: Use this command to buy up sell orders.
-    usage: /buy
+    usage: /buy <order_id>
