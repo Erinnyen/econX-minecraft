@@ -94,8 +94,8 @@ public class MarketDBInteraction {
                 double instance_price = openOrdersResultSet.getDouble(3);
                 double total_price = openOrdersResultSet.getDouble(4);
 
-                String msg = ChatColor.WHITE + "- " + Integer.toString(amount) + " " + ChatColor.BLUE + type + " for "
-                        + ChatColor.GOLD + total_price + "C " + ChatColor.GRAY +
+                String msg = ChatColor.WHITE + "- " + Integer.toString(amount) + " " + ChatColor.BLUE + type +
+                        ChatColor.WHITE + " for " + ChatColor.GOLD + total_price + "C " + ChatColor.GRAY +
                         "(" + instance_price + "C per item)";
 
                 orderList.add(msg);
