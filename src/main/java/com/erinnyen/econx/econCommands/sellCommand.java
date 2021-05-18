@@ -108,8 +108,6 @@ public class sellCommand implements CommandExecutor {
 
             playerInventory.setItemInMainHand(null);
 
-            sender.sendMessage("This kinda worked");
-            //for debugging
             return true;
 
         }
