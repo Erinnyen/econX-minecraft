@@ -1,9 +1,9 @@
-package com.erinnyen.econx.econCommands.market;
+package com.erinnyen.econx.econcommands.market;
 
 
-import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
-import com.erinnyen.econx.DBInteraction.MarketDBInteraction;
-import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
+import com.erinnyen.econx.dbinteaction.MarketDBInteraction;
+import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;

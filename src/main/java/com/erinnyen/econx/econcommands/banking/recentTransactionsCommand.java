@@ -1,7 +1,7 @@
-package com.erinnyen.econx.econCommands.banking;
+package com.erinnyen.econx.econcommands.banking;
 
-import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
-import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
+import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

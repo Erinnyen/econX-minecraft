@@ -1,4 +1,4 @@
-package com.erinnyen.econx.DBInteraction;
+package com.erinnyen.econx.dbinteaction;
 
 import org.bukkit.ChatColor;
 import java.sql.*;

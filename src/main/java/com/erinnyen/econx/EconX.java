@@ -1,14 +1,14 @@
 package com.erinnyen.econx;
 
-import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
-import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
-import com.erinnyen.econx.Listeners.ConnectionListeners;
-import com.erinnyen.econx.econCommands.banking.getCreditCommand;
-import com.erinnyen.econx.econCommands.banking.recentTransactionsCommand;
-import com.erinnyen.econx.econCommands.market.BuyCommand;
-import com.erinnyen.econx.econCommands.market.sellCommand;
-import com.erinnyen.econx.econCommands.banking.sendCommand;
-import com.erinnyen.econx.econCommands.market.ViewSellOrdersCommand;
+import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
+import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
+import com.erinnyen.econx.listeners.ConnectionListeners;
+import com.erinnyen.econx.econcommands.banking.getCreditCommand;
+import com.erinnyen.econx.econcommands.banking.recentTransactionsCommand;
+import com.erinnyen.econx.econcommands.market.BuyCommand;
+import com.erinnyen.econx.econcommands.market.sellCommand;
+import com.erinnyen.econx.econcommands.banking.sendCommand;
+import com.erinnyen.econx.econcommands.market.ViewSellOrdersCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;

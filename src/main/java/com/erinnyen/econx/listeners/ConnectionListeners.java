@@ -1,8 +1,8 @@
-package com.erinnyen.econx.Listeners;
+package com.erinnyen.econx.listeners;
 
 
-import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
-import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
+import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
