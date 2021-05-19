@@ -4,6 +4,7 @@ package com.erinnyen.econx.econcommands.market;
 import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteaction.MarketDBInteraction;
 import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
+import com.erinnyen.econx.dbinteaction.Sell;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -86,11 +87,14 @@ public class sellCommand implements CommandExecutor {
 
             MarketDBInteraction sellOrderDBEntry = new MarketDBInteraction(dbCreds);
 
-            String sellOrderReturnMessage = sellOrderDBEntry.createSellOrder(askedPrice, amount, sellItemType, instancePrice,
+            Sell sellOrder = new Sell(dbCreds, askedPrice, amount, sellItemType, instancePrice,
                     sellerName, playerId, transactionType, sellItemJSONString);
+            
+            
+            String sellOrderReturnString = sellOrder.placeSellOrder();
 
-            if(!sellOrderReturnMessage.equals("Transaction completed!")){
-                sender.sendMessage(header + ChatColor.DARK_RED + sellOrderReturnMessage);
+            if(!sellOrderReturnString.equals("Transaction completed!")){
+                sender.sendMessage(header + ChatColor.DARK_RED + sellOrderReturnString);
                 return false;
             }
 
