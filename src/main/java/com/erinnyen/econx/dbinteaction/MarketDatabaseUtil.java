@@ -5,14 +5,14 @@ import org.bukkit.ChatColor;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MarketDBInteraction {
+public class MarketDatabaseUtil {
 
 
     private final String uname;
     private final String password;
     private  final String url;
 
-    public MarketDBInteraction(DatabaseCredentials pDBcreds){
+    public MarketDatabaseUtil(DatabaseCredentials pDBcreds){
 
 
         uname = pDBcreds.getUsername();

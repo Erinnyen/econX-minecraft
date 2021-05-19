@@ -1,7 +1,7 @@
 package com.erinnyen.econx.econcommands.market;
 
 import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
-import com.erinnyen.econx.dbinteaction.MarketDBInteraction;
+import com.erinnyen.econx.dbinteaction.MarketDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,7 +35,7 @@ public class ViewSellOrdersCommand implements CommandExecutor {
             return false;
         }
 
-        ArrayList<String> openOrders = new MarketDBInteraction(dbCreds).getOpenSellOrders();
+        ArrayList<String> openOrders = new MarketDatabaseUtil(dbCreds).getOpenSellOrders();
 
         if(openOrders == null){
             sender.sendMessage(header + "There are no open sell orders at this time.");
