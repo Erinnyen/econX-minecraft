@@ -68,29 +68,10 @@ public class sellCommand implements CommandExecutor {
 
             }
 
-
-            int amount = sellItem.getAmount();
-            double instancePrice = askedPrice / amount; // The price of each individual item.
             String sellerName = player.getName();
-            int playerId = new PlayerDatabaseUtil(dbCreds).getID(sellerName);
             int transactionType = 1; // transaction type for commodity - please add check feature later
 
-            Object materialType = sellItem.getType();
-            String sellItemType = materialType.toString();
-
-
-
-            //serializing the itemStack object sellItem to a Json String so we can save it in the database.
-
-            Gson gson = new Gson();
-            String sellItemJSONString = gson.toJson(sellItem.serialize());
-
-            MarketDBInteraction sellOrderDBEntry = new MarketDBInteraction(dbCreds);
-
-            Sell sellOrder = new Sell(dbCreds, askedPrice, amount, sellItemType, instancePrice,
-                    sellerName, playerId, transactionType, sellItemJSONString);
-            
-            
+            Sell sellOrder = new Sell(dbCreds, askedPrice, sellerName, transactionType, sellItem);
             String sellOrderReturnString = sellOrder.placeSellOrder();
 
             if(!sellOrderReturnString.equals("Transaction completed!")){
@@ -98,9 +79,9 @@ public class sellCommand implements CommandExecutor {
                 return false;
             }
 
-            sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + amount + " "
-                    + ChatColor.BLUE + sellItemType + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
-                    ChatColor.GRAY + " (" + instancePrice + "C per individual item).");
+            sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + sellOrder.itemAmount + " "
+                    + ChatColor.BLUE + sellOrder.itemType + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
+                    ChatColor.GRAY + " (" + sellOrder.instancePrice + "C per individual item).");
 
             sender.sendMessage(header + ChatColor.BOLD + " Order placed");
 

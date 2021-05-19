@@ -1,6 +1,8 @@
 package com.erinnyen.econx.dbinteaction;
 
+import com.google.gson.Gson;
 import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,13 +20,15 @@ public class Sell {
     public final int itemAmount;
     public final String itemType;
     public final double instancePrice;
-    public final String playerName;
+    public final String sellerName;
     public final int sellerId;
     public final int transactionType;
     public final String sellItemJSON;
 
-    public Sell(DatabaseCredentials pDBcreds, double pTotalPrice, int pItemAmount, String pItemType, double pInstancePrice, String pPlayerName,
-                int pSellerId, int pTransactionType, String pSellItemJSON) {
+    public final ItemStack soldItem;
+
+    public Sell(DatabaseCredentials pDBcreds, double pTotalPrice, String pPlayerName,
+                int pTransactionType, ItemStack pSoldItem) {
 
 
         // Database credentials:
@@ -35,13 +39,22 @@ public class Sell {
 
 
         totalPrice = pTotalPrice;
-        itemAmount = pItemAmount;
-        itemType = pItemType;
-        instancePrice = pInstancePrice;
-        playerName = pPlayerName;
-        sellerId = pSellerId;
+        soldItem = pSoldItem;
+        itemAmount = soldItem.getAmount();
+
+        //Using the "Object" to get the material type as a string. (toString() method of class Object)
+        Object materialType = soldItem.getType();
+        itemType = materialType.toString();
+
+        sellerName = pPlayerName;
+        sellerId = new PlayerDatabaseUtil(dbCreds).getID(sellerName);
+        // add a "check sell order for type" feature please.
         transactionType = pTransactionType;
-        sellItemJSON = pSellItemJSON;
+
+        // serializing the itemStack object sellItem to a Json String so we can save it in the database.
+        Gson gson = new Gson();
+        sellItemJSON = gson.toJson(soldItem.serialize());
+        instancePrice = totalPrice / itemAmount;
 
 
     }
@@ -67,7 +80,7 @@ public class Sell {
             sellOrderEntry.setInt(2, itemAmount);
             sellOrderEntry.setString(3, itemType);
             sellOrderEntry.setDouble(4, instancePrice);
-            sellOrderEntry.setString(5, playerName);
+            sellOrderEntry.setString(5, sellerName);
             sellOrderEntry.setInt(6, sellerId);
             sellOrderEntry.setInt(7, transactionType);
             sellOrderEntry.setString(8, sellItemJSON);
