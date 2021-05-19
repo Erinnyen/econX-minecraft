@@ -48,7 +48,7 @@ public final class EconX extends JavaPlugin {
 
         if(getDataFolder().mkdirs()){
             getLogger().info("Created Plugin directory");
-            createDBCredsFile();
+            createDatabaseCredentialsFile();
             Bukkit.getPluginManager().disablePlugin(this);
 
         }else {
@@ -58,13 +58,14 @@ public final class EconX extends JavaPlugin {
                     getLogger().warning("Couldn't fetch credentials for Database connections.");
                     getLogger().warning("dbcreds.json doesn't exists yet.");
 
-                    createDBCredsFile();
+                    createDatabaseCredentialsFile();
                     Bukkit.getPluginManager().disablePlugin(this);
                 }
                 getLogger().info("Found dbcreds.json");
                 DatabaseCredentials test_conn_creds = new DatabaseCredentials(path);
 
                 if (test_conn_creds.getUsername() != null || test_conn_creds.getPassword() != null || test_conn_creds.getUrl() != null) {
+                    // I know I am kinda of checking twice here, but i don't have a better way to do it.
                     if (test_conn_creds.getUsername().equals("")) {
                         getLogger().warning("Please specify a username for the DB connection in dbcreds.json");
                         Bukkit.getPluginManager().disablePlugin(this);
@@ -93,7 +94,7 @@ public final class EconX extends JavaPlugin {
         }
     }
 
-    public void createDBCredsFile(){
+    public void createDatabaseCredentialsFile(){
 
         File dbCredsJSONFIle = new File(path + "dbcreds.json");
 
