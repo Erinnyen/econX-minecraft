@@ -20,6 +20,8 @@ public class DatabaseCredentials {
         for(File file : Objects.requireNonNull(path.listFiles())){
             if(!file.getName().equals("dbcreds.json")){
                 System.out.println("Error: file not found");
+                // Maybe throw a file not found exception at this point.
+
                 return;
             }
 

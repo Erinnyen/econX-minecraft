@@ -27,7 +27,6 @@ public class sellCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
         double askedPrice;
-        //make Market command package
 
         if(label.equalsIgnoreCase("sell")){
 
@@ -37,7 +36,6 @@ public class sellCommand implements CommandExecutor {
             }
 
             if(args.length != 1){
-                sender.sendMessage("Usage:");
                 return false;
             }
 
@@ -55,7 +53,6 @@ public class sellCommand implements CommandExecutor {
             }
 
             Player player = (Player) sender;
-
             PlayerInventory playerInventory = player.getInventory();
             ItemStack sellItem = playerInventory.getItemInMainHand();
 
