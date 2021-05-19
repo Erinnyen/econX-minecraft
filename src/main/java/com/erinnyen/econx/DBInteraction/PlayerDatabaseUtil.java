@@ -296,7 +296,7 @@ public class PlayerDatabaseUtil {
 
         return null;
     }
-    public String shortTimestamp(Timestamp pTimestamp){
+    private String shortTimestamp(Timestamp pTimestamp){
 
         Date date = new Date(pTimestamp.getTime());
         Time time = new Time(pTimestamp.getTime());
