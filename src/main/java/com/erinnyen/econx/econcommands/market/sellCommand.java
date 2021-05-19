@@ -2,8 +2,6 @@ package com.erinnyen.econx.econcommands.market;
 
 
 import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
-import com.erinnyen.econx.dbinteaction.MarketDBInteraction;
-import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
 import com.erinnyen.econx.dbinteaction.Sell;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
-import com.google.gson.Gson;
 
 
 public class sellCommand implements CommandExecutor {
