@@ -9,13 +9,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DBCredentials {
+public class DatabaseCredentials {
 
     private String username;
     private String password;
     private String url;
 
-    public DBCredentials(File path){
+    public DatabaseCredentials(File path){
 
         for(File file : Objects.requireNonNull(path.listFiles())){
             if(!file.getName().equals("dbcreds.json")){

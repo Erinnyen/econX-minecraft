@@ -1,6 +1,6 @@
 package com.erinnyen.econx.econCommands.market;
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import com.erinnyen.econx.DBInteraction.MarketDBInteraction;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public class ViewSellOrdersCommand implements CommandExecutor {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
-    DBCredentials dbCreds;
+    DatabaseCredentials dbCreds;
 
-    public ViewSellOrdersCommand(DBCredentials pDBcreds){
+    public ViewSellOrdersCommand(DatabaseCredentials pDBcreds){
         dbCreds = pDBcreds;
     }
 

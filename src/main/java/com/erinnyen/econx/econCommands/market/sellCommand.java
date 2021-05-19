@@ -1,7 +1,7 @@
 package com.erinnyen.econx.econCommands.market;
 
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import com.erinnyen.econx.DBInteraction.MarketDBInteraction;
 import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
@@ -18,9 +18,9 @@ import com.google.gson.Gson;
 
 public class sellCommand implements CommandExecutor {
 
-    DBCredentials dbCreds;
+    DatabaseCredentials dbCreds;
 
-    public sellCommand(DBCredentials pDBcreds){
+    public sellCommand(DatabaseCredentials pDBcreds){
         dbCreds = pDBcreds;
     }
 

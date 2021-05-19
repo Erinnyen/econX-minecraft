@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class Transfer {
 
-    private DBCredentials dbCredentials;
+    private DatabaseCredentials dbCredentials;
     private final String uname;
     private final String password;
     private  final String url;
@@ -16,7 +16,7 @@ public class Transfer {
     public final double amount;
     public final String comment;
 
-    public Transfer(DBCredentials pDBcreds, String pPlayer_1, String pPlayer_2, double pAmount, String pComment){
+    public Transfer(DatabaseCredentials pDBcreds, String pPlayer_1, String pPlayer_2, double pAmount, String pComment){
 
         dbCredentials = pDBcreds;
         // I am still using the DataBaseCredential object, to pass it to the playerExistInDB() method later in this class.

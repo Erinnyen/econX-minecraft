@@ -10,7 +10,7 @@ public class PlayerDatabaseUtil {
     private final String password;
     private  final String url;
 
-    public PlayerDatabaseUtil(DBCredentials pDBcreds){
+    public PlayerDatabaseUtil(DatabaseCredentials pDBcreds){
         uname = pDBcreds.getUsername();
         password = pDBcreds.getPassword();
         url = pDBcreds.getUrl();

@@ -1,6 +1,6 @@
 package com.erinnyen.econx.econCommands.market;
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 public class BuyCommand implements CommandExecutor {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
-    DBCredentials dbCreds;
+    DatabaseCredentials dbCreds;
 
-    public BuyCommand(DBCredentials pDBcreds){
+    public BuyCommand(DatabaseCredentials pDBcreds){
         dbCreds = pDBcreds;
     }
     @Override

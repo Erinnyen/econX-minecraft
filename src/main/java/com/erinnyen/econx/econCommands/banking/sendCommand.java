@@ -1,6 +1,6 @@
 package com.erinnyen.econx.econCommands.banking;
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import com.erinnyen.econx.DBInteraction.Transfer;
 import org.bukkit.Bukkit;
@@ -19,9 +19,9 @@ public class sendCommand implements CommandExecutor {
 
      */
 
-    DBCredentials dbCreds;
+    DatabaseCredentials dbCreds;
 
-    public sendCommand(DBCredentials pDBcreds){
+    public sendCommand(DatabaseCredentials pDBcreds){
         dbCreds = pDBcreds;
 
     }

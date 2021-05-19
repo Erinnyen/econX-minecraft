@@ -1,7 +1,6 @@
 package com.erinnyen.econx.DBInteraction;
 
 import org.bukkit.ChatColor;
-import org.json.simple.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class MarketDBInteraction {
     private final String password;
     private  final String url;
 
-    public MarketDBInteraction(DBCredentials pDBcreds){
+    public MarketDBInteraction(DatabaseCredentials pDBcreds){
 
 
         uname = pDBcreds.getUsername();

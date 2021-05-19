@@ -1,6 +1,6 @@
 package com.erinnyen.econx;
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import com.erinnyen.econx.Listeners.ConnectionListeners;
 import com.erinnyen.econx.econCommands.banking.getCreditCommand;
@@ -25,7 +25,7 @@ public final class EconX extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
-        DBCredentials dbCreds = new DBCredentials(path);
+        DatabaseCredentials dbCreds = new DatabaseCredentials(path);
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
@@ -62,7 +62,7 @@ public final class EconX extends JavaPlugin {
                     Bukkit.getPluginManager().disablePlugin(this);
                 }
                 getLogger().info("Found dbcreds.json");
-                DBCredentials test_conn_creds = new DBCredentials(path);
+                DatabaseCredentials test_conn_creds = new DatabaseCredentials(path);
 
                 if (test_conn_creds.getUsername() != null || test_conn_creds.getPassword() != null || test_conn_creds.getUrl() != null) {
                     if (test_conn_creds.getUsername().equals("")) {

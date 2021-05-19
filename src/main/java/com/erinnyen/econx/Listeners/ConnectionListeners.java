@@ -1,7 +1,7 @@
 package com.erinnyen.econx.Listeners;
 
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,9 +18,9 @@ import java.util.UUID;
 public class ConnectionListeners implements Listener {
     String header = ChatColor.GRAY + "[Server]" + ChatColor.RESET;
 
-    DBCredentials dbCreds;
+    DatabaseCredentials dbCreds;
 
-    public ConnectionListeners(DBCredentials pDBcreds){
+    public ConnectionListeners(DatabaseCredentials pDBcreds){
         dbCreds = pDBcreds;
 
     }

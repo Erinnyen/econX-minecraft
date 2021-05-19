@@ -1,6 +1,6 @@
 package com.erinnyen.econx.econCommands.banking;
 
-import com.erinnyen.econx.DBInteraction.DBCredentials;
+import com.erinnyen.econx.DBInteraction.DatabaseCredentials;
 import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class getCreditCommand implements CommandExecutor {
 
-    DBCredentials dbCreds;
+    DatabaseCredentials dbCreds;
 
-    public getCreditCommand(DBCredentials pDBCreds){
+    public getCreditCommand(DatabaseCredentials pDBCreds){
         dbCreds = pDBCreds;
     }
 
