@@ -1,7 +1,8 @@
 package com.erinnyen.econx.econCommands.banking;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
-import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
+import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.DBInteraction.Transfer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -60,7 +61,7 @@ public class sendCommand implements CommandExecutor {
                         We will only proceed if our argument length is greater or equal
                         to 2, so we make sure that a player- and an amount-argument is given.
                      */
-                    PlayerDBInteraction dbConn = new PlayerDBInteraction(dbCreds); // creating a new Database connection object
+                    PlayerDatabaseUtil dbConn = new PlayerDatabaseUtil(dbCreds); // creating a new Database connection object
                     if(!dbConn.playerExistsInDB(playerReceiver)){
                         /*
                             With this method from the DBInteraction Class we're making sure, that
@@ -105,13 +106,14 @@ public class sendCommand implements CommandExecutor {
                         String comment = commentBuilder.toString(); // Will turn thr StringBuilder object into an actual String
 
 
-                        String dbFeedback = dbConn.transaction(playerSender, playerReceiver, amount, comment);
+                        Transfer moneyTransfer = new Transfer(dbCreds, playerSender, playerReceiver, amount, comment);
+                        String transferFeedback = moneyTransfer.executeTransfer();
                         /*
                             The feedback String returned from the transaction() method from DBInteraction turned into
                             a variable so we can work with it later.
                          */
-                        if(!dbFeedback.equals("Transaction completed")){
-                            sender.sendMessage(header + ChatColor.RED + dbFeedback);
+                        if(!transferFeedback.equals("Transaction completed")){
+                            sender.sendMessage(header + ChatColor.RED + transferFeedback);
                             return false;
                             /*
                                 If the transaction() method returns anything else than
@@ -119,7 +121,7 @@ public class sendCommand implements CommandExecutor {
                                 this error and return false.
                              */
                         }
-                        sender.sendMessage(header + ChatColor.WHITE + dbFeedback);
+                        sender.sendMessage(header + ChatColor.WHITE + transferFeedback);
                         sender.sendMessage(header + ChatColor.WHITE + "You send " + ChatColor.GOLD + amount + "C " +
                                 ChatColor.WHITE + "to " +  ChatColor.BOLD + playerReceiver);
 

@@ -1,7 +1,7 @@
 package com.erinnyen.econx.econCommands.banking;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
-import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
+import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,7 +25,7 @@ public class getCreditCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                PlayerDBInteraction creditQuery = new PlayerDBInteraction(dbCreds);
+                PlayerDatabaseUtil creditQuery = new PlayerDatabaseUtil(dbCreds);
 
                 String player_1 = player.getName();
                 double credit = creditQuery.getCredit(player_1);

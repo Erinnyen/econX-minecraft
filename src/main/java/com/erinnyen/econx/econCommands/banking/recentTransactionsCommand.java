@@ -1,7 +1,7 @@
 package com.erinnyen.econx.econCommands.banking;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
-import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
+import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +29,7 @@ public class recentTransactionsCommand implements CommandExecutor {
                 Player player = (Player) sender;
 
 
-                PlayerDBInteraction dbQuery = new PlayerDBInteraction(dbCreds);
+                PlayerDatabaseUtil dbQuery = new PlayerDatabaseUtil(dbCreds);
                 String playerName = player.getName();
                 ArrayList<String> transactions = dbQuery.getRecentTransactions(playerName, 9);
                 //limits the output to pLength

@@ -3,7 +3,7 @@ package com.erinnyen.econx.econCommands.market;
 
 import com.erinnyen.econx.DBInteraction.DBCredentials;
 import com.erinnyen.econx.DBInteraction.MarketDBInteraction;
-import com.erinnyen.econx.DBInteraction.PlayerDBInteraction;
+import com.erinnyen.econx.DBInteraction.PlayerDatabaseUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -71,7 +71,7 @@ public class sellCommand implements CommandExecutor {
             int amount = sellItem.getAmount();
             double instancePrice = askedPrice / amount; // The price of each individual item.
             String sellerName = player.getName();
-            int playerId = new PlayerDBInteraction(dbCreds).getID(sellerName);
+            int playerId = new PlayerDatabaseUtil(dbCreds).getID(sellerName);
             int transactionType = 1; // transaction type for commodity - please add check feature later
 
             Object materialType = sellItem.getType();
