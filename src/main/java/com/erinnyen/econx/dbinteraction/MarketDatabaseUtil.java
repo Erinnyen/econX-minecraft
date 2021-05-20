@@ -1,9 +1,15 @@
 package com.erinnyen.econx.dbinteraction;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MarketDatabaseUtil {
 
@@ -13,7 +19,6 @@ public class MarketDatabaseUtil {
     private  final String url;
 
     public MarketDatabaseUtil(DatabaseCredentials pDBcreds){
-
 
         uname = pDBcreds.getUsername();
         password = pDBcreds.getPassword();
@@ -65,6 +70,64 @@ public class MarketDatabaseUtil {
             openOrdersResultSet.close();
             conn.close();
             return orderList;
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
+        }
+    }
+    public ArrayList<ItemStack> getSellOrdersItemStacks(String playerName){
+
+        ArrayList<ItemStack> itemsForSale = new ArrayList<>();
+
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, uname, password);
+
+            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT JSONString, order_id, instance_price, price FROM sql_econx.open_sell_orders;");
+            // Add where seller_name != ? later please.
+            //openOrdersQuery.setString(1, playerName);
+            ResultSet openOrdersResultSet = openOrdersQuery.executeQuery();
+
+
+            if(!openOrdersResultSet.next()){
+                openOrdersQuery.close();
+                conn.close();
+                return null;
+
+            }
+
+            openOrdersResultSet.next();
+
+            while (!openOrdersResultSet.isAfterLast()) {
+                int orderId = openOrdersResultSet.getInt(2);
+                double instancePrice = openOrdersResultSet.getDouble(3);
+                double totalPrice = openOrdersResultSet.getDouble(4);
+
+                // deserializing the json String
+                String json = openOrdersResultSet.getString(1);
+                Gson gson = new Gson();
+                Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>(){}.getType());
+                ItemStack item = ItemStack.deserialize(map);
+
+                ItemMeta itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName("(Id: " + Integer.toString(orderId) + ") " + ChatColor.GOLD + Double.toString(totalPrice) + "C");
+
+                List<String> lore = new ArrayList<String>();
+                lore.add(ChatColor.GRAY + "(" + instancePrice + "C per item)");
+                itemMeta.setLore(lore);
+                item.setItemMeta(itemMeta);
+
+                itemsForSale.add(item);
+            }
+            return itemsForSale;
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
