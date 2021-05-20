@@ -65,7 +65,12 @@ public class Buy {
     }
     public String executeBuy(){
 
-        String err_header = ChatColor.DARK_RED + "Transaction error: " + ChatColor.GRAY;
+        String err_header = ChatColor.DARK_RED + " Transaction error: " + ChatColor.GRAY;
+
+
+        if (sellerName.equals(buyerName)){
+            return err_header + "You can't buy your own sell orders.";
+        }
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
