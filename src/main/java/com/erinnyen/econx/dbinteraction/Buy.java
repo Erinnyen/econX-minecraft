@@ -24,13 +24,13 @@ public class Buy {
     }
     public void executeBuy(){}
 
-    private void getSellOrder(){
+    private Sell getSellOrder(){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return;
+            return null;
         }
         try{
 
@@ -52,10 +52,12 @@ public class Buy {
                         sellOrdersResult.getInt(3), soldItemObject);
                 theOrderYouWantToBuy.setOrderId(sellOrdersResult.getInt(5));
                 theOrderYouWantToBuy.setOpenTimestamp(sellOrdersResult.getTimestamp(6));
+                return theOrderYouWantToBuy;
             }
-
+            return null;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+            return null;
         }
     }
 }
