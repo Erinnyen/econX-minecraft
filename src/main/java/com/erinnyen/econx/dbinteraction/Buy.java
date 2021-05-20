@@ -2,6 +2,7 @@ package com.erinnyen.econx.dbinteraction;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -61,18 +62,27 @@ public class Buy {
 
 
     }
-    public boolean executeBuy(){
+    public String executeBuy(){
+
+        String err_header = ChatColor.DARK_RED + "Transaction error: " + ChatColor.GRAY;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return false;
+            return err_header + "Mysql Driver not found";
         }
 
         try{
 
+            String comment = " Sold" + Integer.toString(itemAmount) + " of " + itemType;
+            Transfer tranferFunds = new Transfer(dbCreds, buyerName, sellerName, totalPrice, comment);
+            String transferFeedback = tranferFunds.executeTransfer();
 
+            if(!transferFeedback.equals("Transaction completed")){
+                return transferFeedback;
+
+            }
 
             Connection conn = DriverManager.getConnection(dbCreds.getUrl(), dbCreds.getUsername(), dbCreds.getPassword());
             PreparedStatement closedSaleUpdate = conn.prepareStatement("INSERT INTO sql_econx.closed_sales (sell_order_id, price, amount, type, instance_price, seller_name, seller_id, buyer_name," +
@@ -101,10 +111,11 @@ public class Buy {
             deleteOpenOrder.execute();
             deleteOpenOrder.close();
 
-            return true;
+            return null;
+
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            return false;
+            return err_header + "Internal database error: SQLExeption";
         }
 
     }
