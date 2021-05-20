@@ -1,4 +1,4 @@
-package com.erinnyen.econx.dbinteaction;
+package com.erinnyen.econx.dbinteraction;
 
 import com.google.gson.Gson;
 import org.bukkit.ChatColor;

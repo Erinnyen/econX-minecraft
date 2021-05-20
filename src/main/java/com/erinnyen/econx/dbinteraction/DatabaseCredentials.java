@@ -1,4 +1,4 @@
-package com.erinnyen.econx.dbinteaction;
+package com.erinnyen.econx.dbinteraction;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

@@ -1,7 +1,7 @@
 package com.erinnyen.econx;
 
-import com.erinnyen.econx.dbinteaction.DatabaseCredentials;
-import com.erinnyen.econx.dbinteaction.PlayerDatabaseUtil;
+import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
+import com.erinnyen.econx.dbinteraction.PlayerDatabaseUtil;
 import com.erinnyen.econx.listeners.ConnectionListeners;
 import com.erinnyen.econx.econcommands.banking.getCreditCommand;
 import com.erinnyen.econx.econcommands.banking.recentTransactionsCommand;
