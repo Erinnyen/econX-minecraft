@@ -2,6 +2,7 @@ package com.erinnyen.econx.dbinteraction;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -108,8 +109,18 @@ public class Buy {
             PreparedStatement deleteOpenOrder = conn.prepareStatement("DELETE FROM sql_econx.open_sell_orders WHERE order_id = (?)");
             deleteOpenOrder.setInt(1, sellOrderId);
             // execute() returns bool so maybe add check if it returns true.
-            deleteOpenOrder.execute();
+
+            if(!deleteOpenOrder.execute()){
+                deleteOpenOrder.close();
+                conn.close();
+                return err_header + "Internal database error: Deletion of open_sell_order";
+            }
             deleteOpenOrder.close();
+            conn.close();
+
+            // Adding the bought item to the buyers inventory.
+            // Please Add check if the inventory is full
+            Bukkit.getPlayerExact(buyerName).getInventory().addItem(soldItem);
 
             return null;
 
