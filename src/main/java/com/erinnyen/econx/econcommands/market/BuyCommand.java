@@ -32,10 +32,11 @@ public class BuyCommand implements CommandExecutor {
             return false;
         }
 
-        int sell_order_id;
+        Player buyer = (Player) sender;
+        int sellOrderId;
 
         try{
-            sell_order_id = Integer.parseInt(args[0]);
+            sellOrderId = Integer.parseInt(args[0]);
 
         }catch(NumberFormatException | IndexOutOfBoundsException e){
             if(e instanceof IndexOutOfBoundsException){
