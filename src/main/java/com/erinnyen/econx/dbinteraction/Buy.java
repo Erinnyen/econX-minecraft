@@ -14,15 +14,54 @@ public class Buy {
     public final int sellOrderId;
     public final Player buyer;
 
+
+    // This is the Sell Object, that is going to be bought.
+    public final Sell sellOrderToBuy;
+
+    public final double totalPrice;
+    public final int itemAmount;
+    public final String itemType;
+    public final double instancePrice;
+    public final String sellerName;
+    public final int sellerId;
+    public final int transactionType;
+    public final String sellItemJSON;
+
+    public final ItemStack soldItem;
+
+    // The timestamp, of when the order was placed into the database
+    public Timestamp openTimestamp;
+
     public Buy (DatabaseCredentials pDBcreds, int pSellOrderId, Player pBuyer){
 
         dbCreds = pDBcreds;
         sellOrderId = pSellOrderId;
         buyer = pBuyer;
 
+        sellOrderToBuy = this.getSellOrder();
+        totalPrice = sellOrderToBuy.totalPrice;
+        itemAmount = sellOrderToBuy.itemAmount;
+        itemType = sellOrderToBuy.itemType;
+        instancePrice = sellOrderToBuy.instancePrice;
+        sellerName = sellOrderToBuy.sellerName;
+        sellerId = sellOrderToBuy.sellerId;
+        transactionType = sellOrderToBuy.transactionType;
+        sellItemJSON = sellOrderToBuy.sellItemJSON;
+
+        // the ItemStack object of the item that is sold.
+        soldItem = sellOrderToBuy.soldItem;
+
+        openTimestamp = sellOrderToBuy.openTimestamp;
+
 
     }
-    public void executeBuy(){}
+    public String executeBuy(){
+
+
+
+
+        return "all good";
+    }
 
     private Sell getSellOrder(){
 
