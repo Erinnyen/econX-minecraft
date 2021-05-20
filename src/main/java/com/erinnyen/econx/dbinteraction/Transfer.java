@@ -113,7 +113,7 @@ public class Transfer {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return err_header + "Internal database error: SQLExeption";
+            return err_header + "Internal database error: SQLException";
         }
 
     }
