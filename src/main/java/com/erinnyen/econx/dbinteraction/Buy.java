@@ -13,6 +13,8 @@ public class Buy {
     private final DatabaseCredentials dbCreds;
     public final int sellOrderId;
     public final Player buyer;
+    public final String buyerName;
+    public final int buyerId;
 
 
     // This is the Sell Object, that is going to be bought.
@@ -30,13 +32,17 @@ public class Buy {
     public final ItemStack soldItem;
 
     // The timestamp, of when the order was placed into the database
-    public Timestamp openTimestamp;
+    public final Timestamp openTimestamp;
+
 
     public Buy (DatabaseCredentials pDBcreds, int pSellOrderId, Player pBuyer){
 
         dbCreds = pDBcreds;
         sellOrderId = pSellOrderId;
         buyer = pBuyer;
+
+        buyerName = buyer.getName();
+        buyerId = new PlayerDatabaseUtil(dbCreds).getID(buyerName);
 
         sellOrderToBuy = this.getSellOrder();
         totalPrice = sellOrderToBuy.totalPrice;
@@ -55,12 +61,52 @@ public class Buy {
 
 
     }
-    public String executeBuy(){
+    public boolean executeBuy(){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        try{
 
 
 
+            Connection conn = DriverManager.getConnection(dbCreds.getUrl(), dbCreds.getUsername(), dbCreds.getPassword());
+            PreparedStatement closedSaleUpdate = conn.prepareStatement("INSERT INTO sql_econx.closed_sales (sell_order_id, price, amount, type, instance_price, seller_name, seller_id, buyer_name," +
+                    "buyer_id, open_timestamp, transaction_type, JSONString) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
-        return "all good";
+            closedSaleUpdate.setInt(1,sellOrderId);
+            closedSaleUpdate.setDouble(2, totalPrice);
+            closedSaleUpdate.setInt(3, itemAmount);
+            closedSaleUpdate.setString(4, itemType);
+            closedSaleUpdate.setDouble(5, instancePrice);
+            closedSaleUpdate.setString(6, sellerName);
+            closedSaleUpdate.setInt(7, sellerId);
+            closedSaleUpdate.setString(8, buyerName);
+            closedSaleUpdate.setInt(9, buyerId);
+            closedSaleUpdate.setTimestamp(10, openTimestamp);
+            closedSaleUpdate.setInt(11, transactionType);
+            closedSaleUpdate.setString(12, sellItemJSON);
+
+            closedSaleUpdate.executeUpdate();
+            closedSaleUpdate.close();
+
+            // Deleting the open order
+            PreparedStatement deleteOpenOrder = conn.prepareStatement("DELETE FROM sql_econx.open_sell_orders WHERE order_id = (?)");
+            deleteOpenOrder.setInt(1, sellOrderId);
+            // execute() returns bool so maybe add check if it returns true.
+            deleteOpenOrder.execute();
+            deleteOpenOrder.close();
+
+            return true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return false;
+        }
+
     }
 
     private Sell getSellOrder(){
@@ -91,6 +137,10 @@ public class Buy {
                         sellOrdersResult.getInt(3), soldItemObject);
                 theOrderYouWantToBuy.setOrderId(sellOrdersResult.getInt(5));
                 theOrderYouWantToBuy.setOpenTimestamp(sellOrdersResult.getTimestamp(6));
+
+
+                conn.close();
+                sellOrdersResult.close();
                 return theOrderYouWantToBuy;
             }
             return null;
