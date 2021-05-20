@@ -1,5 +1,6 @@
 package com.erinnyen.econx.econcommands.market;
 
+import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -48,9 +49,14 @@ public class BuyCommand implements CommandExecutor {
             return false;
         }
 
+        Buy buy = new Buy(dbCreds, sellOrderId, buyer);
+        String transactionFeedback = buy.executeBuy();
 
+        if(transactionFeedback != null){
+            sender.sendMessage(header + transactionFeedback);
+            return false;
 
-
-        return false;
+        }
+        return true;
     }
 }
