@@ -67,6 +67,7 @@ CREATE TABLE `closed_sales` (
     PRIMARY KEY (`closed_order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--For Database-user creation, with all the right permissions.
 CREATE USER 'your-username'@'localhost' IDENTIFIED BY 'your-password';
 GRANT DELETE, INSERT, SELECT, UPDATE ON sql_econx.* TO 'your-username'@'localhost';
            
