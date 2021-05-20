@@ -25,7 +25,7 @@ public class Sell {
     // The timestamp, of when the order was placed into the database
     public Timestamp openTimestamp;
 
-    public Sell(DatabaseCredentials pDBcreds, double pTotalPrice, String pPlayerName,
+    public Sell(DatabaseCredentials pDBcreds, double pTotalPrice, String pSellerName,
                 int pTransactionType, ItemStack pSoldItem) {
 
 
@@ -40,7 +40,7 @@ public class Sell {
         Object materialType = soldItem.getType();
         itemType = materialType.toString();
 
-        sellerName = pPlayerName;
+        sellerName = pSellerName;
         sellerId = new PlayerDatabaseUtil(dbCreds).getID(sellerName);
         // add a "check sell order for type" feature please.
         transactionType = pTransactionType;
