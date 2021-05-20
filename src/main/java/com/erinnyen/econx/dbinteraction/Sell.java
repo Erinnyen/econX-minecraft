@@ -4,17 +4,11 @@ import com.google.gson.Gson;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Sell {
 
-    private DatabaseCredentials dbCreds;
-    private final String uname;
-    private final String password;
-    private  final String url;
+    private final DatabaseCredentials dbCreds;
 
     public final double totalPrice;
     public final int itemAmount;
@@ -26,6 +20,10 @@ public class Sell {
     public final String sellItemJSON;
 
     public final ItemStack soldItem;
+    public int orderId;
+
+    // The timestamp, of when the order was placed into the database
+    public Timestamp openTimestamp;
 
     public Sell(DatabaseCredentials pDBcreds, double pTotalPrice, String pPlayerName,
                 int pTransactionType, ItemStack pSoldItem) {
@@ -33,10 +31,6 @@ public class Sell {
 
         // Database credentials:
         dbCreds = pDBcreds;
-        uname = pDBcreds.getUsername();
-        password = pDBcreds.getPassword();
-        url = pDBcreds.getUrl();
-
 
         totalPrice = pTotalPrice;
         soldItem = pSoldItem;
@@ -59,9 +53,29 @@ public class Sell {
 
     }
 
+    public void setOrderId(int pOrderId){
+        /*
+        This method is only used when a Sell object is used outside of the database, (For example in
+        the Buy class.) because the orderId is assigned by sql when inserting into the database.
+        */
+        this.orderId = pOrderId;
+
+    }
+    public void setOpenTimestamp(Timestamp pTimestamp){
+        /*
+        This method is only used when a Sell object is used outside of the database, (For example in
+        the Buy class.) because (like the orderId) the timestamp is assigned by sql when inserting into the database.
+        */
+        this.openTimestamp = pTimestamp;
+    }
+
     public String placeSellOrder(){
 
         String err_header = ChatColor.DARK_RED + "Error: ";
+
+        String uname = dbCreds.getUsername();
+        String password = dbCreds.getPassword();
+        String url = dbCreds.getUrl();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
