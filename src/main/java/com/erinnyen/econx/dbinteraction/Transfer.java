@@ -51,6 +51,10 @@ public class Transfer {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
 
+            if(Player_1.equals(Player_2)){
+                return err_header + "You can transfer money to yourself";
+
+            }
             if(!new PlayerDatabaseUtil(dbCredentials).playerExistsInDB(Player_2)){
                 return err_header + " Your specified receiver does not exist in out system.";
             }
@@ -109,7 +113,7 @@ public class Transfer {
             transferDatabaseEntry(id_1, id_2, amount, comment);
             conn.close();
 
-            return "Transaction completed";
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
