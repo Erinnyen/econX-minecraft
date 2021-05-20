@@ -81,7 +81,7 @@ public final class EconX extends JavaPlugin {
                     PlayerDatabaseUtil test_conn = new PlayerDatabaseUtil(test_conn_creds);
                     if (test_conn.testConnection()) {
                         getLogger().info("Database connection established.");
-                        getLogger().info("All set good to go");
+                        getLogger().info("All set good to go.");
                         return;
                     }
                     getLogger().warning("Something went wrong with the database connection!");
