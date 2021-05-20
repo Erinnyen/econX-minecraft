@@ -21,7 +21,7 @@ CREATE TABLE `transactions` (
   `amount` double(20, 2) NOT NULL,
   `timestamp` timestamp NOT NULL,
   `transaction_type` int(5) NOT NULL,
-  `comment` VARCHAR(1023) DEFAULT NUll;
+  `comment` VARCHAR(1023) DEFAULT NUll,
   PRIMARY KEY (`transaction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
