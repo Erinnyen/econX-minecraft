@@ -80,9 +80,8 @@ public class Buy {
             Transfer tranferFunds = new Transfer(dbCreds, buyerName, sellerName, totalPrice, comment);
             String transferFeedback = tranferFunds.executeTransfer();
 
-            if(!transferFeedback.equals("Transaction completed")){
+            if(transferFeedback != null){
                 return transferFeedback;
-
             }
 
             Connection conn = DriverManager.getConnection(dbCreds.getUrl(), dbCreds.getUsername(), dbCreds.getPassword());
@@ -110,7 +109,7 @@ public class Buy {
             deleteOpenOrder.setInt(1, sellOrderId);
             // execute() returns bool so maybe add check if it returns true.
 
-            if(!deleteOpenOrder.execute()){
+            if(deleteOpenOrder.execute()){
                 deleteOpenOrder.close();
                 conn.close();
                 return err_header + "Internal database error: Deletion of open_sell_order";
