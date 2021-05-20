@@ -33,3 +33,7 @@ commands:
   buy:
     description: Use this command to buy up sell orders.
     usage: /buy <order_id>
+
+  gui:
+    description: This will show the market gui.
+    usage: /gui
