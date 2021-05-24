@@ -1,18 +1,14 @@
 package com.erinnyen.econx.econcommands.market;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
-import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
 import com.erinnyen.econx.gui.MarketGui;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 
 
 public class MarketGuiCommand implements CommandExecutor {

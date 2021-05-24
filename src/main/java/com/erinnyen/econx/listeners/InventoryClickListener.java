@@ -1,29 +1,29 @@
 package com.erinnyen.econx.listeners;
 
+import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
-import org.bukkit.Material;
+import com.erinnyen.econx.gui.MarketGui;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class InventoryClickListener implements Listener {
 
-
+    String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     DatabaseCredentials dbCreds;
-    Inventory shopInventory;
+    MarketGui marketGui;
 
-    public InventoryClickListener(DatabaseCredentials pDBcreds, Inventory pShopInventory){
+    public InventoryClickListener(DatabaseCredentials pDBcreds, MarketGui pMarketGui){
         dbCreds = pDBcreds;
-        shopInventory = pShopInventory;
+        marketGui = pMarketGui;
 
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        if(!event.getInventory().equals(shopInventory)){
+        if(!event.getInventory().equals(marketGui.inv)){
             return;
         }
         if(event.getCurrentItem() == null){
@@ -38,13 +38,24 @@ public class InventoryClickListener implements Listener {
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
 
-
-        if(event.getSlot() == 0){
-            player.getInventory().addItem(new ItemStack(Material.COAL));
-        }
-
         if(event.getSlot() == 53){
             player.closeInventory();
+            return;
         }
+        if(marketGui.orderIDsGui.get(event.getSlot()) != null){ // Error prevention.
+            Buy buy = new Buy(dbCreds, marketGui.orderIDsGui.get(event.getSlot()), player);
+            String buyFeedback = buy.executeBuy();
+            if(buyFeedback != null){
+                player.sendMessage(buyFeedback);
+                return;
+            }
+            marketGui.addSellOrders(player.getName());
+            player.sendMessage(header + ChatColor.BOLD + "Transactions completed.");
+
+        }else{
+            player.sendMessage(header + ChatColor.DARK_RED + "Something went wrong with executing the buy order.");
+        }
+
+        return;
     }
 }

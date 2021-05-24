@@ -17,6 +17,9 @@ public class MarketGui {
     public Inventory inv;
     private DatabaseCredentials dbCreds;
     ItemStack exitBarrierBlock;
+    // Creating an ArrayList, where the index is the slot and the value the order_id.
+    public ArrayList<Integer> orderIDsGui;
+
 
     public MarketGui(DatabaseCredentials pDBCreds){
         dbCreds = pDBCreds;
@@ -42,13 +45,21 @@ public class MarketGui {
         inv.clear();
         // Adding the barrier block in the lower right corner again.
         inv.setItem(53, exitBarrierBlock);
-
+        ArrayList<Integer> list = new ArrayList<Integer>();
 
         for(Object item : openSellOrderItemStacks.toArray()){
             // I can only do the for loop with an Object so i have to cast ItemStack over it later.
             ItemStack itemStack = (ItemStack) item;
             inv.addItem(itemStack);
-        }
+            // The order_id is the second entry in the lore.
+            String orderIdString = itemStack.getLore().get(1);
+            System.out.println(orderIdString);
 
+
+            int orderIdInteger = Integer.parseInt(orderIdString);
+            //orderIDsGui.add(orderIdInteger);
+            list.add(orderIdInteger);
+        }
+        orderIDsGui = list;
     }
 }
