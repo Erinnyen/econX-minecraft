@@ -43,13 +43,14 @@ public class ConnectionListeners implements Listener {
             String str_uuid = uuid.toString();
             dbConn.newPLayerEntry(str_uuid, name);
 
+
         }
     }
     @EventHandler
     public void onLeft(PlayerQuitEvent event){
         Player player = event.getPlayer();
         String player_name = player.getName();
-        event.setQuitMessage(header + "Bye, " + ChatColor.BLUE + player.getName() + "!");
+        event.setQuitMessage(header + " Bye, " + ChatColor.BLUE + player.getName() + "!");
 
         PlayerDatabaseUtil dbConn = new PlayerDatabaseUtil(dbCreds);
         dbConn.updateLastOnline(player_name);

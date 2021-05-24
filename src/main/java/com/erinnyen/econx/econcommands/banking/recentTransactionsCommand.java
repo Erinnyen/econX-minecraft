@@ -38,7 +38,7 @@ public class recentTransactionsCommand implements CommandExecutor {
                     sender.sendMessage(header + "You don't have any recent transactions to view.");
                     return true;
                 }
-                sender.sendMessage(header + "recent transactions:");
+                sender.sendMessage(header + "Recent transactions:");
                 for(int i = 0; i< transactions.size(); i++){
                     sender.sendMessage(transactions.get(i));
                 }
