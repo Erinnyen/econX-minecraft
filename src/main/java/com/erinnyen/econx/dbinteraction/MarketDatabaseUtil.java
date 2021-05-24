@@ -117,7 +117,7 @@ public class MarketDatabaseUtil {
                 ItemStack soldItemObject = ItemStack.deserialize(map);
 
                 ItemMeta itemMeta = soldItemObject.getItemMeta();
-                itemMeta.setDisplayName(type + " " + ChatColor.GOLD + Double.toString(totalPrice) + "C");
+                itemMeta.setDisplayName(type + ChatColor.GRAY + " for " + ChatColor.GOLD + Double.toString(totalPrice) + "C");
 
                 List<String> lore = new ArrayList<String>();
                 lore.add(ChatColor.GRAY + "(" + instancePrice + "C per item)");
