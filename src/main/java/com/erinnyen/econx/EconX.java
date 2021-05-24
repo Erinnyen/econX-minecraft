@@ -2,7 +2,8 @@ package com.erinnyen.econx;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.PlayerDatabaseUtil;
-import com.erinnyen.econx.econcommands.market.MarketGUI;
+import com.erinnyen.econx.econcommands.market.MarketGuiCommand;
+import com.erinnyen.econx.gui.MarketGui;
 import com.erinnyen.econx.listeners.ConnectionListeners;
 import com.erinnyen.econx.econcommands.banking.getCreditCommand;
 import com.erinnyen.econx.econcommands.banking.recentTransactionsCommand;
@@ -29,6 +30,7 @@ import java.util.Objects;
 public final class EconX extends JavaPlugin {
 
     private final File path = new File(String.valueOf(this.getDataFolder()));
+    public MarketGui marketGui;
     public Inventory marketGuiInventory;
 
 
@@ -37,7 +39,8 @@ public final class EconX extends JavaPlugin {
         // Plugin startup logic
 
         DatabaseCredentials dbCreds = new DatabaseCredentials(path);
-        createInv();
+        marketGui = new MarketGui(dbCreds);
+        marketGuiInventory = marketGui.inv;
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
@@ -48,7 +51,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("viewsellorders")).setExecutor(new ViewSellOrdersCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("buy")).setExecutor(new BuyCommand(dbCreds));
-        Objects.requireNonNull(this.getCommand("gui")).setExecutor(new MarketGUI(dbCreds, marketGuiInventory));
+        Objects.requireNonNull(this.getCommand("gui")).setExecutor(new MarketGuiCommand(dbCreds, marketGui));
 
 
 
@@ -131,33 +134,5 @@ public final class EconX extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
-
-
-    public void createInv(){
-
-        marketGuiInventory = Bukkit.createInventory(null, 54, ChatColor.LIGHT_PURPLE + "Items for Sale:");
-
-        ItemStack item = new ItemStack(Material.COAL);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("(Id: " + "3" + ") " + ChatColor.GOLD + "40.0" + "C");
-        List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.GRAY + "(" + "490" + "C per item)");
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        item.setAmount(32);
-
-        marketGuiInventory.setItem(0, item);
-
-        item = new ItemStack(Material.BARRIER);
-        meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Close Shop");
-        item.setItemMeta(meta);
-
-        marketGuiInventory.setItem(53, item);
-
-    }
-
-
-
 
 }

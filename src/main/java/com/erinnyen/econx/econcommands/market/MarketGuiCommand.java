@@ -2,6 +2,7 @@ package com.erinnyen.econx.econcommands.market;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
+import com.erinnyen.econx.gui.MarketGui;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,15 +15,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 
-public class MarketGUI implements CommandExecutor {
+public class MarketGuiCommand implements CommandExecutor {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
-    DatabaseCredentials dbCreds;
-    Inventory marketGuiInventory;
+    private DatabaseCredentials dbCreds;
+    MarketGui marketGui;
 
-    public MarketGUI(DatabaseCredentials pDbCreds, Inventory pInventory){
+    public MarketGuiCommand(DatabaseCredentials pDbCreds, MarketGui pMarketGui){
         dbCreds = pDbCreds;
-        marketGuiInventory = pInventory;
+        marketGui = pMarketGui;
 
     }
     @Override
@@ -36,8 +37,9 @@ public class MarketGUI implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        ArrayList<ItemStack> openSellOrders= new MarketDatabaseUtil(dbCreds).getSellOrdersItemStacks(player.getName());
-        player.openInventory(marketGuiInventory);
+        marketGui.addSellOrders(player.getName());
+
+        player.openInventory(marketGui.inv);
 
         return true;
     }
