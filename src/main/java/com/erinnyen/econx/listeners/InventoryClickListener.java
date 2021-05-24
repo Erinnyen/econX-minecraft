@@ -50,10 +50,10 @@ public class InventoryClickListener implements Listener {
                 return;
             }
             marketGui.addSellOrders(player.getName());
-            player.sendMessage(header + ChatColor.BOLD + "Transactions completed.");
+            player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
 
         }else{
-            player.sendMessage(header + ChatColor.DARK_RED + "Something went wrong with executing the buy order.");
+            player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
         }
 
         return;
