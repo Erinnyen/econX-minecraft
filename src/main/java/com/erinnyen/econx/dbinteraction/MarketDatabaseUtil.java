@@ -91,7 +91,7 @@ public class MarketDatabaseUtil {
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
-            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT JSONString, order_id, instance_price, price FROM sql_econx.open_sell_orders;");
+            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT JSONString, order_id, instance_price, price, type FROM sql_econx.open_sell_orders;");
             // Add where seller_name != ? later please.
             //openOrdersQuery.setString(1, playerName);
             ResultSet openOrdersResultSet = openOrdersQuery.executeQuery();
@@ -108,6 +108,7 @@ public class MarketDatabaseUtil {
                 int orderId = openOrdersResultSet.getInt(2);
                 double instancePrice = openOrdersResultSet.getDouble(3);
                 double totalPrice = openOrdersResultSet.getDouble(4);
+                String type = openOrdersResultSet.getString(5);
 
                 // deserializing the json String
                 String json = openOrdersResultSet.getString(1);
@@ -116,10 +117,11 @@ public class MarketDatabaseUtil {
                 ItemStack soldItemObject = ItemStack.deserialize(map);
 
                 ItemMeta itemMeta = soldItemObject.getItemMeta();
-                itemMeta.setDisplayName("(Id: " + Integer.toString(orderId) + ") " + ChatColor.GOLD + Double.toString(totalPrice) + "C");
+                itemMeta.setDisplayName(type + " " + ChatColor.GOLD + Double.toString(totalPrice) + "C");
 
                 List<String> lore = new ArrayList<String>();
                 lore.add(ChatColor.GRAY + "(" + instancePrice + "C per item)");
+                lore.add(Integer.toString(orderId));
                 itemMeta.setLore(lore);
                 soldItemObject.setItemMeta(itemMeta);
 
