@@ -27,7 +27,7 @@ public class MarketGui {
         ItemMeta meta = exitBarrierBlock.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Close Shop");
         List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.GRAY + "Click here to close the shop");
+        lore.add(ChatColor.GRAY + "Click here to close!");
         meta.setLore(lore);
         exitBarrierBlock.setItemMeta(meta);
 
