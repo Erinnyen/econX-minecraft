@@ -122,6 +122,7 @@ public class MarketDatabaseUtil {
                 List<String> lore = new ArrayList<String>();
                 lore.add(ChatColor.GRAY + "(" + instancePrice + "C per item)");
                 lore.add(Integer.toString(orderId));
+                lore.add(ChatColor.BOLD + "" + ChatColor.BLUE + "Click to buy");
                 itemMeta.setLore(lore);
                 soldItemObject.setItemMeta(itemMeta);
 
