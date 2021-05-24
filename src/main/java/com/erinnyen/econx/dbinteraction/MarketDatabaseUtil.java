@@ -104,9 +104,7 @@ public class MarketDatabaseUtil {
 
             }
 
-            openOrdersResultSet.next();
-
-            while (!openOrdersResultSet.isAfterLast()) {
+            while(openOrdersResultSet.next()) {
                 int orderId = openOrdersResultSet.getInt(2);
                 double instancePrice = openOrdersResultSet.getDouble(3);
                 double totalPrice = openOrdersResultSet.getDouble(4);
@@ -115,17 +113,17 @@ public class MarketDatabaseUtil {
                 String json = openOrdersResultSet.getString(1);
                 Gson gson = new Gson();
                 Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>(){}.getType());
-                ItemStack item = ItemStack.deserialize(map);
+                ItemStack soldItemObject = ItemStack.deserialize(map);
 
-                ItemMeta itemMeta = item.getItemMeta();
+                ItemMeta itemMeta = soldItemObject.getItemMeta();
                 itemMeta.setDisplayName("(Id: " + Integer.toString(orderId) + ") " + ChatColor.GOLD + Double.toString(totalPrice) + "C");
 
                 List<String> lore = new ArrayList<String>();
                 lore.add(ChatColor.GRAY + "(" + instancePrice + "C per item)");
                 itemMeta.setLore(lore);
-                item.setItemMeta(itemMeta);
+                soldItemObject.setItemMeta(itemMeta);
 
-                itemsForSale.add(item);
+                itemsForSale.add(soldItemObject);
             }
             return itemsForSale;
 
