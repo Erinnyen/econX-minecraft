@@ -21,7 +21,7 @@ public class MarketGui {
     public MarketGui(DatabaseCredentials pDBCreds){
         dbCreds = pDBCreds;
 
-        inv = Bukkit.createInventory(null, 54, ChatColor.LIGHT_PURPLE + "Items for Sale:");
+        inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "Items for Sale:");
 
         exitBarrierBlock = new ItemStack(Material.BARRIER);
         ItemMeta meta = exitBarrierBlock.getItemMeta();
