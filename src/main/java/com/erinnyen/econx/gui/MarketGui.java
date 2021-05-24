@@ -53,7 +53,6 @@ public class MarketGui {
             inv.addItem(itemStack);
             // The order_id is the second entry in the lore.
             String orderIdString = itemStack.getLore().get(1);
-            System.out.println(orderIdString);
 
 
             int orderIdInteger = Integer.parseInt(orderIdString);
