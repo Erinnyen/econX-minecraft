@@ -13,18 +13,12 @@ import com.erinnyen.econx.econcommands.banking.sendCommand;
 import com.erinnyen.econx.econcommands.market.ViewSellOrdersCommand;
 import com.erinnyen.econx.listeners.InventoryClickListener;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public final class EconX extends JavaPlugin {
