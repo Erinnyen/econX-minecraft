@@ -51,8 +51,8 @@ public class MarketGui {
             // I can only do the for loop with an Object so i have to cast ItemStack over it later.
             ItemStack itemStack = (ItemStack) item;
             inv.addItem(itemStack);
-            // The order_id is the second entry in the lore.
-            String orderIdString = itemStack.getLore().get(1);
+            // The order_id is the third entry in the lore.
+            String orderIdString = itemStack.getLore().get(2);
 
 
             int orderIdInteger = Integer.parseInt(orderIdString);

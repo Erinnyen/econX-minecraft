@@ -92,7 +92,7 @@ public class MarketDatabaseUtil {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
             PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT JSONString, order_id, instance_price, price, type FROM sql_econx.open_sell_orders LIMIT 46;");
-            // Limit 45 are 4 x 9 rows of items.
+            // Limit 46 are 4 x 9 rows of items.
             // Add where seller_name != ? later please.
             //openOrdersQuery.setString(1, playerName);
             ResultSet openOrdersResultSet = openOrdersQuery.executeQuery();
@@ -122,8 +122,9 @@ public class MarketDatabaseUtil {
 
                 List<String> lore = new ArrayList<String>();
                 lore.add(ChatColor.GRAY + "(" + instancePrice + "C per item)");
-                lore.add(Integer.toString(orderId));
                 lore.add(ChatColor.BOLD + "" + ChatColor.BLUE + "Click to buy!");
+                // Adding the orderId to the lore so we can identify it later.
+                lore.add(Integer.toString(orderId));
                 itemMeta.setLore(lore);
                 soldItemObject.setItemMeta(itemMeta);
 

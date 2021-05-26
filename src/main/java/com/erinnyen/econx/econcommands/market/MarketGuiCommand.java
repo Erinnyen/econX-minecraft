@@ -29,7 +29,7 @@ public class MarketGuiCommand implements CommandExecutor {
             return false;
         }
         if(!(sender instanceof Player)){
-            sender.sendMessage(header + ChatColor.RED + "You have to be a Player to use this command!");
+            sender.sendMessage(header + ChatColor.RED + " You have to be a Player to use this command!");
             return false;
         }
         Player player = (Player) sender;

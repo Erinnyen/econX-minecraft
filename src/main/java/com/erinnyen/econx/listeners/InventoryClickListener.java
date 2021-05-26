@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import java.text.ParseException;
+
 public class InventoryClickListener implements Listener {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
@@ -35,6 +37,7 @@ public class InventoryClickListener implements Listener {
         if (event.getCurrentItem().getItemMeta().getDisplayName() == null){
             return;
         }
+
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
 
@@ -42,20 +45,23 @@ public class InventoryClickListener implements Listener {
             player.closeInventory();
             return;
         }
-        if(marketGui.orderIDsGui.get(event.getSlot()) != null){ // Error prevention.
-            Buy buy = new Buy(dbCreds, marketGui.orderIDsGui.get(event.getSlot()), player);
+
+
+        try {
+            int sellOrderId = Integer.parseInt(event.getCurrentItem().getLore().get(2));
+            Buy buy = new Buy(dbCreds, sellOrderId, player);
             String buyFeedback = buy.executeBuy();
             if(buyFeedback != null){
                 player.sendMessage(buyFeedback);
+                player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
                 return;
             }
             marketGui.addSellOrders(player.getName());
             player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
 
-        }else{
-            player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            return;
         }
-
         return;
     }
 }
