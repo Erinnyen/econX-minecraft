@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -33,9 +34,10 @@ public class MarketGuiCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        marketGui.addSellOrders(player.getName());
 
-        player.openInventory(marketGui.inv);
+        MarketGui playerMarketInventoryGui = new MarketGui(dbCreds);
+        Inventory playerMarketInv = playerMarketInventoryGui.createInventory(player);
+        player.openInventory(playerMarketInv);
 
         return true;
     }

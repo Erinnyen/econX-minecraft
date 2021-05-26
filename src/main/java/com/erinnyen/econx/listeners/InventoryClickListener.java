@@ -4,6 +4,7 @@ import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.gui.MarketGui;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,21 +15,27 @@ public class InventoryClickListener implements Listener {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     DatabaseCredentials dbCreds;
-    MarketGui marketGui;
 
-    public InventoryClickListener(DatabaseCredentials pDBcreds, MarketGui pMarketGui){
+    public InventoryClickListener(DatabaseCredentials pDBcreds){
         dbCreds = pDBcreds;
-        marketGui = pMarketGui;
-
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
 
         //Ignoring all the click events, that aren't within our shop
-        if(!event.getInventory().equals(marketGui.inv)){
+
+        // I have to do a try catch here, because there are other inventories, that are smaller than 53
+        // so we will produce a NullPointerException.
+
+        try {
+            if(event.getInventory().getItem(53).getType() != Material.BARRIER){
+                return;
+            }
+        } catch (NullPointerException e) {
             return;
         }
+
         if(event.getCurrentItem() == null){
             return;
         }
@@ -59,6 +66,7 @@ public class InventoryClickListener implements Listener {
             Using the try/catch here to catch the exceptions produced if the item doesn't
             have the specific lore we specified in MarketGui.
          */
+
         try {
             int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
             Buy buy = new Buy(dbCreds, sellOrderId, player);
@@ -68,7 +76,8 @@ public class InventoryClickListener implements Listener {
                 player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
                 return;
             }
-            marketGui.addSellOrders(player.getName());
+            player.closeInventory();
+            player.openInventory(new MarketGui(dbCreds).createInventory(player));
             player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
 
 

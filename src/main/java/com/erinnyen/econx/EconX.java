@@ -13,7 +13,6 @@ import com.erinnyen.econx.econcommands.banking.sendCommand;
 import com.erinnyen.econx.econcommands.market.ViewSellOrdersCommand;
 import com.erinnyen.econx.listeners.InventoryClickListener;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +35,7 @@ public final class EconX extends JavaPlugin {
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
-        pluginManager.registerEvents(new InventoryClickListener(dbCreds, marketGui), this);
+        pluginManager.registerEvents(new InventoryClickListener(dbCreds), this);
         Objects.requireNonNull(this.getCommand("send")).setExecutor(new sendCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("getcredit")).setExecutor(new getCreditCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));
@@ -44,8 +43,6 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("viewsellorders")).setExecutor(new ViewSellOrdersCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("buy")).setExecutor(new BuyCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("gui")).setExecutor(new MarketGuiCommand(dbCreds, marketGui));
-
-
 
 
     }
