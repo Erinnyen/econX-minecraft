@@ -112,7 +112,7 @@ public class sendCommand implements CommandExecutor {
                             The feedback String returned from the transaction() method from DBInteraction turned into
                             a variable so we can work with it later.
                          */
-                        if(!transferFeedback.equals("Transaction completed")){
+                        if(transferFeedback != null){
                             sender.sendMessage(header + ChatColor.RED + transferFeedback);
                             return false;
                             /*
@@ -121,7 +121,6 @@ public class sendCommand implements CommandExecutor {
                                 this error and return false.
                              */
                         }
-                        sender.sendMessage(header + ChatColor.WHITE + transferFeedback);
                         sender.sendMessage(header + ChatColor.WHITE + "You send " + ChatColor.GOLD + amount + "C " +
                                 ChatColor.WHITE + "to " +  ChatColor.BOLD + playerReceiver);
 
