@@ -16,11 +16,9 @@ public class MarketGuiCommand implements CommandExecutor {
 
     String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     private DatabaseCredentials dbCreds;
-    MarketGui marketGui;
 
-    public MarketGuiCommand(DatabaseCredentials pDbCreds, MarketGui pMarketGui){
+    public MarketGuiCommand(DatabaseCredentials pDbCreds){
         dbCreds = pDbCreds;
-        marketGui = pMarketGui;
 
     }
     @Override

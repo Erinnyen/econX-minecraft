@@ -31,7 +31,6 @@ public final class EconX extends JavaPlugin {
         // Plugin startup logic
 
         DatabaseCredentials dbCreds = new DatabaseCredentials(path);
-        marketGui = new MarketGui(dbCreds);
 
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
@@ -42,7 +41,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("sell")).setExecutor(new sellCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("viewsellorders")).setExecutor(new ViewSellOrdersCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("buy")).setExecutor(new BuyCommand(dbCreds));
-        Objects.requireNonNull(this.getCommand("gui")).setExecutor(new MarketGuiCommand(dbCreds, marketGui));
+        Objects.requireNonNull(this.getCommand("gui")).setExecutor(new MarketGuiCommand(dbCreds));
 
 
     }
