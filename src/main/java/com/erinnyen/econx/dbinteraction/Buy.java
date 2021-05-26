@@ -68,7 +68,7 @@ public class Buy {
         String err_header = ChatColor.DARK_RED + " Transaction error: " + ChatColor.GRAY;
 
 
-        if (!sellerName.equals(buyerName)){ // Just for testing, please remove ! for production.
+        if (sellerName.equals(buyerName)){
             return err_header + "You can't buy your own sell orders.";
         }
 
@@ -86,12 +86,12 @@ public class Buy {
 
             //Just for testing
 
-            //Transfer tranferFunds = new Transfer(dbCreds, buyerName, sellerName, totalPrice, comment);
-            //String transferFeedback = tranferFunds.executeTransfer();
+            Transfer tranferFunds = new Transfer(dbCreds, buyerName, sellerName, totalPrice, comment);
+            String transferFeedback = tranferFunds.executeTransfer();
 
-            //if(transferFeedback != null){
-            //    return transferFeedback;
-            //}
+            if(transferFeedback != null){
+                return transferFeedback;
+            }
 
             Connection conn = DriverManager.getConnection(dbCreds.getUrl(), dbCreds.getUsername(), dbCreds.getPassword());
             PreparedStatement closedSaleUpdate = conn.prepareStatement("INSERT INTO sql_econx.closed_sales (sell_order_id, price, amount, type, instance_price, seller_name, seller_id, buyer_name," +
