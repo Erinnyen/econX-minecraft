@@ -25,7 +25,6 @@ public final class EconX extends JavaPlugin {
 
     private final File path = new File(String.valueOf(this.getDataFolder()));
     public MarketGui marketGui;
-    public Inventory marketGuiInventory;
 
 
     @Override
