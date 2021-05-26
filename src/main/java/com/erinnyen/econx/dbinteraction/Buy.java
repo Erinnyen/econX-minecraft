@@ -81,7 +81,7 @@ public class Buy {
 
         try{
 
-            String comment = " Sold" + Integer.toString(itemAmount) + " of " + itemType;
+            String comment = " Sold " + Integer.toString(itemAmount) + " of " + itemType;
 
 
             //Just for testing
