@@ -301,8 +301,8 @@ public class PlayerDatabaseUtil {
         Date date = new Date(pTimestamp.getTime());
         Time time = new Time(pTimestamp.getTime());
 
-        System.out.println(date);
-        System.out.println(time);
+        //System.out.println(date);
+        //System.out.println(time);
 
         // Please find a way to not use depreciated methods.
         // Please use the calender because it doesn't work
@@ -312,7 +312,7 @@ public class PlayerDatabaseUtil {
         String hours = Integer.toString(time.getHours());
         String minutes = Integer.toString(time.getMinutes());
 
-        System.out.println(day);
+        //System.out.println(day);
 
         //Making these to string because i want to have them in the dd and mm format and not d and m.
 
