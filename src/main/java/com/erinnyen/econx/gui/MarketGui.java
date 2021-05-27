@@ -16,7 +16,8 @@ import java.util.List;
 public class MarketGui {
     private DatabaseCredentials dbCreds;
     ItemStack exitBarrierBlock;
-
+    ItemStack confirmPurchaseBlock;
+    ItemStack cancelPurchaseBlock;
 
 
     public MarketGui(DatabaseCredentials pDBCreds){
@@ -31,6 +32,17 @@ public class MarketGui {
         lore.add(ChatColor.GRAY + "Click here to close!");
         meta.setLore(lore);
         exitBarrierBlock.setItemMeta(meta);
+
+
+        confirmPurchaseBlock = new ItemStack(Material.GREEN_CONCRETE);
+        ItemMeta confirmMeta = confirmPurchaseBlock.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + "Confirm Purchase!");
+        //Add the lore later.
+        confirmPurchaseBlock.setItemMeta(confirmMeta);
+
+        cancelPurchaseBlock = new ItemStack(Material.RED_CONCRETE);
+        ItemMeta cancelMeta = cancelPurchaseBlock.getItemMeta();
+        meta.setDisplayName(ChatColor.RED + "Cancel Purchase!");
 
 
     }
@@ -63,5 +75,17 @@ public class MarketGui {
             ItemStack itemStack = (ItemStack) item;
             inventory.addItem(itemStack);
         }
+    }
+
+
+    public Inventory createConfirmationInventory(Player owner){
+        Inventory confirmInventory = Bukkit.createInventory(owner, 36, ChatColor.BLACK + "Please confirm your purchase!");
+
+        confirmInventory.setItem(0, confirmPurchaseBlock);
+        confirmInventory.setItem(1, cancelPurchaseBlock);
+
+
+        return confirmInventory;
+
     }
 }

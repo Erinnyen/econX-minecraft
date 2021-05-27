@@ -76,7 +76,9 @@ public class InventoryClickListener implements Listener {
                 player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
                 return;
             }
-            new MarketGui(dbCreds).updateInv(event.getInventory(), player);
+            player.closeInventory();
+            player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player));
+            //new MarketGui(dbCreds).updateInv(event.getInventory(), player);
             player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
 
 
