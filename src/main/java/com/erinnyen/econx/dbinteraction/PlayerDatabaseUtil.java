@@ -2,7 +2,10 @@ package com.erinnyen.econx.dbinteraction;
 
 import org.bukkit.ChatColor;
 import java.sql.*;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PlayerDatabaseUtil {
 
@@ -297,13 +300,10 @@ public class PlayerDatabaseUtil {
         return null;
     }
     private String shortTimestamp(Timestamp pTimestamp){
+        //Still didn't fix it, made it better though.
 
         Date date = new Date(pTimestamp.getTime());
         Time time = new Time(pTimestamp.getTime());
-
-        //System.out.println(date);
-        //System.out.println(time);
-
         // Please find a way to not use depreciated methods.
         // Please use the calender because it doesn't work
 
@@ -311,25 +311,6 @@ public class PlayerDatabaseUtil {
         String month = Integer.toString(date.getMonth());
         String hours = Integer.toString(time.getHours());
         String minutes = Integer.toString(time.getMinutes());
-
-        //System.out.println(day);
-
-        //Making these to string because i want to have them in the dd and mm format and not d and m.
-
-        if(date.getDay() < 10){
-            day = "0" + day;
-        }
-        if(date.getMonth() < 10){
-            month = "0" + month;
-        }
-        if(time.getHours() < 10){
-            hours = "0" + hours;
-        }
-        if(time.getMinutes() < 10){
-            minutes = "0" + minutes;
-
-        }
-        // I hate those if-statements please find a better way to do that right here.
 
         String date_dd_mm_hh_mm = day + "." + month + " " + hours + ":" + minutes;
 
