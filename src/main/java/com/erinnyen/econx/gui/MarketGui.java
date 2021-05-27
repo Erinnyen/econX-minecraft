@@ -38,13 +38,11 @@ public class MarketGui {
         confirmPurchaseBlock = new ItemStack(Material.GREEN_CONCRETE);
         ItemMeta confirmMeta = confirmPurchaseBlock.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "Confirm Purchase!");
-        confirmMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
         //Add the lore later.
         confirmPurchaseBlock.setItemMeta(confirmMeta);
 
         cancelPurchaseBlock = new ItemStack(Material.RED_CONCRETE);
         ItemMeta cancelMeta = cancelPurchaseBlock.getItemMeta();
-        cancelMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
         //Add lore later.
         meta.setDisplayName(ChatColor.RED + "Cancel Purchase!");
 
