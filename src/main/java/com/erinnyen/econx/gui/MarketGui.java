@@ -5,6 +5,7 @@ import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -37,11 +38,14 @@ public class MarketGui {
         confirmPurchaseBlock = new ItemStack(Material.GREEN_CONCRETE);
         ItemMeta confirmMeta = confirmPurchaseBlock.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "Confirm Purchase!");
+        confirmMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
         //Add the lore later.
         confirmPurchaseBlock.setItemMeta(confirmMeta);
 
         cancelPurchaseBlock = new ItemStack(Material.RED_CONCRETE);
         ItemMeta cancelMeta = cancelPurchaseBlock.getItemMeta();
+        cancelMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
+        //Add lore later.
         meta.setDisplayName(ChatColor.RED + "Cancel Purchase!");
 
 
@@ -83,6 +87,8 @@ public class MarketGui {
 
         confirmInventory.setItem(30, confirmPurchaseBlock);
         confirmInventory.setItem(32, cancelPurchaseBlock);
+        //placeholder item
+        confirmInventory.setItem(13, new ItemStack(Material.COAL));
 
 
         return confirmInventory;
