@@ -61,12 +61,7 @@ public class InventoryClickListener implements Listener {
 
             player.closeInventory();
             player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player, event.getCurrentItem()));
-
-            /*
-                Using the try/catch here to catch the exceptions produced if the item doesn't
-                have the specific lore we specified in MarketGui.
-             */
-
+            return;
 
         }
         if(event.getInventory().getSize() == 36){
@@ -88,16 +83,12 @@ public class InventoryClickListener implements Listener {
                     //new MarketGui(dbCreds).updateInv(event.getInventory(), player);
                     player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
                     player.closeInventory();
+                    return;
 
                 } catch (IndexOutOfBoundsException | NumberFormatException e) {
                     return;
                 }
             }
-            /*
-
-
-            */
-
         }
 
 
