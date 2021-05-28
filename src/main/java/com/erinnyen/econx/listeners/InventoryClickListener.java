@@ -30,7 +30,7 @@ public class InventoryClickListener implements Listener {
 
         try {
             if(event.getInventory().getItem(53).getType() != Material.BARRIER
-            || event.getInventory().getItem(30).getType() != Material.GREEN_CONCRETE) {
+            && event.getInventory().getItem(30).getType() != Material.GREEN_CONCRETE) {
                 return;
             }
         } catch (NullPointerException e) {
