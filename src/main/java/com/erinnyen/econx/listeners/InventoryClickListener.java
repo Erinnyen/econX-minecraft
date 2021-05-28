@@ -29,7 +29,8 @@ public class InventoryClickListener implements Listener {
         // so we will produce a NullPointerException.
 
         try {
-            if(event.getInventory().getItem(53).getType() != Material.BARRIER){
+            if(event.getInventory().getItem(53).getType() != Material.BARRIER
+            || event.getInventory().getItem(30).getType() != Material.GREEN_CONCRETE) {
                 return;
             }
         } catch (NullPointerException e) {
@@ -48,43 +49,59 @@ public class InventoryClickListener implements Listener {
         if(event.getCurrentItem().getItemMeta().getLore() == null){
             return;
         }
-
-        /*
-            Only if the criteria above aren't met, then we'll set the cancelled to true.
-            This means you can still move around items in your own inventory although you have the shop open.
-        */
-
         event.setCancelled(true);
+
         Player player = (Player) event.getWhoClicked();
 
-        if(event.getSlot() == 53){
-            player.closeInventory();
-            return;
-        }
-
-        /*
-            Using the try/catch here to catch the exceptions produced if the item doesn't
-            have the specific lore we specified in MarketGui.
-         */
-
-        try {
-            int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
-            Buy buy = new Buy(dbCreds, sellOrderId, player);
-            String buyFeedback = buy.executeBuy();
-            if (buyFeedback != null) {
-                player.sendMessage(buyFeedback);
-                player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
+        if(event.getInventory().getSize() == 54){
+            if(event.getSlot() == 53){
+                player.closeInventory();
                 return;
             }
+
             player.closeInventory();
-            player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player));
-            //new MarketGui(dbCreds).updateInv(event.getInventory(), player);
-            player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
+            player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player, event.getCurrentItem()));
+
+            /*
+                Using the try/catch here to catch the exceptions produced if the item doesn't
+                have the specific lore we specified in MarketGui.
+             */
 
 
-        } catch (IndexOutOfBoundsException | NumberFormatException e) {
-            return;
         }
+        if(event.getInventory().getSize() == 36){
+            if(event.getSlot() == 32){
+                player.closeInventory();
+                return;
+            }
+            if(event.getSlot() == 30){
+                try {
+                    int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
+                    Buy buy = new Buy(dbCreds, sellOrderId, player);
+                    String buyFeedback = buy.executeBuy();
+                    if (buyFeedback != null) {
+                        player.sendMessage(buyFeedback);
+                        player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
+                        return;
+                    }
+
+                    //new MarketGui(dbCreds).updateInv(event.getInventory(), player);
+                    player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
+                    player.closeInventory();
+
+                } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                    return;
+                }
+            }
+            /*
+
+
+            */
+
+        }
+
+
         return;
     }
+
 }

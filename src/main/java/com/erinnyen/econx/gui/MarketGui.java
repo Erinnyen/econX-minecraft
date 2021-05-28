@@ -81,13 +81,15 @@ public class MarketGui {
     }
 
 
-    public Inventory createConfirmationInventory(Player owner){
+    public Inventory createConfirmationInventory(Player owner, ItemStack item){
+
+        //Maybe add Price in title.
         Inventory confirmInventory = Bukkit.createInventory(owner, 36, ChatColor.BLACK + "Please confirm your purchase!");
 
         confirmInventory.setItem(30, confirmPurchaseBlock);
         confirmInventory.setItem(32, cancelPurchaseBlock);
         //placeholder item
-        confirmInventory.setItem(13, new ItemStack(Material.COAL));
+        confirmInventory.setItem(13, item);
 
 
         return confirmInventory;
