@@ -27,15 +27,16 @@ public class InventoryClickListener implements Listener {
 
         // I have to do a try catch here, because there are other inventories, that are smaller than 53
         // so we will produce a NullPointerException.
-
         try {
             if(event.getInventory().getItem(53).getType() != Material.BARRIER
             && event.getInventory().getItem(30).getType() != Material.GREEN_CONCRETE) {
                 return;
             }
-        } catch (NullPointerException e) {
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("bro this null thing");
             return;
         }
+
 
         if(event.getCurrentItem() == null){
             return;
@@ -64,7 +65,9 @@ public class InventoryClickListener implements Listener {
             return;
 
         }
+        System.out.println("Hey here");
         if(event.getInventory().getSize() == 36){
+            System.out.println("got here");
             if(event.getSlot() == 32){
                 player.closeInventory();
                 return;
