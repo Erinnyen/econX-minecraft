@@ -5,7 +5,6 @@ import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,8 +23,6 @@ public class MarketGui {
     public MarketGui(DatabaseCredentials pDBCreds){
         dbCreds = pDBCreds;
 
-
-
         exitBarrierBlock = new ItemStack(Material.BARRIER);
         ItemMeta meta = exitBarrierBlock.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Close Shop");
@@ -37,14 +34,18 @@ public class MarketGui {
 
         confirmPurchaseBlock = new ItemStack(Material.GREEN_CONCRETE);
         ItemMeta confirmMeta = confirmPurchaseBlock.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Confirm Purchase!");
-        //Add the lore later.
+        confirmMeta.setDisplayName(ChatColor.GREEN + "Confirm Purchase!");
+        List<String> confirmLore = new ArrayList<String>();
+        confirmLore.add(ChatColor.GRAY + "Click here to confirm!");
+        confirmMeta.setLore(confirmLore);
         confirmPurchaseBlock.setItemMeta(confirmMeta);
 
         cancelPurchaseBlock = new ItemStack(Material.RED_CONCRETE);
         ItemMeta cancelMeta = cancelPurchaseBlock.getItemMeta();
-        //Add lore later.
-        meta.setDisplayName(ChatColor.RED + "Cancel Purchase!");
+        cancelMeta.setDisplayName(ChatColor.RED + "Cancel Purchase!");
+        List<String> cancelLore = new ArrayList<String>();
+        cancelLore.add(ChatColor.GRAY + "Click here to confirm!");
+        cancelMeta.setLore(confirmLore);
         cancelPurchaseBlock.setItemMeta(cancelMeta);
 
 
@@ -83,13 +84,14 @@ public class MarketGui {
 
     public Inventory createConfirmationInventory(Player owner, ItemStack item){
 
-        //Maybe add Price in title.
+        //Maybe add Price in title later.
         Inventory confirmInventory = Bukkit.createInventory(owner, 36, ChatColor.BLACK + "Please confirm your purchase!");
-
         confirmInventory.setItem(30, confirmPurchaseBlock);
         confirmInventory.setItem(32, cancelPurchaseBlock);
         //placeholder item
         confirmInventory.setItem(13, item);
+
+
 
 
         return confirmInventory;
