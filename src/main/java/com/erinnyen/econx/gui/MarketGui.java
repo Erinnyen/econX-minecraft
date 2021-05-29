@@ -89,6 +89,14 @@ public class MarketGui {
         confirmInventory.setItem(30, confirmPurchaseBlock);
         confirmInventory.setItem(32, cancelPurchaseBlock);
         //placeholder item
+
+        // Removing the "click to buy!" from the Item Lore
+        ItemMeta sellItemMeta = item.getItemMeta();
+        List<String> sellItemLore = sellItemMeta.getLore();
+        sellItemLore.set(2, "");
+        sellItemMeta.setLore(sellItemLore);
+        item.setItemMeta(sellItemMeta);
+
         confirmInventory.setItem(13, item);
 
 
