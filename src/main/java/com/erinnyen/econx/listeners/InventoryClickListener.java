@@ -75,9 +75,7 @@ public class InventoryClickListener implements Listener {
             return;
 
         }
-        System.out.println("Hey here");
         if(event.getInventory().getSize() == 36){
-            System.out.println("got here");
             if(event.getSlot() == 32){
                 player.closeInventory();
                 return;
