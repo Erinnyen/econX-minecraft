@@ -30,6 +30,7 @@ public class InventoryClickListener implements Listener {
         // so we will produce a NullPointerException.
         boolean isTheInvWereLookingFor = false;
         try {
+            // The Market inventory has the distinct exitBarrierBlock in the lower right corner.
             if(event.getInventory().getItem(53).getType() == Material.BARRIER) {
                 isTheInvWereLookingFor = true;
             }
@@ -37,6 +38,7 @@ public class InventoryClickListener implements Listener {
             //Doing nothing
         }
         try {
+            // The confirmInventory has the distinct confirm concrete Block in the lower left.
             if(event.getInventory().getItem(30).getType() == Material.GREEN_CONCRETE){
                 isTheInvWereLookingFor = true;
             }
