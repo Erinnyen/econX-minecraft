@@ -3,6 +3,7 @@ package com.erinnyen.econx.listeners;
 import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.gui.MarketGui;
+import org.apache.commons.lang.ObjectUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,11 +29,17 @@ public class InventoryClickListener implements Listener {
         // I have to do a try catch here, because there are other inventories, that are smaller than 53
         // so we will produce a NullPointerException.
         try {
-            if(event.getInventory().getItem(53).getType() != Material.BARRIER
-            && event.getInventory().getItem(30).getType() != Material.GREEN_CONCRETE) {
+            boolean isTheInvWereLookingFor = false;
+            if(event.getInventory().getItem(53).getType() == Material.BARRIER) {
+                isTheInvWereLookingFor = true;
+            }
+            if(event.getInventory().getItem(30).getType() == Material.GREEN_CONCRETE){
+                isTheInvWereLookingFor = true;
+            }
+            if(!isTheInvWereLookingFor){
                 return;
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println("bro this null thing");
             return;
         }
