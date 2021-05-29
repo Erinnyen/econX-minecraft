@@ -93,7 +93,7 @@ public class MarketGui {
         // Removing the "click to buy!" from the Item Lore
         ItemMeta sellItemMeta = item.getItemMeta();
         List<String> sellItemLore = sellItemMeta.getLore();
-        sellItemLore.set(2, "");
+        sellItemLore.set(3, "");
         sellItemMeta.setLore(sellItemLore);
         item.setItemMeta(sellItemMeta);
 
