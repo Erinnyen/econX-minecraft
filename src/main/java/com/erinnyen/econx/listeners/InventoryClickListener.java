@@ -28,19 +28,22 @@ public class InventoryClickListener implements Listener {
 
         // I have to do a try catch here, because there are other inventories, that are smaller than 53
         // so we will produce a NullPointerException.
+        boolean isTheInvWereLookingFor = false;
         try {
-            boolean isTheInvWereLookingFor = false;
             if(event.getInventory().getItem(53).getType() == Material.BARRIER) {
                 isTheInvWereLookingFor = true;
             }
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+            //Doing nothing
+        }
+        try {
             if(event.getInventory().getItem(30).getType() == Material.GREEN_CONCRETE){
                 isTheInvWereLookingFor = true;
             }
-            if(!isTheInvWereLookingFor){
-                return;
-            }
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("bro this null thing");
+            //Doing nothing
+        }
+        if(!isTheInvWereLookingFor){
             return;
         }
 
