@@ -112,9 +112,6 @@ public class MarketGui {
 
         confirmInventory.setItem(13, item);
 
-
-
-
         return confirmInventory;
 
     }
