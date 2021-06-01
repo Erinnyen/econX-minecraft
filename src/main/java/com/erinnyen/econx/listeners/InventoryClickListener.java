@@ -101,7 +101,6 @@ public class InventoryClickListener implements Listener {
                         return;
                     }
 
-                    //new MarketGui(dbCreds).updateInv(event.getInventory(), player);
                     player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
                     player.closeInventory();
                     return;

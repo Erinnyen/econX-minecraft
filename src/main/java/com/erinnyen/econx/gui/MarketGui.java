@@ -102,7 +102,7 @@ public class MarketGui {
         //placeholder item
 
 
-        // Removing the "click to buy!" from the Item Lore
+        // Just keeping the instance Price for the itemLore in the confirmation Inventory Gui.
         ItemMeta sellItemMeta = item.getItemMeta();
         List<String> sellItemLore = new ArrayList<String>();
         String instancePrice = item.getItemMeta().getLore().get(0);
