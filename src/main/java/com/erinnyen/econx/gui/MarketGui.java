@@ -18,6 +18,7 @@ public class MarketGui {
     ItemStack exitBarrierBlock;
     ItemStack confirmPurchaseBlock;
     ItemStack cancelPurchaseBlock;
+    int sellId;
 
 
     public MarketGui(DatabaseCredentials pDBCreds){
@@ -82,7 +83,17 @@ public class MarketGui {
     }
 
 
-    public Inventory createConfirmationInventory(Player owner, ItemStack item){
+    public Inventory createConfirmationInventory(Player owner, ItemStack item, int sellOrderId){
+
+
+        sellId = sellOrderId;
+        //Adding the sell orderId to the
+        ItemMeta confirmMeta = confirmPurchaseBlock.getItemMeta();
+        List<String> confirmLore = new ArrayList<String>();
+        confirmLore.add(Integer.toString(sellOrderId));
+        confirmMeta.setLore(confirmLore);
+
+
 
         //Maybe add Price in title later.
         Inventory confirmInventory = Bukkit.createInventory(owner, 36, ChatColor.BLACK + "Please confirm your purchase!");
@@ -90,10 +101,11 @@ public class MarketGui {
         confirmInventory.setItem(32, cancelPurchaseBlock);
         //placeholder item
 
+
         // Removing the "click to buy!" from the Item Lore
         ItemMeta sellItemMeta = item.getItemMeta();
         List<String> sellItemLore = sellItemMeta.getLore();
-        sellItemLore.set(3, "");
+        sellItemLore.set(2, "");
         sellItemMeta.setLore(sellItemLore);
         item.setItemMeta(sellItemMeta);
 

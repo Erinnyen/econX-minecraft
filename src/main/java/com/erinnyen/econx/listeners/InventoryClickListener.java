@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import java.text.NumberFormat;
+
 
 public class InventoryClickListener implements Listener {
 
@@ -71,10 +73,16 @@ public class InventoryClickListener implements Listener {
                 player.closeInventory();
                 return;
             }
+            try {
+                int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
+                player.closeInventory();
+                player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player, event.getCurrentItem(), sellOrderId));
+                return;
+            } catch (NumberFormatException e){
+                e.printStackTrace();
+                return;
+            }
 
-            player.closeInventory();
-            player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player, event.getCurrentItem()));
-            return;
 
         }
         if(event.getInventory().getSize() == 36){
@@ -84,7 +92,7 @@ public class InventoryClickListener implements Listener {
             }
             if(event.getSlot() == 30){
                 try {
-                    int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
+                    int sellOrderId = Integer.parseInt(event.getInventory().getItem(30).getItemMeta().getLore().get(1));
                     Buy buy = new Buy(dbCreds, sellOrderId, player);
                     String buyFeedback = buy.executeBuy();
                     if (buyFeedback != null) {
