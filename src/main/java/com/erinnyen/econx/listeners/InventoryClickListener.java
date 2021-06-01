@@ -2,6 +2,7 @@ package com.erinnyen.econx.listeners;
 
 import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
+import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
 import com.erinnyen.econx.gui.MarketGui;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -73,6 +74,13 @@ public class InventoryClickListener implements Listener {
             }
             try {
                 int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
+
+                //testing if the player has enough money to buy the item
+                if(!new MarketDatabaseUtil(dbCreds).testForSufficientFunds(sellOrderId, event.getWhoClicked().getName())){
+                    event.getWhoClicked().sendMessage(header + ChatColor.RED + "You don't have enough money to buy this.");
+                    return;
+                }
+
                 player.closeInventory();
                 player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player, event.getCurrentItem(), sellOrderId));
                 return;
