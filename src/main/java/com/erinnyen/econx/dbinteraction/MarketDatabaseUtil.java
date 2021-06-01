@@ -17,12 +17,14 @@ public class MarketDatabaseUtil {
     private final String uname;
     private final String password;
     private  final String url;
+    private final DatabaseCredentials dbCreds;
 
     public MarketDatabaseUtil(DatabaseCredentials pDBcreds){
 
         uname = pDBcreds.getUsername();
         password = pDBcreds.getPassword();
         url = pDBcreds.getUrl();
+        dbCreds = pDBcreds;
 
     }
 
@@ -135,6 +137,48 @@ public class MarketDatabaseUtil {
             sqlException.printStackTrace();
             return null;
         }
+    }
+
+    public boolean testForSufficientFunds(int orderId, String playerName){
+        //If any error or exception occurs, this method will return false.
+        double price;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            Connection conn = DriverManager.getConnection(url, uname, password);
+            PreparedStatement orderQuery = conn.prepareStatement("SELECT price FROM sql_econx.open_sell_orders WHERE order_id = ?;");
+            orderQuery.setInt(1, orderId);
+
+            ResultSet orderQueryResult = orderQuery.executeQuery();
+            if(orderQueryResult.next()){
+                price = orderQueryResult.getDouble(1);
+            }else{
+                return false;
+            }
+
+            PlayerDatabaseUtil playerQueries = new PlayerDatabaseUtil(dbCreds);
+
+
+            if(!playerQueries.playerExistsInDB(playerName)){
+                return false;
+            }
+            if(playerQueries.getCredit(playerName) == -1){
+                return false;
+            }
+
+            if((playerQueries.getCredit(playerName) - price) < 0 ){
+                return false;
+            }
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }
