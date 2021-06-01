@@ -89,10 +89,10 @@ public class MarketGui {
         sellId = sellOrderId;
         //Adding the sell orderId to the
         ItemMeta confirmMeta = confirmPurchaseBlock.getItemMeta();
-        List<String> confirmLore = new ArrayList<String>();
+        List<String> confirmLore = confirmPurchaseBlock.getItemMeta().getLore();
         confirmLore.add(Integer.toString(sellOrderId));
         confirmMeta.setLore(confirmLore);
-
+        confirmPurchaseBlock.setItemMeta(confirmMeta);
 
 
         //Maybe add Price in title later.
