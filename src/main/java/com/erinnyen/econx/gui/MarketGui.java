@@ -46,7 +46,7 @@ public class MarketGui {
         cancelMeta.setDisplayName(ChatColor.RED + "Cancel Purchase!");
         List<String> cancelLore = new ArrayList<String>();
         cancelLore.add(ChatColor.GRAY + "Click here to cancel!");
-        cancelMeta.setLore(confirmLore);
+        cancelMeta.setLore(cancelLore);
         cancelPurchaseBlock.setItemMeta(cancelMeta);
 
 
