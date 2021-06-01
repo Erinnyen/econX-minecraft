@@ -47,9 +47,6 @@ public class PlayerDatabaseUtil {
     }
 
 
-
-
-
     public boolean playerExistsInDB(String pPlayer){
         // Please rewrite this method to use sql to check if the player exists.
         try {
