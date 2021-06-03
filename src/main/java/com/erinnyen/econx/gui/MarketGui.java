@@ -138,6 +138,13 @@ public class MarketGui {
     public Inventory createOwnOrdersInventory(Player owner){
         Inventory inv = Bukkit.createInventory(owner, 54, ChatColor.BLACK + "Items you are selling:");
         inv.setItem(53, exitBarrierBlock);
+        ArrayList<ItemStack> openSellOrderItemStacks = new MarketDatabaseUtil(dbCreds).getOwnSellOrders(owner.getName());
+
+        for(Object item : openSellOrderItemStacks.toArray()){
+            // I can only do the for loop with an Object so i have to cast ItemStack over it later.
+            ItemStack itemStack = (ItemStack) item;
+            inv.addItem(itemStack);
+        }
 
         return inv;
     }
