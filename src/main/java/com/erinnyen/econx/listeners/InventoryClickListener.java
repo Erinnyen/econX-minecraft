@@ -61,8 +61,11 @@ public class InventoryClickListener implements Listener {
         if (event.getCurrentItem().getItemMeta().getDisplayName() == null){
             return;
         }
-        if(event.getCurrentItem().getItemMeta().getLore() == null){
-            return;
+        // I have to do this if-clause, bc the youTooPoorBlock doesn't have an ItemLore.
+        if(event.getCurrentItem().getType() != Material.BARRIER) {
+            if (event.getCurrentItem().getItemMeta().getLore() == null) {
+                return;
+            }
         }
         event.setCancelled(true);
 
