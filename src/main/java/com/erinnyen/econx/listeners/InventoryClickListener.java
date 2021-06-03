@@ -68,6 +68,9 @@ public class InventoryClickListener implements Listener {
             }
         }
         event.setCancelled(true);
+        if(event.getCurrentItem().getType() == Material.BARRIER && event.getCurrentItem().getItemMeta().getLore() == null){
+            return;
+        }
 
         Player player = (Player) event.getWhoClicked();
 
