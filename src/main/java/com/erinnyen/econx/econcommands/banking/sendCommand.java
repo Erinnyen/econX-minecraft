@@ -79,6 +79,10 @@ public class sendCommand implements CommandExecutor {
                             We're trying to transform args[1] into a Double.
                             If that doesn't work well catch the exception.
                          */
+                        if(amount < 1){
+                            sender.sendMessage(header + " You have to at least send " + ChatColor.GOLD  + "1C");
+                            return true;
+                        }
                         StringBuilder commentBuilder = new StringBuilder();
                         boolean playerComment;
                         /*

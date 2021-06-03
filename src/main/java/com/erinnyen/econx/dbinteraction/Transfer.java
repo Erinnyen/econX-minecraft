@@ -38,8 +38,8 @@ public class Transfer {
 
         String err_header = ChatColor.DARK_RED + "Transaction error: " + ChatColor.GRAY;
 
-        if(amount < 1){
-            return err_header + " You have to at least send " + ChatColor.GOLD  + "1C";
+        if(amount < 0.01){
+            return err_header + " Minimum amount for transactions is: " + ChatColor.GOLD  + "0.01C";
         }
 
         try {
