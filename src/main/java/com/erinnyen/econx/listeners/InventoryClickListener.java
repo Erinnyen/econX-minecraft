@@ -116,7 +116,24 @@ public class InventoryClickListener implements Listener {
                 player.closeInventory();
                 return;
             }
-            return;
+            try {
+                int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
+                MarketGui gui = new MarketGui(dbCreds);
+
+                MarketDatabaseUtil dbUtil = new MarketDatabaseUtil(dbCreds);
+                String withdrawFeedback = dbUtil.withdrawSellOrder(player, sellOrderId);
+                if (withdrawFeedback != null){
+                    player.sendMessage(withdrawFeedback);
+                    return;
+                }
+                player.sendMessage(header + "Withdrawal complete!");
+
+                gui.updateOwnOrderInventory(event.getInventory(), player);
+                return;
+            } catch (NumberFormatException e){
+                e.printStackTrace();
+                return;
+            }
         }
 
         // Identifying the confirmation Inventory by the size
