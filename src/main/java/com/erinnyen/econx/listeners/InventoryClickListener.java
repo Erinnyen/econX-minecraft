@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 
 public class InventoryClickListener implements Listener {
@@ -126,7 +125,7 @@ public class InventoryClickListener implements Listener {
                     player.sendMessage(withdrawFeedback);
                     return;
                 }
-                player.sendMessage(header + "Withdrawal complete!");
+                player.sendMessage(header + " Withdrawal complete!");
 
                 gui.updateOwnOrderInventory(event.getInventory(), player);
                 return;
