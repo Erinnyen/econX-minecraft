@@ -149,6 +149,20 @@ public class MarketGui {
         return inv;
     }
 
+    public void updateOwnOrderInventory(Inventory inventory, Player owner){
+        inventory.clear();
+        ArrayList<ItemStack> openSellOrderItemStacks = new MarketDatabaseUtil(dbCreds).getOwnSellOrders(owner.getName());
+
+
+        inventory.setItem(53, exitBarrierBlock);
+
+        for(Object item : openSellOrderItemStacks.toArray()){
+            // I can only do the for loop with an Object so i have to cast ItemStack over it later.
+            ItemStack itemStack = (ItemStack) item;
+            inventory.addItem(itemStack);
+        }
+    }
+
     public void cantAffordItem(Inventory inventory, int index){
         inventory.setItem(index, youTooPoorBlock);
     }
