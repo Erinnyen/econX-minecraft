@@ -62,7 +62,7 @@ public class MarketGui {
 
         yourOwnOrdersBlock = new ItemStack(Material.EMERALD);
         ItemMeta yourOwnOrdersMeta = yourOwnOrdersBlock.getItemMeta();
-        yourOwnOrdersMeta.setDisplayName(ChatColor.BLUE + "Your sell orders.");
+        yourOwnOrdersMeta.setDisplayName(ChatColor.BLUE + "Your sell orders");
         List<String> yourOwnOrdersLore = new ArrayList<>();
         yourOwnOrdersLore.add(ChatColor.GRAY + "Click here to view the items your selling!");
         yourOwnOrdersMeta.setLore(yourOwnOrdersLore);

@@ -87,6 +87,13 @@ public class InventoryClickListener implements Listener {
                     player.openInventory(new MarketGui(dbCreds).createOwnOrdersInventory(player));
                     return;
                 }
+
+                // When the player clicks on the refresh button
+                if(event.getSlot() == 49){
+                    new MarketGui(dbCreds).updateInv(event.getInventory(), player);
+                    return;
+                }
+
                 try {
                     int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
                     MarketGui gui = new MarketGui(dbCreds);
