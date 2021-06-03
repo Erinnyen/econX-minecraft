@@ -194,7 +194,7 @@ public class MarketDatabaseUtil {
 
         try {
             Connection conn = DriverManager.getConnection(url, uname, password);
-            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT JSONString, order_id, instance_price, price, type FROM sql_econx.open_sell_orders WHERE seller_name == ? LIMIT 46;");
+            PreparedStatement openOrdersQuery = conn.prepareStatement("SELECT JSONString, order_id, instance_price, price, type FROM sql_econx.open_sell_orders WHERE seller_name = ? LIMIT 46;");
             // Limit 46 are 4 x 9 rows of items.
             // Add where seller_name != ? later please.
             openOrdersQuery.setString(1, playerName);
