@@ -24,11 +24,12 @@ public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
+        /*
+            Ignoring all the click events, that aren't within our shop
+            I have to do a try catch here, because there are other inventories, that are smaller than 53
+            so we will produce a NullPointerException.
+         */
 
-        //Ignoring all the click events, that aren't within our shop
-
-        // I have to do a try catch here, because there are other inventories, that are smaller than 53
-        // so we will produce a NullPointerException.
         boolean isTheInvWereLookingFor = false;
         try {
             // The Market inventory has the distinct exitBarrierBlock in the lower right corner.
@@ -74,15 +75,16 @@ public class InventoryClickListener implements Listener {
             }
             try {
                 int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
-
+                MarketGui gui = new MarketGui(dbCreds);
                 //testing if the player has enough money to buy the item
                 if(!new MarketDatabaseUtil(dbCreds).testForSufficientFunds(sellOrderId, event.getWhoClicked().getName())){
-                    event.getWhoClicked().sendMessage(header + ChatColor.RED + "You don't have enough money to buy this.");
+                    gui.cantAffordItem(event.getInventory(), event.getSlot());
+                    event.getWhoClicked().sendMessage(header + ChatColor.RED + " You don't have enough money to buy this.");
                     return;
                 }
 
                 player.closeInventory();
-                player.openInventory(new MarketGui(dbCreds).createConfirmationInventory(player, event.getCurrentItem(), sellOrderId));
+                player.openInventory(gui.createConfirmationInventory(player, event.getCurrentItem(), sellOrderId));
                 return;
             } catch (NumberFormatException e){
                 e.printStackTrace();

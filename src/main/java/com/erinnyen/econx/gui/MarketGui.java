@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.graalvm.compiler.graph.NodeWorkList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class MarketGui {
     ItemStack exitBarrierBlock;
     ItemStack confirmPurchaseBlock;
     ItemStack cancelPurchaseBlock;
+    ItemStack youTooPoorBlock;
     int sellId;
 
 
@@ -48,6 +50,13 @@ public class MarketGui {
         cancelLore.add(ChatColor.GRAY + "Click here to cancel!");
         cancelMeta.setLore(cancelLore);
         cancelPurchaseBlock.setItemMeta(cancelMeta);
+
+
+        youTooPoorBlock = new ItemStack(Material.BARRIER);
+        ItemMeta youTooPoorMeta = youTooPoorBlock.getItemMeta();
+        youTooPoorMeta.setDisplayName(ChatColor.RED + "You can't afford this item!");
+        youTooPoorBlock.setItemMeta(youTooPoorMeta);
+
 
 
     }
@@ -114,5 +123,9 @@ public class MarketGui {
 
         return confirmInventory;
 
+    }
+
+    public void cantAffordItem(Inventory inventory, int index){
+        inventory.setItem(index, youTooPoorBlock);
     }
 }
