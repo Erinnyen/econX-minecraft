@@ -104,6 +104,8 @@ public class MarketGui {
 
 
         inventory.setItem(53, exitBarrierBlock);
+        inventory.setItem(45, yourOwnOrdersBlock);
+        inventory.setItem(49, refreshInventory);
 
         for(Object item : openSellOrderItemStacks.toArray()){
             // I can only do the for loop with an Object so i have to cast ItemStack over it later.
