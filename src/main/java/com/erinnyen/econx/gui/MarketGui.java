@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.graalvm.compiler.graph.NodeWorkList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,8 @@ public class MarketGui {
     ItemStack confirmPurchaseBlock;
     ItemStack cancelPurchaseBlock;
     ItemStack youTooPoorBlock;
+    ItemStack yourOwnOrdersBlock;
+
     int sellId;
 
 
@@ -57,7 +58,13 @@ public class MarketGui {
         youTooPoorMeta.setDisplayName(ChatColor.RED + "You can't afford this item!");
         youTooPoorBlock.setItemMeta(youTooPoorMeta);
 
-
+        yourOwnOrdersBlock = new ItemStack(Material.EMERALD);
+        ItemMeta yourOwnOrdersMeta = yourOwnOrdersBlock.getItemMeta();
+        yourOwnOrdersMeta.setDisplayName(ChatColor.BLUE + "Your sell orders.");
+        List<String> yourOwnOrdersLore = new ArrayList<>();
+        yourOwnOrdersLore.add(ChatColor.GRAY + "Click here to view the items your selling!");
+        yourOwnOrdersMeta.setLore(yourOwnOrdersLore);
+        yourOwnOrdersBlock.setItemMeta(yourOwnOrdersMeta);
 
     }
 
@@ -67,6 +74,7 @@ public class MarketGui {
         Inventory inventory = Bukkit.createInventory(owner, 54, ChatColor.BLACK + "Items for Sale:");
         // Adding the barrier block in the lower right corner again
         inventory.setItem(53, exitBarrierBlock);
+        inventory.setItem(45, exitBarrierBlock);
 
         for(Object item : openSellOrderItemStacks.toArray()){
             // I can only do the for loop with an Object so i have to cast ItemStack over it later.
