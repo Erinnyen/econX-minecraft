@@ -79,6 +79,11 @@ public class InventoryClickListener implements Listener {
                 player.closeInventory();
                 return;
             }
+            // When the player clicks on the "view your own sell orders" Block.
+            if(event.getSlot() == 45){
+                player.closeInventory();
+                return;
+            }
             try {
                 int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
                 MarketGui gui = new MarketGui(dbCreds);

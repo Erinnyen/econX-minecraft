@@ -74,7 +74,7 @@ public class MarketGui {
         Inventory inventory = Bukkit.createInventory(owner, 54, ChatColor.BLACK + "Items for Sale:");
         // Adding the barrier block in the lower right corner again
         inventory.setItem(53, exitBarrierBlock);
-        inventory.setItem(45, exitBarrierBlock);
+        inventory.setItem(45, yourOwnOrdersBlock);
 
         for(Object item : openSellOrderItemStacks.toArray()){
             // I can only do the for loop with an Object so i have to cast ItemStack over it later.
