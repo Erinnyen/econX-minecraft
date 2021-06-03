@@ -2,7 +2,9 @@ package com.erinnyen.econx.dbinteraction;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -237,6 +239,52 @@ public class MarketDatabaseUtil {
             sqlException.printStackTrace();
             return null;
         }
+    }
+
+    public String withdrawSellOrder(Player seller, int orderId){
+
+        String err_header = ChatColor.DARK_RED + " Withdrawal error: " + ChatColor.GRAY;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return err_header + "Mysql Driver not found";
+        }
+
+        try{
+
+            Connection conn = DriverManager.getConnection(dbCreds.getUrl(), dbCreds.getUsername(), dbCreds.getPassword());
+            PreparedStatement getItemQuery = conn.prepareStatement("SELECT JSONString FROM sql_econx.open_sell_orders WHERE order_id = ? AND seller_name = ?;");
+            getItemQuery.setInt(1, orderId);
+            getItemQuery.setString(2, seller.getName());
+
+            ResultSet getItemResultSet = getItemQuery.executeQuery();
+            if(getItemResultSet.next()) {
+
+                String itemJSON = getItemResultSet.getString(1);
+                Gson gson = new Gson();
+
+                Map<String, Object> map = gson.fromJson(itemJSON, new TypeToken<Map<String, Object>>() {}.getType());
+                ItemStack itemStack = ItemStack.deserialize(map);
+
+                // Please Add check if the inventory is full
+                Bukkit.getPlayerExact(seller.getName()).getInventory().addItem(itemStack);
+
+            } else {
+                return err_header + "Something went wrong";
+            }
+
+            PreparedStatement deleteOrder = conn.prepareStatement("DELETE FROM sql_econx.open_sell_orders WHERE order_id = ?;");
+            deleteOrder.setInt(1, orderId);
+            deleteOrder.execute();
+
+            return null;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return err_header + "Internal database error: SQLExeption";
+        }
+
     }
 
 }
