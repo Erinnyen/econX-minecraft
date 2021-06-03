@@ -20,6 +20,8 @@ public class MarketGui {
     public final ItemStack cancelPurchaseBlock;
     public final ItemStack youTooPoorBlock;
     public final ItemStack yourOwnOrdersBlock;
+    public final ItemStack refreshInventory;
+
 
     int sellId;
 
@@ -66,8 +68,15 @@ public class MarketGui {
         yourOwnOrdersMeta.setLore(yourOwnOrdersLore);
         yourOwnOrdersBlock.setItemMeta(yourOwnOrdersMeta);
 
+        refreshInventory = new ItemStack(Material.STRUCTURE_VOID);
+        ItemMeta refreshMeta = refreshInventory.getItemMeta();
+        refreshMeta.setDisplayName(ChatColor.DARK_PURPLE + "Refresh");
+        List<String> refreshLore = new ArrayList<>();
+        refreshLore.add(ChatColor.GRAY + "Click here to refresh the Market Gui!");
+        refreshMeta.setLore(refreshLore);
+        refreshInventory.setItemMeta(refreshMeta);
 
-        // Maybe add a refresh market block.
+
 
     }
 
@@ -78,6 +87,7 @@ public class MarketGui {
         // Adding the barrier block in the lower right corner again
         inventory.setItem(53, exitBarrierBlock);
         inventory.setItem(45, yourOwnOrdersBlock);
+        inventory.setItem(49, refreshInventory);
 
         for(Object item : openSellOrderItemStacks.toArray()){
             // I can only do the for loop with an Object so i have to cast ItemStack over it later.
@@ -164,6 +174,7 @@ public class MarketGui {
     }
 
     public void cantAffordItem(Inventory inventory, int index){
+        //Maybe work with Hashmaps for a cool down.
         inventory.setItem(index, youTooPoorBlock);
     }
 }
