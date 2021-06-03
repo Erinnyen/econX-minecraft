@@ -15,11 +15,11 @@ import java.util.List;
 
 public class MarketGui {
     private DatabaseCredentials dbCreds;
-    ItemStack exitBarrierBlock;
-    ItemStack confirmPurchaseBlock;
-    ItemStack cancelPurchaseBlock;
-    ItemStack youTooPoorBlock;
-    ItemStack yourOwnOrdersBlock;
+    public final ItemStack exitBarrierBlock;
+    public final ItemStack confirmPurchaseBlock;
+    public final ItemStack cancelPurchaseBlock;
+    public final ItemStack youTooPoorBlock;
+    public final ItemStack yourOwnOrdersBlock;
 
     int sellId;
 
@@ -65,6 +65,9 @@ public class MarketGui {
         yourOwnOrdersLore.add(ChatColor.GRAY + "Click here to view the items your selling!");
         yourOwnOrdersMeta.setLore(yourOwnOrdersLore);
         yourOwnOrdersBlock.setItemMeta(yourOwnOrdersMeta);
+
+
+        // Maybe add a refresh market block.
 
     }
 
@@ -131,6 +134,12 @@ public class MarketGui {
 
         return confirmInventory;
 
+    }
+    public Inventory createOwnOrdersInventory(Player owner){
+        Inventory inv = Bukkit.createInventory(owner, 54, ChatColor.BLACK + "Items you are selling:");
+        inv.setItem(53, exitBarrierBlock);
+
+        return inv;
     }
 
     public void cantAffordItem(Inventory inventory, int index){

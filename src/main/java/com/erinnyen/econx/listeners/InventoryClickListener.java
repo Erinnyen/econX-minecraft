@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-
+import org.bukkit.inventory.ItemStack;
 
 
 public class InventoryClickListener implements Listener {
@@ -74,36 +74,52 @@ public class InventoryClickListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
+        // Identifying the Market Gui Inventory by the size and the Emerald in the lower left corner.
+        try {
+            if(event.getInventory().getSize() == 54 && event.getInventory().getItem(45).equals(new MarketGui(dbCreds).yourOwnOrdersBlock)){
+                if(event.getSlot() == 53){
+                    player.closeInventory();
+                    return;
+                }
+
+                // When the player clicks on the "view your own sell orders" Block.
+                if(event.getSlot() == 45){
+                    player.closeInventory();
+                    player.openInventory(new MarketGui(dbCreds).createOwnOrdersInventory(player));
+                    return;
+                }
+                try {
+                    int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
+                    MarketGui gui = new MarketGui(dbCreds);
+                    // testing if the player has enough money to buy the item
+                    if(!new MarketDatabaseUtil(dbCreds).testForSufficientFunds(sellOrderId, event.getWhoClicked().getName())){
+                        gui.cantAffordItem(event.getInventory(), event.getSlot());
+                        event.getWhoClicked().sendMessage(header + ChatColor.RED + " You don't have enough money to buy this.");
+                        return;
+                    }
+
+                    player.closeInventory();
+                    player.openInventory(gui.createConfirmationInventory(player, event.getCurrentItem(), sellOrderId));
+                    return;
+                } catch (NumberFormatException e){
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        } catch (NullPointerException e) {
+            // Doing nothing.
+        }
+
+        // Identifying the ownOrders Inventory by the size.
         if(event.getInventory().getSize() == 54){
             if(event.getSlot() == 53){
                 player.closeInventory();
                 return;
             }
-            // When the player clicks on the "view your own sell orders" Block.
-            if(event.getSlot() == 45){
-                player.closeInventory();
-                return;
-            }
-            try {
-                int sellOrderId = Integer.parseInt(event.getCurrentItem().getItemMeta().getLore().get(2));
-                MarketGui gui = new MarketGui(dbCreds);
-                //testing if the player has enough money to buy the item
-                if(!new MarketDatabaseUtil(dbCreds).testForSufficientFunds(sellOrderId, event.getWhoClicked().getName())){
-                    gui.cantAffordItem(event.getInventory(), event.getSlot());
-                    event.getWhoClicked().sendMessage(header + ChatColor.RED + " You don't have enough money to buy this.");
-                    return;
-                }
-
-                player.closeInventory();
-                player.openInventory(gui.createConfirmationInventory(player, event.getCurrentItem(), sellOrderId));
-                return;
-            } catch (NumberFormatException e){
-                e.printStackTrace();
-                return;
-            }
-
-
+            return;
         }
+
+        // Identifying the confirmation Inventory by the size
         if(event.getInventory().getSize() == 36){
             if(event.getSlot() == 32){
                 player.closeInventory();
@@ -129,8 +145,6 @@ public class InventoryClickListener implements Listener {
                 }
             }
         }
-
-
         return;
     }
 
