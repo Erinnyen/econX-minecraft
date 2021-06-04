@@ -72,6 +72,10 @@ public class Buy {
             return err_header + "You can't buy your own sell orders.";
         }
 
+        if(Bukkit.getPlayerExact(buyerName).getInventory().firstEmpty() == -1){
+            return err_header + "Your inventory is full.";
+        }
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -127,7 +131,6 @@ public class Buy {
             conn.close();
 
             // Adding the bought item to the buyers inventory.
-            // Please Add check if the inventory is full
             Bukkit.getPlayerExact(buyerName).getInventory().addItem(soldItem);
 
             return null;
