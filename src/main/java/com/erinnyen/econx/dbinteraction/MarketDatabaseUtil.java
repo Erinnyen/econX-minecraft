@@ -245,6 +245,11 @@ public class MarketDatabaseUtil {
 
         String err_header = ChatColor.DARK_RED + " Withdrawal error: " + ChatColor.GRAY;
 
+
+        if(seller.getInventory().firstEmpty() == -1){
+            return err_header + "Your inventory is full.";
+        }
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
