@@ -21,8 +21,6 @@ public class MarketGui {
     public final ItemStack youTooPoorBlock;
     public final ItemStack yourOwnOrdersBlock;
     public final ItemStack refreshInventory;
-
-
     int sellId;
 
 
