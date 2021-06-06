@@ -1,4 +1,4 @@
-package com.erinnyen.econx.econcommands.market;
+package com.erinnyen.econx.econcommands.admin;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
@@ -30,6 +30,12 @@ public class ViewSellOrdersCommand implements CommandExecutor {
         if(!label.equalsIgnoreCase("viewsellorders")){
             return false;
         }
+
+        if(!sender.hasPermission("econx.admin")){
+            sender.sendMessage(ChatColor.DARK_RED + " You don't have the permissions to do that.");
+            return true;
+        }
+
         if(args.length != 0){
             sender.sendMessage("Usage:");
             return false;

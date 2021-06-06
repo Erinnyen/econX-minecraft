@@ -1,4 +1,4 @@
-package com.erinnyen.econx.econcommands.market;
+package com.erinnyen.econx.econcommands.admin;
 
 import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
@@ -28,12 +28,18 @@ public class BuyCommand implements CommandExecutor {
             sender.sendMessage(header + ChatColor.DARK_RED +" You have to be a player to use this command!");
             return false;
         }
+        Player buyer = (Player) sender;
+
+        if(!buyer.hasPermission("econx.admin")){
+            sender.sendMessage(ChatColor.DARK_RED + "You don't have the permissions to do that.");
+        }
+
         if(args.length != 1){
             sender.sendMessage(header + ChatColor.DARK_RED + " Please specify the OrderID from the order you want to buy.");
             return false;
         }
 
-        Player buyer = (Player) sender;
+
         int sellOrderId;
 
         try{
