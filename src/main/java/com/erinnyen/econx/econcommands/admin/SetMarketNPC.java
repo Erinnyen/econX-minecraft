@@ -26,7 +26,7 @@ public class SetMarketNPC implements CommandExecutor {
         if(args.length != 0) return false;
 
         new MarketNPC(player.getLocation());
-        sender.sendMessage(header + "Market NPC creation was successful.");
+        sender.sendMessage(header + " Market NPC creation was successful.");
         return true;
     }
 }
