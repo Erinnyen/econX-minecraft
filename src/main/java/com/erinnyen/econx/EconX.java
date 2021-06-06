@@ -25,8 +25,6 @@ import java.util.Objects;
 public final class EconX extends JavaPlugin {
 
     private final File path = new File(String.valueOf(this.getDataFolder()));
-    public MarketGui marketGui;
-
 
     @Override
     public void onEnable() {
@@ -37,7 +35,7 @@ public final class EconX extends JavaPlugin {
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ConnectionListeners(dbCreds), this);
         pluginManager.registerEvents(new InventoryClickListener(dbCreds), this);
-        pluginManager.registerEvents(new MarketNPCListener(), this);
+        pluginManager.registerEvents(new MarketNPCListener(dbCreds), this);
         Objects.requireNonNull(this.getCommand("send")).setExecutor(new sendCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("getcredit")).setExecutor(new getCreditCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("recent")).setExecutor(new recentTransactionsCommand(dbCreds));

@@ -1,5 +1,7 @@
 package com.erinnyen.econx.listeners;
 
+import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
+import com.erinnyen.econx.gui.MarketGui;
 import com.erinnyen.econx.gui.MarketNPC;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,10 +11,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.Inventory;
 
 public class MarketNPCListener implements Listener {
 
     String header = ChatColor.AQUA + "[EconX]" + ChatColor.RESET;
+    private final DatabaseCredentials DBCREDS;
+
+    public MarketNPCListener(DatabaseCredentials databaseCredentials){
+        DBCREDS = databaseCredentials;
+    }
 
     @EventHandler
     public void rightClickInteraction(PlayerInteractEntityEvent event){
@@ -23,7 +31,9 @@ public class MarketNPCListener implements Listener {
         if(trader.getCustomName().equals(MarketNPC.VENDOR_NAME)){
             event.setCancelled(true);
             Player player = (Player) event.getPlayer();
-            player.sendMessage("It worked");
+            MarketGui playerMarketInventoryGui = new MarketGui(DBCREDS);
+            Inventory playerMarketInv = playerMarketInventoryGui.createInventory(player);
+            player.openInventory(playerMarketInv);
 
 
         }
