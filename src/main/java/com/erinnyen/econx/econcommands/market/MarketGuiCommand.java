@@ -24,6 +24,8 @@ public class MarketGuiCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
+        if(!label.equalsIgnoreCase("creatshop")) return false;
+
         if(!label.equalsIgnoreCase("gui")){
             return false;
         }

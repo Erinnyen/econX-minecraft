@@ -37,3 +37,8 @@ commands:
   gui:
     description: This will show the market gui.
     usage: /gui
+
+
+  createshop:
+    description: Use this command to create a shop Wandering trader at the location where you are standing.
+    usage: /createshop

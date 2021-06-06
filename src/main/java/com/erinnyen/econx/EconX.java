@@ -2,6 +2,7 @@ package com.erinnyen.econx;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.econcommands.admin.SetMarketNPC;
 import com.erinnyen.econx.econcommands.market.MarketGuiCommand;
 import com.erinnyen.econx.gui.MarketGui;
 import com.erinnyen.econx.listeners.ConnectionListeners;
@@ -42,6 +43,7 @@ public final class EconX extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("viewsellorders")).setExecutor(new ViewSellOrdersCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("buy")).setExecutor(new BuyCommand(dbCreds));
         Objects.requireNonNull(this.getCommand("gui")).setExecutor(new MarketGuiCommand(dbCreds));
+        Objects.requireNonNull(this.getCommand("createshop")).setExecutor(new SetMarketNPC());
 
 
     }
