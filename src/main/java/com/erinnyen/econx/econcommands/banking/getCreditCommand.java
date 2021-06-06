@@ -2,6 +2,7 @@ package com.erinnyen.econx.econcommands.banking;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +20,6 @@ public class getCreditCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        String header = ChatColor.LIGHT_PURPLE + "[Bank] ";
 
         if (label.equalsIgnoreCase("getCredit") || label.equalsIgnoreCase("credit")) {
             if (sender instanceof Player) {
@@ -30,15 +30,15 @@ public class getCreditCommand implements CommandExecutor {
                 String player_1 = player.getName();
                 double credit = creditQuery.getCredit(player_1);
                 if(credit == -1){
-                    sender.sendMessage(header + ChatColor.DARK_RED + "Something went wrong. Could not complete request.");
+                    sender.sendMessage(Util.BANK_ERR + "Something went wrong. Could not complete request.");
                     return false;
                 }
 
-                player.sendMessage(header + ChatColor.WHITE + "You're credit is currently: "
+                player.sendMessage(Util.BANK_HEADER + ChatColor.WHITE + "You're credit is currently: "
                         + ChatColor.GOLD + credit + "C");
                 return true;
             }
-            sender.sendMessage(header + ChatColor.DARK_RED +"You have to be a player to use this command!");
+            sender.sendMessage(Util.NOT_PLAYER);
         }
         return false;
     }

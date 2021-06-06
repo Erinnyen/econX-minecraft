@@ -1,5 +1,6 @@
 package com.erinnyen.econx.dbinteraction;
 
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 
 import java.sql.*;
@@ -36,10 +37,10 @@ public class Transfer {
     }
     public String executeTransfer() {
 
-        String err_header = ChatColor.DARK_RED + "Transaction error: " + ChatColor.GRAY;
+
 
         if(amount < 0.01){
-            return err_header + " Minimum amount for transactions is: " + ChatColor.GOLD  + "0.01C";
+            return Util.TRANSACTION_ERR + " Minimum amount for transactions is: " + ChatColor.GOLD  + "0.01C";
         }
 
         try {
@@ -52,11 +53,11 @@ public class Transfer {
 
 
             if(Player_1.equals(Player_2)){
-                return err_header + "You can transfer money to yourself";
+                return Util.TRANSACTION_ERR + "You can transfer money to yourself";
 
             }
             if(!new PlayerDatabaseUtil(dbCredentials).playerExistsInDB(Player_2)){
-                return err_header + " Your specified receiver does not exist in out system.";
+                return Util.TRANSACTION_ERR + " Your specified receiver does not exist in out system.";
             }
 
 
@@ -66,7 +67,7 @@ public class Transfer {
             ResultSet resultSet1 = prepQuery1.executeQuery();
 
             if(!resultSet1.next()){
-                return err_header + "Internal database error: Sender";
+                return Util.DATABASE_ERR + "There is something wrong with the sender";
             }
 
             int id_1 = resultSet1.getInt("player_id");
@@ -79,14 +80,14 @@ public class Transfer {
             ResultSet resultSet2 = prepQuery2.executeQuery();
 
             if(!resultSet2.next()){
-                return err_header + "Internal database error: receiver";
+                return Util.DATABASE_ERR + "There is something wrong with the receiver";
             }
 
             int id_2 = resultSet2.getInt(1);
             int cr_2 = resultSet2.getInt(2);
 
             if((cr_1 - amount) < 0){
-                return err_header + "Cannot execute transaction due to insufficient funds.";
+                return Util.TRANSACTION_ERR + "Cannot execute transaction due to insufficient funds.";
 
             }
             double ncr_1 = cr_1 - amount;
@@ -117,7 +118,7 @@ public class Transfer {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return err_header + "Internal database error: SQLException";
+            return Util.DATABASE_ERR + "SQLException";
         }
 
     }

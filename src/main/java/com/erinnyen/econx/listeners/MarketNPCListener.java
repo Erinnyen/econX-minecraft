@@ -3,6 +3,7 @@ package com.erinnyen.econx.listeners;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.gui.MarketGui;
 import com.erinnyen.econx.gui.MarketNPC;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +16,6 @@ import org.bukkit.inventory.Inventory;
 
 public class MarketNPCListener implements Listener {
 
-    String header = ChatColor.AQUA + "[EconX]" + ChatColor.RESET;
     private final DatabaseCredentials DBCREDS;
 
     public MarketNPCListener(DatabaseCredentials databaseCredentials){
@@ -55,7 +55,7 @@ public class MarketNPCListener implements Listener {
         if(player.hasPermission("econX.admin")){
             if(player.getInventory().getItemInMainHand().getType().equals(Material.WATER_BUCKET)){
                 shop.setHealth(0);
-                player.sendMessage(header + " You deleted the shop!");
+                player.sendMessage(Util.ECONX_HEADER + "You deleted the shop!");
             }
         }
 

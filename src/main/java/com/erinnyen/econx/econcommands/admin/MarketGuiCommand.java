@@ -2,6 +2,7 @@ package com.erinnyen.econx.econcommands.admin;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.gui.MarketGui;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,13 +30,13 @@ public class MarketGuiCommand implements CommandExecutor {
             return false;
         }
         if(!(sender instanceof Player)){
-            sender.sendMessage(header + ChatColor.RED + " You have to be a Player to use this command!");
+            sender.sendMessage(Util.NOT_PLAYER);
             return false;
         }
         Player player = (Player) sender;
 
         if(!player.hasPermission("econx.admin")){
-            sender.sendMessage(ChatColor.DARK_RED + " You don't have the permissions to do that.");
+            sender.sendMessage(Util.PERM_ERR);
             return true;
         }
 

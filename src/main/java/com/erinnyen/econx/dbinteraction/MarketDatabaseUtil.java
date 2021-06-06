@@ -1,5 +1,6 @@
 package com.erinnyen.econx.dbinteraction;
 
+import com.erinnyen.econx.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.bukkit.Bukkit;
@@ -243,18 +244,18 @@ public class MarketDatabaseUtil {
 
     public String withdrawSellOrder(Player seller, int orderId){
 
-        String err_header = ChatColor.DARK_RED + " Withdrawal error: " + ChatColor.GRAY;
+
 
 
         if(seller.getInventory().firstEmpty() == -1){
-            return err_header + "Your inventory is full.";
+            return Util.MARKET_ERR + "Your inventory is full.";
         }
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return err_header + "Mysql Driver not found";
+            return Util.DATABASE_ERR + "Mysql Driver not found";
         }
 
         try{
@@ -277,7 +278,7 @@ public class MarketDatabaseUtil {
                 Bukkit.getPlayerExact(seller.getName()).getInventory().addItem(itemStack);
 
             } else {
-                return err_header + "Something went wrong";
+                return Util.DATABASE_ERR + "Something went wrong";
             }
 
             PreparedStatement deleteOrder = conn.prepareStatement("DELETE FROM sql_econx.open_sell_orders WHERE order_id = ?;");
@@ -287,7 +288,7 @@ public class MarketDatabaseUtil {
             return null;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            return err_header + "Internal database error: SQLExeption";
+            return Util.DATABASE_ERR + "SQLExeption";
         }
 
     }

@@ -1,5 +1,6 @@
 package com.erinnyen.econx.dbinteraction;
 
+import com.erinnyen.econx.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.bukkit.Bukkit;
@@ -65,22 +66,22 @@ public class Buy {
     }
     public String executeBuy(){
 
-        String err_header = ChatColor.DARK_RED + " Transaction error: " + ChatColor.GRAY;
+
 
 
         if (sellerName.equals(buyerName)){
-            return err_header + "You can't buy your own sell orders.";
+            return Util.TRANSACTION_ERR + "You can't buy your own sell orders.";
         }
 
         if(Bukkit.getPlayerExact(buyerName).getInventory().firstEmpty() == -1){
-            return err_header + "Your inventory is full.";
+            return Util.TRANSACTION_ERR + "Your inventory is full.";
         }
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return err_header + "Mysql Driver not found";
+            return Util.TRANSACTION_ERR + "Mysql Driver not found";
         }
 
         try{
@@ -125,7 +126,7 @@ public class Buy {
             if(deleteOpenOrder.execute()){
                 deleteOpenOrder.close();
                 conn.close();
-                return err_header + "Internal database error: Deletion of open_sell_order";
+                return Util.TRANSACTION_ERR + "Internal database error: Deletion of open_sell_order";
             }
             deleteOpenOrder.close();
             conn.close();
@@ -137,7 +138,7 @@ public class Buy {
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            return err_header + "Internal database error: SQLExeption";
+            return Util.TRANSACTION_ERR + "Internal database error: SQLExeption";
         }
 
     }

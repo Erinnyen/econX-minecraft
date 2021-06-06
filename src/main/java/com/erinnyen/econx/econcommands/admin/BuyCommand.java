@@ -2,6 +2,7 @@ package com.erinnyen.econx.econcommands.admin;
 
 import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class BuyCommand implements CommandExecutor {
 
-    String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     DatabaseCredentials dbCreds;
 
     public BuyCommand(DatabaseCredentials pDBcreds){
@@ -25,18 +25,18 @@ public class BuyCommand implements CommandExecutor {
         }
 
         if(!(sender instanceof Player)){
-            sender.sendMessage(header + ChatColor.DARK_RED +" You have to be a player to use this command!");
+            sender.sendMessage(Util.NOT_PLAYER);
             return false;
         }
         Player buyer = (Player) sender;
 
         if(!buyer.hasPermission("econx.admin")){
-            sender.sendMessage(ChatColor.DARK_RED + "You don't have the permissions to do that.");
+            sender.sendMessage(Util.PERM_ERR);
             return true;
         }
 
         if(args.length != 1){
-            sender.sendMessage(header + ChatColor.DARK_RED + " Please specify the OrderID from the order you want to buy.");
+            sender.sendMessage(Util.MARKET_HEADER + ChatColor.DARK_RED + " Please specify the OrderID from the order you want to buy.");
             return false;
         }
 
@@ -49,9 +49,9 @@ public class BuyCommand implements CommandExecutor {
         }catch(NumberFormatException | IndexOutOfBoundsException e){
             if(e instanceof IndexOutOfBoundsException){
                 // Checking which exception we're getting to send the corresponding error message.
-                sender.sendMessage(header + ChatColor.DARK_RED + " Please specify the OrderID from the order you want to buy.");
+                sender.sendMessage(Util.MARKET_ERR + "Please specify the OrderID from the order you want to buy.");
             }else{
-                sender.sendMessage(header + ChatColor.DARK_RED + " OrderID must be a number!");
+                sender.sendMessage(Util.MARKET_ERR + ChatColor.DARK_RED + "OrderID must be a number!");
             }
             return false;
         }
@@ -60,7 +60,7 @@ public class BuyCommand implements CommandExecutor {
         String transactionFeedback = buy.executeBuy();
 
         if(transactionFeedback != null){
-            sender.sendMessage(header + transactionFeedback);
+            sender.sendMessage(Util.MARKET_HEADER + transactionFeedback);
             return false;
 
         }

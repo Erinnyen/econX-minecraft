@@ -2,6 +2,7 @@ package com.erinnyen.econx.econcommands.banking;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.PlayerDatabaseUtil;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,8 +22,6 @@ public class recentTransactionsCommand implements CommandExecutor {
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        String header = ChatColor.LIGHT_PURPLE + "[Bank] " + ChatColor.WHITE;
-
 
         if(label.equalsIgnoreCase("recent") || label.equalsIgnoreCase("recentTransaction") || label.equalsIgnoreCase("getrecent")){
             if(sender instanceof Player){
@@ -35,16 +34,16 @@ public class recentTransactionsCommand implements CommandExecutor {
                 //limits the output to pLength
 
                 if(transactions == null){
-                    sender.sendMessage(header + "You don't have any recent transactions to view.");
+                    sender.sendMessage(Util.BANK_HEADER + ChatColor.YELLOW + "You don't have any recent transactions to view.");
                     return true;
                 }
-                sender.sendMessage(header + "Recent transactions:");
+                sender.sendMessage(Util.BANK_HEADER + "Recent transactions:");
                 for(int i = 0; i< transactions.size(); i++){
                     sender.sendMessage(transactions.get(i));
                 }
                 return true;
             }
-            sender.sendMessage(header + ChatColor.DARK_RED +"You have to be a player to use this command!");
+            sender.sendMessage(Util.NOT_PLAYER);
         }
         return false;
     }

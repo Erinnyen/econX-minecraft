@@ -3,6 +3,7 @@ package com.erinnyen.econx.econcommands.banking;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.PlayerDatabaseUtil;
 import com.erinnyen.econx.dbinteraction.Transfer;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -32,8 +33,6 @@ public class sendCommand implements CommandExecutor {
             The [Bank] tag will be displayed before each feedback from the system so the player
             knows where it is from.
          */
-        String usage = ChatColor.DARK_PURPLE + "Usage: "+ ChatColor.DARK_RED + "/send <player> <amount> <comment>";
-        String header = ChatColor.LIGHT_PURPLE + "[Bank] ";
 
         if (label.equalsIgnoreCase("send")) { //This will check if the provided command is the "send" we're looking for.
             if (sender instanceof Player) {
@@ -47,7 +46,7 @@ public class sendCommand implements CommandExecutor {
 
 
                 if(player.getName().equalsIgnoreCase(playerReceiver)){
-                    sender.sendMessage(header + ChatColor.DARK_RED + "You can't send yourself money!");
+                    sender.sendMessage(Util.BANK_ERR + "You can't send yourself money!");
                     return false;
                     /*
                         This will return if the sender is equal to the receiver and sends the
@@ -68,7 +67,7 @@ public class sendCommand implements CommandExecutor {
                             the player we want to send money to is listed in our database. If he's not
                             then we will return and print an error-message.
                          */
-                        sender.sendMessage(header + ChatColor.DARK_RED + "Player does not exist on this server.");
+                        sender.sendMessage(Util.BANK_ERR + "Player does not exist on this server.");
                         return false;
                     }
 
@@ -80,7 +79,7 @@ public class sendCommand implements CommandExecutor {
                             If that doesn't work well catch the exception.
                          */
                         if(amount < 1){
-                            sender.sendMessage(header + " You have to at least send " + ChatColor.GOLD  + "1C");
+                            sender.sendMessage(Util.BANK_HEADER + Util.TRANSACTION_ERR + " You have to at least send " + ChatColor.GOLD  + "1C");
                             return true;
                         }
                         StringBuilder commentBuilder = new StringBuilder();
@@ -117,7 +116,7 @@ public class sendCommand implements CommandExecutor {
                             a variable so we can work with it later.
                          */
                         if(transferFeedback != null){
-                            sender.sendMessage(header + ChatColor.RED + transferFeedback);
+                            sender.sendMessage(transferFeedback);
                             return false;
                             /*
                                 If the transaction() method returns anything else than
@@ -125,18 +124,18 @@ public class sendCommand implements CommandExecutor {
                                 this error and return false.
                              */
                         }
-                        sender.sendMessage(header + ChatColor.WHITE + "You send " + ChatColor.GOLD + amount + "C " +
+                        sender.sendMessage(Util.BANK_HEADER + ChatColor.WHITE + "You send " + ChatColor.GOLD + amount + "C " +
                                 ChatColor.WHITE + "to " +  ChatColor.BOLD + playerReceiver);
 
                         Player receiverOnline = Bukkit.getPlayerExact(playerReceiver);
                         if(receiverOnline != null){
                             if(playerComment){
-                                receiverOnline.sendMessage(header + ChatColor.WHITE + ChatColor.BOLD + playerSender + ChatColor.RESET + " has send you "
+                                receiverOnline.sendMessage(Util.BANK_HEADER + ChatColor.WHITE + ChatColor.BOLD + playerSender + ChatColor.RESET + " has send you "
                                         + ChatColor.GOLD + amount + "C " +
                                         ChatColor.WHITE + "with the message:");
                                 receiverOnline.sendMessage(ChatColor.BLUE + comment);
                             }else{
-                                receiverOnline.sendMessage(header + ChatColor.WHITE + playerSender + " has send you "
+                                receiverOnline.sendMessage(Util.BANK_HEADER+ ChatColor.WHITE + playerSender + " has send you "
                                         + ChatColor.GOLD + amount + "C");
                             }
 
@@ -150,19 +149,16 @@ public class sendCommand implements CommandExecutor {
                             as args[1]. We will print an error-message and return.
                          */
                         e.printStackTrace();
-                        sender.sendMessage(header + ChatColor.DARK_RED + "Amount musst be a number!");
-                        sender.sendMessage(usage);
+                        sender.sendMessage(Util.BANK_ERR + "Amount musst be a number!");
                         return false;
                     }
                 } else {
-                    sender.sendMessage(usage);
                     return false;
                 }
 
 
             }
-            sender.sendMessage(header + ChatColor.RED + "You have to be a Player to use this command!");
-            sender.sendMessage(usage);
+            sender.sendMessage(Util.NOT_PLAYER);
             return false;
         }
         return false;

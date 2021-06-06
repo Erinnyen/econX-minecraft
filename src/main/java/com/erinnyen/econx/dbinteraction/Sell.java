@@ -1,5 +1,6 @@
 package com.erinnyen.econx.dbinteraction;
 
+import com.erinnyen.econx.util.Util;
 import com.google.gson.Gson;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -71,7 +72,6 @@ public class Sell {
 
     public String placeSellOrder(){
 
-        String err_header = ChatColor.DARK_RED + "Error: ";
 
         String uname = dbCreds.getUsername();
         String password = dbCreds.getPassword();
@@ -107,7 +107,7 @@ public class Sell {
 
         }catch(SQLException e){
             e.printStackTrace();
-            return err_header + "Something went wrong with the database entry!";
+            return Util.DATABASE_ERR + "Something went wrong with the database entry!";
         }
 
         return "Transaction completed!";

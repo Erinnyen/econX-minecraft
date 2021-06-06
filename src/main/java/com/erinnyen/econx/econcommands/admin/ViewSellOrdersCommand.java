@@ -2,6 +2,7 @@ package com.erinnyen.econx.econcommands.admin;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 
 public class ViewSellOrdersCommand implements CommandExecutor {
 
-    String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     DatabaseCredentials dbCreds;
 
     public ViewSellOrdersCommand(DatabaseCredentials pDBcreds){
@@ -32,7 +32,7 @@ public class ViewSellOrdersCommand implements CommandExecutor {
         }
 
         if(!sender.hasPermission("econx.admin")){
-            sender.sendMessage(ChatColor.DARK_RED + " You don't have the permissions to do that.");
+            sender.sendMessage(Util.PERM_ERR);
             return true;
         }
 
@@ -44,11 +44,11 @@ public class ViewSellOrdersCommand implements CommandExecutor {
         ArrayList<String> openOrders = new MarketDatabaseUtil(dbCreds).getOpenSellOrders();
 
         if(openOrders == null){
-            sender.sendMessage(header + "There are no open sell orders at this time.");
+            sender.sendMessage(Util.MARKET_HEADER + "There are no open sell orders at this time.");
             return false;
         }
 
-        sender.sendMessage(header + " Open sell orders:");
+        sender.sendMessage(Util.MARKET_HEADER + " Open sell orders:");
         for(int i = 0; i< openOrders.size(); i++){
             sender.sendMessage(openOrders.get(i));
         }

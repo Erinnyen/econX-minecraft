@@ -1,5 +1,6 @@
 package com.erinnyen.econx.dbinteraction;
 
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import java.sql.*;
 import java.time.Instant;
@@ -40,7 +41,7 @@ public class PlayerDatabaseUtil {
         } catch (SQLException | NullPointerException e) {
             // handle SQL error here!
             e.printStackTrace();
-            System.out.println("Error: Something went wrong with the Database connection!");
+            System.out.println(Util.DATABASE_ERR + "Something went wrong with the Database connection!");
         }
         return false;
 
@@ -177,7 +178,7 @@ public class PlayerDatabaseUtil {
             Connection conn = DriverManager.getConnection(url, uname, password);
 
             if(getID(pName) == 0){
-                System.out.println("Error: The player you wanted to update does not exist.");
+                System.out.println(Util.DATABASE_ERR + " The player you wanted to update does not exist.");
                 return;
             }
             PreparedStatement lastonline = conn.prepareStatement("UPDATE sql_econx.players SET last_online = ? WHERE player_id = ?;");

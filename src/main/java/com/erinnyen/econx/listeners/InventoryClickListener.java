@@ -4,6 +4,7 @@ import com.erinnyen.econx.dbinteraction.Buy;
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.MarketDatabaseUtil;
 import com.erinnyen.econx.gui.MarketGui;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,7 +15,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class InventoryClickListener implements Listener {
 
-    String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
     DatabaseCredentials dbCreds;
 
     public InventoryClickListener(DatabaseCredentials pDBcreds){
@@ -100,7 +100,7 @@ public class InventoryClickListener implements Listener {
                     // testing if the player has enough money to buy the item
                     if(!new MarketDatabaseUtil(dbCreds).testForSufficientFunds(sellOrderId, event.getWhoClicked().getName())){
                         gui.cantAffordItem(event.getInventory(), event.getSlot());
-                        event.getWhoClicked().sendMessage(header + ChatColor.RED + " You don't have enough money to buy this.");
+                        event.getWhoClicked().sendMessage(Util.MARKET_ERR + "You don't have enough money to buy this.");
                         return;
                     }
 
@@ -132,7 +132,7 @@ public class InventoryClickListener implements Listener {
                     player.sendMessage(withdrawFeedback);
                     return;
                 }
-                player.sendMessage(header + " Withdrawal complete!");
+                player.sendMessage(Util.MARKET_HEADER + " Withdrawal complete!");
 
                 gui.updateOwnOrderInventory(event.getInventory(), player);
                 return;
@@ -155,11 +155,11 @@ public class InventoryClickListener implements Listener {
                     String buyFeedback = buy.executeBuy();
                     if (buyFeedback != null) {
                         player.sendMessage(buyFeedback);
-                        player.sendMessage(header + ChatColor.DARK_RED + " Something went wrong with executing the buy order.");
+                        player.sendMessage(Util.MARKET_ERR + " Something went wrong with executing the buy order.");
                         return;
                     }
 
-                    player.sendMessage(header + ChatColor.BOLD + " Transactions completed.");
+                    player.sendMessage(Util.MARKET_HEADER + ChatColor.BOLD + " Transactions completed.");
                     player.closeInventory();
                     return;
 

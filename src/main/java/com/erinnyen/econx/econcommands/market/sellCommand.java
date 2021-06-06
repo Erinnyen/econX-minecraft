@@ -3,6 +3,7 @@ package com.erinnyen.econx.econcommands.market;
 
 import com.erinnyen.econx.dbinteraction.DatabaseCredentials;
 import com.erinnyen.econx.dbinteraction.Sell;
+import com.erinnyen.econx.util.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -25,13 +26,12 @@ public class sellCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        String header = ChatColor.LIGHT_PURPLE + "[Market]" + ChatColor.RESET;
         double askedPrice;
 
         if(label.equalsIgnoreCase("sell")){
 
             if(!(sender instanceof Player)){
-                sender.sendMessage(header + ChatColor.DARK_RED +"You have to be a player to use this command!");
+                sender.sendMessage(Util.NOT_PLAYER);
                 return false;
             }
 
@@ -45,9 +45,9 @@ public class sellCommand implements CommandExecutor {
             }catch(NumberFormatException | IndexOutOfBoundsException e){
                 if(e instanceof IndexOutOfBoundsException){
                     // Checking which exception we're getting to send the corresponding error message.
-                    sender.sendMessage(header + ChatColor.DARK_RED + " Please specify a sell-price");
+                    sender.sendMessage(Util.MARKET_ERR + "Please specify a sell-price");
                 }else{
-                    sender.sendMessage(header + ChatColor.DARK_RED + " Sell-price must be a number!");
+                    sender.sendMessage(Util.MARKET_ERR + "Sell-price must be a number!");
                 }
                 return false;
             }
@@ -57,7 +57,7 @@ public class sellCommand implements CommandExecutor {
             ItemStack sellItem = playerInventory.getItemInMainHand();
 
             if(sellItem.getType().equals(Material.AIR)){
-                sender.sendMessage(header + ChatColor.DARK_RED + " Please hold the item you want to sell in your hand!");
+                sender.sendMessage(Util.MARKET_ERR + " Please hold the item you want to sell in your hand!");
                 return false;
 
             }
@@ -69,20 +69,19 @@ public class sellCommand implements CommandExecutor {
             String sellOrderReturnString = sellOrder.placeSellOrder();
 
             if(!sellOrderReturnString.equals("Transaction completed!")){
-                sender.sendMessage(header + ChatColor.DARK_RED + sellOrderReturnString);
+                sender.sendMessage(sellOrderReturnString);
                 return false;
             }
 
-            sender.sendMessage(header + ChatColor.BOLD + " You placed a sell-order of " + sellOrder.itemAmount + " "
+            sender.sendMessage(Util.MARKET_HEADER + ChatColor.BOLD + " You placed a sell-order of " + sellOrder.itemAmount + " "
                     + ChatColor.BLUE + sellOrder.itemType + ChatColor.WHITE + " for " + ChatColor.GOLD + askedPrice + "C" +
                     ChatColor.GRAY + " (" + sellOrder.instancePrice + "C per individual item).");
 
-            sender.sendMessage(header + ChatColor.BOLD + " Order placed");
+            sender.sendMessage(Util.MARKET_HEADER + ChatColor.BOLD + " Order placed");
 
             // Add "You can always withdraw uncompleted orders on the market place"
 
             playerInventory.setItemInMainHand(null);
-
             return true;
 
         }
