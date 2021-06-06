@@ -32,6 +32,7 @@ public class BuyCommand implements CommandExecutor {
 
         if(!buyer.hasPermission("econx.admin")){
             sender.sendMessage(ChatColor.DARK_RED + "You don't have the permissions to do that.");
+            return true;
         }
 
         if(args.length != 1){
